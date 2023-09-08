@@ -13,7 +13,29 @@ public class Algorithms {
    ///////////////////////////////////////////
 
    public static <T extends Comparable<T>> void insertionSort(T[] array) {
-      // TODO: Student, implement this.
+      /*
+       * TODO: lajittelee koko taulukon luonnolliseen järjestykseen. Voit olettaa
+       * ettei taulukossa ole null:eja.
+       */
+
+      /*
+       * Aloitetaan käymällä taulukon alkioita läpi. Otetaan ensiksi ensimmäinen alkio
+       * jota verrataan seuraavaan alkioon.
+       */
+      for (int i = 1; i < array.length; i++) {
+         T tarkasteltava_alkio = array[i];
+         // Edeltävä alkio.
+         int j = i - 1;
+         // Lähdetään vertailemaan tarkasteltavaa alkiota muihin alkioihin.
+         while (j >= 0 && array[j].compareTo(tarkasteltava_alkio) > 0) {
+            // Siirretään tarkasteltava alkio yhden alkion verran oikealle.
+            array[j + 1] = array[j];
+            // Vähennetään
+            j--;
+         }
+         // Asetetaan alkio oikeaan paikkaan
+         array[i + 1] = tarkasteltava_alkio;
+      }
    }
 
    ///////////////////////////////////////////
@@ -21,7 +43,9 @@ public class Algorithms {
    ///////////////////////////////////////////
 
    public static <T extends Comparable<T>> void insertionSort(T[] array, int fromIndex, int toIndex) {
-      // TODO: Student, implement this.
+      // TODO: lajittelee taulukon luonnolliseen järjestykseen annettujen indeksien
+      // välillä. Voit olettaa ettei taulukossa ole annetulla indeksivälillä null:eja.
+
    }
 
    //////////////////////////////////////////////////////////
@@ -56,9 +80,6 @@ public class Algorithms {
       // TODO: Student, implement this.
    }
 
-
-
-
    ///////////////////////////////////////////
    // Binary search bw indices
    ///////////////////////////////////////////
@@ -75,15 +96,15 @@ public class Algorithms {
       return -1;
    }
 
-   public static <E extends Comparable<E>> void fastSort(E [] array) {
+   public static <E extends Comparable<E>> void fastSort(E[] array) {
       // TODO: Student, implement this.
    }
 
-   public static <E> void fastSort(E [] array, Comparator<E> comparator) {
+   public static <E> void fastSort(E[] array, Comparator<E> comparator) {
       // TODO: Student, implement this.
    }
 
-   public static <E> void fastSort(E [] array, int fromIndex, int toIndex, Comparator<E> comparator) {
+   public static <E> void fastSort(E[] array, int fromIndex, int toIndex, Comparator<E> comparator) {
       // TODO: Student, implement this.
    }
 
