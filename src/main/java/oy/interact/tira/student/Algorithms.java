@@ -14,27 +14,23 @@ public class Algorithms {
 
    public static <T extends Comparable<T>> void insertionSort(T[] array) {
       /*
-       * TODO: lajittelee koko taulukon luonnolliseen järjestykseen. Voit olettaa
-       * ettei taulukossa ole null:eja.
+       * Tämä insertion sort algorytmi toimii seuraavanlaisesti.
+       * Olen ikäänkuin jakanut tarkasteltavasta alkiosta katsottuna sen oikean puolen
+       * järjestättömiiin alkioihin ja vasemman järjestettyihin.
+       * algormytmi laajenaa ja tarkastelee aina vasemmanpuoleista järjesteltyjä
+       * alkioiden tilannetta lisäämällä aina sinne yhden alkion.
        */
 
-      /*
-       * Aloitetaan käymällä taulukon alkioita läpi. Otetaan ensiksi ensimmäinen alkio
-       * jota verrataan seuraavaan alkioon.
-       */
-      for (int i = 1; i < array.length; i++) {
-         T tarkasteltava_alkio = array[i];
-         // Edeltävä alkio.
-         int j = i - 1;
-         // Lähdetään vertailemaan tarkasteltavaa alkiota muihin alkioihin.
-         while (j >= 0 && array[j].compareTo(tarkasteltava_alkio) > 0) {
-            // Siirretään tarkasteltava alkio yhden alkion verran oikealle.
-            array[j + 1] = array[j];
-            // Vähennetään
-            j--;
+      for (int tarkasteltava_alkio = 1; tarkasteltava_alkio < array.length; tarkasteltava_alkio++) {
+         T alkio = array[tarkasteltava_alkio];
+         int edellinen_alkio = tarkasteltava_alkio - 1;
+         // Aloitetaan järjestäminen vasemmalle puolelle
+         while (edellinen_alkio >= 0 && array[edellinen_alkio].compareTo(alkio) > 0) {
+            array[edellinen_alkio + 1] = array[edellinen_alkio];
+            edellinen_alkio--;
          }
-         // Asetetaan alkio oikeaan paikkaan
-         array[i + 1] = tarkasteltava_alkio;
+         // Asetetaan
+         array[edellinen_alkio + 1] = alkio;
       }
    }
 
@@ -43,9 +39,22 @@ public class Algorithms {
    ///////////////////////////////////////////
 
    public static <T extends Comparable<T>> void insertionSort(T[] array, int fromIndex, int toIndex) {
-      // TODO: lajittelee taulukon luonnolliseen järjestykseen annettujen indeksien
-      // välillä. Voit olettaa ettei taulukossa ole annetulla indeksivälillä null:eja.
-
+      /*
+       * Tämä insertion sort algorytmi toimii samalla periaattella kuin ylhäällä
+       * näkyvä insertion sort algorytmi. Erona on että funktioon asetetut fromIndex
+       * ja toIndex parametrien väli sortataan eikä koko taulukkoa.
+       */
+      for (int tarkasteltava_alkio = fromIndex + 1; tarkasteltava_alkio < toIndex; tarkasteltava_alkio++) {
+         T alkio = array[tarkasteltava_alkio];
+         int edellinen_alkio = tarkasteltava_alkio - 1;
+         // Aloitetaan järjestäminen vasemmalle puolelle
+         while (edellinen_alkio >= fromIndex && array[edellinen_alkio].compareTo(alkio) > 0) {
+            array[edellinen_alkio + 1] = array[edellinen_alkio];
+            edellinen_alkio--;
+         }
+         // Asetetaan
+         array[edellinen_alkio + 1] = alkio;
+      }
    }
 
    //////////////////////////////////////////////////////////
@@ -69,7 +78,13 @@ public class Algorithms {
    ///////////////////////////////////////////
 
    public static <T> void reverse(T[] array) {
-      // TODO: Student, implement this.
+      // Tämä reverse funktio kääntää koko taulunkon.
+      int taulukonPituus = array.length;
+      for (int alkio = 0; alkio < taulukonPituus / 2; alkio++) {
+         T tallennettuAlkio = array[alkio];
+         array[alkio] = array[taulukonPituus - alkio - 1];
+         array[taulukonPituus - alkio - 1] = tallennettuAlkio;
+      }
    }
 
    ///////////////////////////////////////////
@@ -77,7 +92,13 @@ public class Algorithms {
    ///////////////////////////////////////////
 
    public static <T> void reverse(T[] array, int fromIndex, int toIndex) {
-      // TODO: Student, implement this.
+      // TODO: Kääntää koko taulukon ympäri.
+      int taulukonPituus = array.length - toIndex + 1;
+      for (int alkio = fromIndex; alkio < taulukonPituus / 2; alkio++) {
+         T tallennettuAlkio = array[alkio];
+         array[alkio] = array[taulukonPituus - alkio - 1];
+         array[taulukonPituus - alkio - 1] = tallennettuAlkio;
+      }
    }
 
    ///////////////////////////////////////////
