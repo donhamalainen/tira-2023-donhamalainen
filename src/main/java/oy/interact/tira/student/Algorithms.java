@@ -8,19 +8,17 @@ public class Algorithms {
       // nada
    }
 
-   ///////////////////////////////////////////
-   // Insertion Sort for the whole array
-   ///////////////////////////////////////////
+   // SWAP METHOD; joka vaihtaa kahden taulukon arvon paikkaa.
+   public static <T> void swap(T[] array, int first, int second) {
+      T temp = array[first];
+      array[first] = array[second];
+      array[second] = temp;
+   }
 
+   /*
+    * Insertion Sort; algorytmi, joka järjestää taulukon pienimmästä suurimapaan.
+    */
    public static <T extends Comparable<T>> void insertionSort(T[] array) {
-      /*
-       * Tämä insertion sort algorytmi toimii seuraavanlaisesti.
-       * Olen ikäänkuin jakanut tarkasteltavasta alkiosta katsottuna sen oikean puolen
-       * järjestättömiiin alkioihin ja vasemman järjestettyihin.
-       * algormytmi laajenaa ja tarkastelee aina vasemmanpuoleista järjesteltyjä
-       * alkioiden tilannetta lisäämällä aina sinne yhden alkion.
-       */
-
       for (int tarkasteltava_alkio = 1; tarkasteltava_alkio < array.length; tarkasteltava_alkio++) {
          T alkio = array[tarkasteltava_alkio];
          int edellinen_alkio = tarkasteltava_alkio - 1;
@@ -34,16 +32,11 @@ public class Algorithms {
       }
    }
 
-   ///////////////////////////////////////////
-   // Insertion Sort for a slice of the array
-   ///////////////////////////////////////////
-
+   /*
+    * Insertion Sort; algorytmi, joka järjestää taulukon fromIndex kohdasta
+    * loppukohtaan toIndex pienimmästä suurimpaan
+    */
    public static <T extends Comparable<T>> void insertionSort(T[] array, int fromIndex, int toIndex) {
-      /*
-       * Tämä insertion sort algorytmi toimii samalla periaattella kuin ylhäällä
-       * näkyvä insertion sort algorytmi. Erona on että funktioon asetetut fromIndex
-       * ja toIndex parametrien väli sortataan eikä koko taulukkoa.
-       */
       for (int tarkasteltava_alkio = fromIndex + 1; tarkasteltava_alkio < toIndex; tarkasteltava_alkio++) {
          T alkio = array[tarkasteltava_alkio];
          int edellinen_alkio = tarkasteltava_alkio - 1;
@@ -63,6 +56,7 @@ public class Algorithms {
 
    public static <T> void insertionSort(T[] array, Comparator<T> comparator) {
       // TODO: Student, implement this.
+      // new insertionSort(T [] array, 0, array.length, comparator);
    }
 
    ////////////////////////////////////////////////////////////
@@ -73,10 +67,10 @@ public class Algorithms {
       // TODO: Student, implement this.
    }
 
-   ///////////////////////////////////////////
-   // Reversing an array
-   ///////////////////////////////////////////
-
+   /*
+    * Reversing Insertion Sort; algorytmi järjestää taulukon suurimmasta
+    * pienempään.
+    */
    public static <T> void reverse(T[] array) {
       // Tämä reverse funktio kääntää koko taulunkon.
       int taulukonPituus = array.length;
@@ -87,10 +81,10 @@ public class Algorithms {
       }
    }
 
-   ///////////////////////////////////////////
-   // Reversing a slice of an array
-   ///////////////////////////////////////////
-
+   /*
+    * Insertion Sort; algorytmi, joka järjestää taulukon fromIndex kohdasta
+    * loppukohtaan toIndex suurimpmasta pienimpään.
+    */
    public static <T> void reverse(T[] array, int fromIndex, int toIndex) {
       // TODO: Kääntää koko taulukon ympäri.
       int taulukonPituus = array.length - toIndex + 1;
