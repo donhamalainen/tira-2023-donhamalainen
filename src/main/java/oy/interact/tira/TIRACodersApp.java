@@ -331,7 +331,7 @@ public class TIRACodersApp implements ActionListener {
                 Pair<String, Integer>[] topWords = wordCounter.topCodeWords(100);
                 if (topWords != null) {
                     new TopWordsFrame(selectedFile, topWords);
-                    for (Pair<String,Integer> item : topWords) {
+                    for (Pair<String, Integer> item : topWords) {
                         System.out.format("%10s\t%6d%n", item.getKey(), item.getValue());
                     }
                 }

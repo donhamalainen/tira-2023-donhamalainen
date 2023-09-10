@@ -38,6 +38,12 @@ Alaluvut jokaisen tehtävän raportille löydät alta.
 
 ## 01-TASK
 
+'
+Kävin ensimmäisessä tehtävässä läpi insertion sort algorytmiä. Algorytmin rakentaminen ei ollut omasta puolestani haastavaa eikä edellyttänyt paljoakaan aikaa sen kokonaisuuden ymmärtämiseen. Haastavin asia oli sisäistää tai ymmärtää koko projektin toiminnallisuus. Aikakompleksisuus ei ole vielä ollut osana kurssin tehtäviä mutta jatkossa otan sen myös paremmin huomioon. Java koodi itsessään on minulle yksinkertaista, mutta en ole vielä masteroinut sitä tarpeeksi. Kuitenkin sain tehtävän 01 tehtyä onnistuneesti.
+
+Javan hakeminen on kesän jälkeen vähän hakemista mutta kyllä se tästä.
+'
+
 ## 02-TASK
 
 ## 03-TASK
