@@ -19,16 +19,15 @@ public class Algorithms {
     * Insertion Sort; algorytmi, joka järjestää taulukon pienimmästä suurimapaan.
     */
    public static <T extends Comparable<T>> void insertionSort(T[] array) {
+
       for (int tarkasteltava_alkio = 1; tarkasteltava_alkio < array.length; tarkasteltava_alkio++) {
          T alkio = array[tarkasteltava_alkio];
          int edellinen_alkio = tarkasteltava_alkio - 1;
-         // Aloitetaan järjestäminen vasemmalle puolelle
+
          while (edellinen_alkio >= 0 && array[edellinen_alkio].compareTo(alkio) > 0) {
-            array[edellinen_alkio + 1] = array[edellinen_alkio];
+            swap(array, edellinen_alkio, edellinen_alkio + 1);
             edellinen_alkio--;
          }
-         // Asetetaan
-         array[edellinen_alkio + 1] = alkio;
       }
    }
 
@@ -42,7 +41,7 @@ public class Algorithms {
          int edellinen_alkio = tarkasteltava_alkio - 1;
          // Aloitetaan järjestäminen vasemmalle puolelle
          while (edellinen_alkio >= fromIndex && array[edellinen_alkio].compareTo(alkio) > 0) {
-            array[edellinen_alkio + 1] = array[edellinen_alkio];
+            swap(array, edellinen_alkio, edellinen_alkio + 1);
             edellinen_alkio--;
          }
          // Asetetaan
@@ -76,7 +75,7 @@ public class Algorithms {
       int taulukonPituus = array.length;
       for (int alkio = 0; alkio < taulukonPituus / 2; alkio++) {
          T tallennettuAlkio = array[alkio];
-         array[alkio] = array[taulukonPituus - alkio - 1];
+         swap(array, alkio, taulukonPituus - alkio - 1);
          array[taulukonPituus - alkio - 1] = tallennettuAlkio;
       }
    }
@@ -90,7 +89,7 @@ public class Algorithms {
       int taulukonPituus = array.length - toIndex + 1;
       for (int alkio = fromIndex; alkio < taulukonPituus / 2; alkio++) {
          T tallennettuAlkio = array[alkio];
-         array[alkio] = array[taulukonPituus - alkio - 1];
+         swap(array, alkio, taulukonPituus - alkio - 1);
          array[taulukonPituus - alkio - 1] = tallennettuAlkio;
       }
    }
