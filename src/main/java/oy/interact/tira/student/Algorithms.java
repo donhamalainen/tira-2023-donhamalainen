@@ -10,11 +10,16 @@ public class Algorithms {
 
    // SWAP METHOD; joka vaihtaa kahden taulukon arvon paikkaa.
    public static <T> void swap(T[] array, int first, int second) {
-      T temp = array[first];
+      final T temp = array[first];
       array[first] = array[second];
       array[second] = temp;
    }
 
+   /*
+    * insertionSort(T [] array) kutsumalla metodia insertionSort(T [] array, 0,
+    * array.length). Sama pätee myös järjestyksen kääntämisalgoritmeihin alla.
+    *
+    */
    /*
     * Insertion Sort; algorytmi, joka järjestää taulukon pienimmästä suurimapaan.
     */
@@ -44,18 +49,28 @@ public class Algorithms {
             swap(array, edellinen_alkio, edellinen_alkio + 1);
             edellinen_alkio--;
          }
-         // Asetetaan
-         array[edellinen_alkio + 1] = alkio;
       }
    }
+
+   /*
+    * 
+    * voit toteuttaa metodin insertionSort(T [] array, Comparator<T> comparator)
+    * kutsumalla metodia insertionSort(T [] array, 0, array.length, comparator).
+    */
 
    //////////////////////////////////////////////////////////
    // Insertion Sort for the whole array using a Comparator
    //////////////////////////////////////////////////////////
 
    public static <T> void insertionSort(T[] array, Comparator<T> comparator) {
-      // TODO: Student, implement this.
-      // new insertionSort(T [] array, 0, array.length, comparator);
+      for (int tarkasteltava_alkio = 1; tarkasteltava_alkio < array.length; tarkasteltava_alkio++) {
+         T alkio = array[tarkasteltava_alkio];
+         int edellinen_alkio = tarkasteltava_alkio - 1;
+         while (edellinen_alkio >= 0 && comparator.compare(array[edellinen_alkio], alkio) > 0) {
+            swap(array, edellinen_alkio, edellinen_alkio + 1);
+            edellinen_alkio--;
+         }
+      }
    }
 
    ////////////////////////////////////////////////////////////
@@ -63,7 +78,14 @@ public class Algorithms {
    ////////////////////////////////////////////////////////////
 
    public static <T> void insertionSort(T[] array, int fromIndex, int toIndex, Comparator<T> comparator) {
-      // TODO: Student, implement this.
+      for (int tarkasteltava_alkio = fromIndex; tarkasteltava_alkio < toIndex; tarkasteltava_alkio++) {
+         T alkio = array[tarkasteltava_alkio];
+         int edellinen_alkio = tarkasteltava_alkio - 1;
+         while (edellinen_alkio >= 0 && comparator.compare(array[edellinen_alkio], alkio) > 0) {
+            swap(array, edellinen_alkio, edellinen_alkio + 1);
+            edellinen_alkio--;
+         }
+      }
    }
 
    /*

@@ -3,10 +3,10 @@ package oy.interact.tira.model;
 import java.util.Comparator;
 
 public enum CoderSortOrder {
-	FULLNAME_ASCENDING ("Full name (ascending)"),
-	FULLNAME_DESCENDING ("Full name (descending)"),
-	CODER_NAME_ASCENDING ("Coder name (ascending)"),
-	CODER_NAME_DESCENDING ("Coder name (descending)");
+	FULLNAME_ASCENDING("Full name (ascending)"),
+	FULLNAME_DESCENDING("Full name (descending)"),
+	CODER_NAME_ASCENDING("Coder name (ascending)"),
+	CODER_NAME_DESCENDING("Coder name (descending)");
 
 	private String name;
 
@@ -34,20 +34,18 @@ public enum CoderSortOrder {
 	}
 
 	public boolean isReversed(CoderSortOrder another) {
-		return ( 
-			(this == FULLNAME_ASCENDING && another == FULLNAME_DESCENDING) || 
-			(this == FULLNAME_DESCENDING && another == FULLNAME_ASCENDING) || 
-			(this == CODER_NAME_ASCENDING && another == CODER_NAME_DESCENDING) || 
-			(this == CODER_NAME_DESCENDING && another == CODER_NAME_ASCENDING)
-		);
+		return ((this == FULLNAME_ASCENDING && another == FULLNAME_DESCENDING) ||
+				(this == FULLNAME_DESCENDING && another == FULLNAME_ASCENDING) ||
+				(this == CODER_NAME_ASCENDING && another == CODER_NAME_DESCENDING) ||
+				(this == CODER_NAME_DESCENDING && another == CODER_NAME_ASCENDING));
 	}
 
-	public static final String [] getNames() {
-		return new String [] {
-			FULLNAME_ASCENDING.getName(),
-			FULLNAME_DESCENDING.getName(),
-			CODER_NAME_ASCENDING.getName(),
-			CODER_NAME_DESCENDING.getName()
+	public static final String[] getNames() {
+		return new String[] {
+				FULLNAME_ASCENDING.getName(),
+				FULLNAME_DESCENDING.getName(),
+				CODER_NAME_ASCENDING.getName(),
+				CODER_NAME_DESCENDING.getName()
 		};
 	}
 
