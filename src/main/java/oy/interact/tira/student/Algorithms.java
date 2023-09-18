@@ -24,11 +24,9 @@ public class Algorithms {
     * Insertion Sort; algorytmi, joka järjestää taulukon pienimmästä suurimapaan.
     */
    public static <T extends Comparable<T>> void insertionSort(T[] array) {
-
       for (int tarkasteltava_alkio = 1; tarkasteltava_alkio < array.length; tarkasteltava_alkio++) {
          T alkio = array[tarkasteltava_alkio];
          int edellinen_alkio = tarkasteltava_alkio - 1;
-
          while (edellinen_alkio >= 0 && array[edellinen_alkio].compareTo(alkio) > 0) {
             swap(array, edellinen_alkio, edellinen_alkio + 1);
             edellinen_alkio--;
@@ -63,10 +61,10 @@ public class Algorithms {
    //////////////////////////////////////////////////////////
 
    public static <T> void insertionSort(T[] array, Comparator<T> comparator) {
-      for (int tarkasteltava_alkio = 1; tarkasteltava_alkio < array.length; tarkasteltava_alkio++) {
+      for (int tarkasteltava_alkio = 1; tarkasteltava_alkio < array.length - 1; tarkasteltava_alkio++) {
          T alkio = array[tarkasteltava_alkio];
          int edellinen_alkio = tarkasteltava_alkio - 1;
-         while (edellinen_alkio >= 0 && comparator.compare(array[edellinen_alkio], alkio) > 0) {
+         while (edellinen_alkio >= 0 && alkio != null && comparator.compare(array[edellinen_alkio], alkio) > 0) {
             swap(array, edellinen_alkio, edellinen_alkio + 1);
             edellinen_alkio--;
          }
@@ -81,7 +79,7 @@ public class Algorithms {
       for (int tarkasteltava_alkio = fromIndex; tarkasteltava_alkio < toIndex; tarkasteltava_alkio++) {
          T alkio = array[tarkasteltava_alkio];
          int edellinen_alkio = tarkasteltava_alkio - 1;
-         while (edellinen_alkio >= 0 && comparator.compare(array[edellinen_alkio], alkio) > 0) {
+         while (edellinen_alkio >= 0 && alkio != null && comparator.compare(array[edellinen_alkio], alkio) > 0) {
             swap(array, edellinen_alkio, edellinen_alkio + 1);
             edellinen_alkio--;
          }
