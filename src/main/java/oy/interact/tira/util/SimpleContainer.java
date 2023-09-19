@@ -192,6 +192,8 @@ public class SimpleContainer<E extends Comparable<E>> implements TIRAContainer<E
 	@Override
 	public void sort() {
 		// TODO: Student: finish this as part of task 02.
+		Algorithms.insertionSort(this.array);
+		sorted = true;
 	}
 
 	// TEACHERS: TODO: Remove the call to Algorithms sort method.
