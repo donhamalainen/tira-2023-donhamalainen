@@ -59,12 +59,14 @@ public enum CoderSortOrder {
 		switch (this) {
 			case FULLNAME_ASCENDING:
 				return new CoderFullNameComparator();
-			case FULLNAME_DESCENDING:
-				return new CoderFullNameComparator().reversed();
 			case CODER_NAME_ASCENDING:
 				return new CoderNameComparator();
+
+			case FULLNAME_DESCENDING:
+				return new CoderFullNameComparator().reversed();
 			case CODER_NAME_DESCENDING:
 				return new CoderNameComparator().reversed();
+
 			default:
 				return null;
 		}
