@@ -15,29 +15,11 @@ public class Algorithms {
       array[second] = temp;
    }
 
-   /*
-    * insertionSort(T [] array) kutsumalla metodia insertionSort(T [] array, 0,
-    * array.length). Sama pätee myös järjestyksen kääntämisalgoritmeihin alla.
-    *
-    */
-   /*
-    * Insertion Sort; algorytmi, joka järjestää taulukon pienimmästä suurimapaan.
-    */
+   // INSERTIONSORT
    public static <T extends Comparable<T>> void insertionSort(T[] array) {
-      for (int tarkasteltava_alkio = 1; tarkasteltava_alkio < array.length; tarkasteltava_alkio++) {
-         T alkio = array[tarkasteltava_alkio];
-         int edellinen_alkio = tarkasteltava_alkio - 1;
-         while (edellinen_alkio >= 0 && array[edellinen_alkio].compareTo(alkio) > 0) {
-            swap(array, edellinen_alkio, edellinen_alkio + 1);
-            edellinen_alkio--;
-         }
-      }
+      insertionSort(array, 0, array.length);
    }
 
-   /*
-    * Insertion Sort; algorytmi, joka järjestää taulukon fromIndex kohdasta
-    * loppukohtaan toIndex pienimmästä suurimpaan
-    */
    public static <T extends Comparable<T>> void insertionSort(T[] array, int fromIndex, int toIndex) {
       for (int tarkasteltava_alkio = fromIndex + 1; tarkasteltava_alkio < toIndex; tarkasteltava_alkio++) {
          T alkio = array[tarkasteltava_alkio];
@@ -50,30 +32,11 @@ public class Algorithms {
       }
    }
 
-   /*
-    * 
-    * voit toteuttaa metodin insertionSort(T [] array, Comparator<T> comparator)
-    * kutsumalla metodia insertionSort(T [] array, 0, array.length, comparator).
-    */
-
-   //////////////////////////////////////////////////////////
-   // Insertion Sort for the whole array using a Comparator
-   //////////////////////////////////////////////////////////
-
+   // INSERTIONSORT END
+   // COMPARATOR INSERTIONSORT
    public static <T> void insertionSort(T[] array, Comparator<T> comparator) {
-      for (int tarkasteltava_alkio = 1; tarkasteltava_alkio < array.length - 1; tarkasteltava_alkio++) {
-         T alkio = array[tarkasteltava_alkio];
-         int edellinen_alkio = tarkasteltava_alkio - 1;
-         while (edellinen_alkio >= 0 && alkio != null && comparator.compare(array[edellinen_alkio], alkio) > 0) {
-            swap(array, edellinen_alkio, edellinen_alkio + 1);
-            edellinen_alkio--;
-         }
-      }
+      insertionSort(array, 0, array.length, comparator);
    }
-
-   ////////////////////////////////////////////////////////////
-   // Insertion Sort for slice of the array using a Comparator
-   ////////////////////////////////////////////////////////////
 
    public static <T> void insertionSort(T[] array, int fromIndex, int toIndex, Comparator<T> comparator) {
       for (int tarkasteltava_alkio = fromIndex; tarkasteltava_alkio < toIndex; tarkasteltava_alkio++) {
@@ -86,33 +49,18 @@ public class Algorithms {
       }
    }
 
-   /*
-    * Reversing Insertion Sort; algorytmi järjestää taulukon suurimmasta
-    * pienempään.
-    */
+   // COMPARATOR INSERTIONSORT END
+   // REVERSE
    public static <T> void reverse(T[] array) {
-      // Tämä reverse funktio kääntää koko taulunkon.
-      int taulukonPituus = array.length;
-      for (int alkio = 0; alkio < taulukonPituus / 2; alkio++) {
-         T tallennettuAlkio = array[alkio];
-         swap(array, alkio, taulukonPituus - alkio - 1);
-         array[taulukonPituus - alkio - 1] = tallennettuAlkio;
-      }
+      reverse(array, 0, array.length);
    }
 
-   /*
-    * Insertion Sort; algorytmi, joka järjestää taulukon fromIndex kohdasta
-    * loppukohtaan toIndex suurimpmasta pienimpään.
-    */
    public static <T> void reverse(T[] array, int fromIndex, int toIndex) {
-      // TODO: Kääntää koko taulukon ympäri.
-      int taulukonPituus = array.length - toIndex + 1;
-      for (int alkio = fromIndex; alkio < taulukonPituus / 2; alkio++) {
-         T tallennettuAlkio = array[alkio];
-         swap(array, alkio, taulukonPituus - alkio - 1);
-         array[taulukonPituus - alkio - 1] = tallennettuAlkio;
+      for (int tarkasteltava_alkio = fromIndex; tarkasteltava_alkio < toIndex / 2; tarkasteltava_alkio++) {
+         swap(array, tarkasteltava_alkio, (toIndex - 1 - tarkasteltava_alkio));
       }
    }
+   // REVERSE END
 
    ///////////////////////////////////////////
    // Binary search bw indices
