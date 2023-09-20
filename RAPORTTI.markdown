@@ -51,6 +51,10 @@ Tässä tapauksessa Reverse metodi on suositeltavampaa koska sen aikakompleksisu
 
 ## 02-TASK
 
+'
+![Chart kuva]()
+'
+
 ## 03-TASK
 
 ## 04-TASK

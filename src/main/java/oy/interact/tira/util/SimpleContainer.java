@@ -61,12 +61,23 @@ public class SimpleContainer<E extends Comparable<E>> implements TIRAContainer<E
 	@Override
 	public E get(E element) throws IllegalArgumentException {
 		// TODO: Student: finish this as part of task 02.
+		for (int silmukka = 0; silmukka <= count - 1; silmukka++) {
+			if (array[silmukka].equals(element)) {
+				return element;
+			}
+		}
 		throw new NotYetImplementedException("Task 02-TASK on linear search not yet implemented");
+
 	}
 
 	@Override
 	public int indexOf(E element, Comparator<E> usingComparator) {
 		// TODO: Student: finish this as part of task 02.
+		for (int silmukka = 0; silmukka <= count - 1; silmukka++) {
+			if (array[silmukka].compareTo(element) == 0) {
+				return silmukka;
+			}
+		}
 		throw new NotYetImplementedException("Task 02-TASK on linear search not yet implemented");
 	}
 
@@ -114,13 +125,23 @@ public class SimpleContainer<E extends Comparable<E>> implements TIRAContainer<E
 	@Override
 	public int findIndex(Predicate<E> searcher) {
 		// TODO: Student: finish this as part of task 02.
-		throw new NotYetImplementedException("Task 02-TASK on linear search not yet implemented");
+		for (int silmukka = 0; silmukka <= count - 1; silmukka++) {
+			if (searcher.test(array[silmukka])) {
+				return silmukka;
+			}
+		}
+		return -1;
 	}
 
 	@Override
 	public E find(Predicate<E> searcher) {
 		// TODO: Student: finish this as part of task 02.
-		throw new NotYetImplementedException("Task 02-TASK on linear search not yet implemented");
+		for (int silmukka = 0; silmukka <= count - 1; silmukka++) {
+			if (searcher.test(array[silmukka])) {
+				return array[silmukka];
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -185,7 +206,7 @@ public class SimpleContainer<E extends Comparable<E>> implements TIRAContainer<E
 	public void reverse() {
 		// TODO: Student: finish this as part of task 02.
 		Algorithms.reverse(this.array, 0, count);
-		sorted = true;
+		this.sorted = true;
 	}
 
 	// TEACHERS: TODO: Remove the call to Algorithms sort method.
@@ -193,7 +214,7 @@ public class SimpleContainer<E extends Comparable<E>> implements TIRAContainer<E
 	public void sort() {
 		// TODO: Student: finish this as part of task 02.
 		Algorithms.insertionSort(this.array, 0, count);
-		sorted = true;
+		this.sorted = true;
 	}
 
 	// TEACHERS: TODO: Remove the call to Algorithms sort method.
@@ -201,6 +222,6 @@ public class SimpleContainer<E extends Comparable<E>> implements TIRAContainer<E
 	public void sort(Comparator<E> usingComparator) {
 		// TODO: Student: finish this as part of task 02.
 		Algorithms.insertionSort(this.array, 0, count, usingComparator);
-		sorted = true;
+		this.sorted = true;
 	}
 }
