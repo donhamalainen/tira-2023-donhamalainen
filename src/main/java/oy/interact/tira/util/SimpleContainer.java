@@ -61,9 +61,9 @@ public class SimpleContainer<E extends Comparable<E>> implements TIRAContainer<E
 	@Override
 	public E get(E element) throws IllegalArgumentException {
 		// TODO: Student: finish this as part of task 02.
-		for (int silmukka = 0; silmukka <= count - 1; silmukka++) {
+		for (int silmukka = 0; silmukka < count; silmukka++) {
 			if (array[silmukka].equals(element)) {
-				return element;
+				return array[silmukka];
 			}
 		}
 		throw new NotYetImplementedException("Task 02-TASK on linear search not yet implemented");
@@ -73,7 +73,7 @@ public class SimpleContainer<E extends Comparable<E>> implements TIRAContainer<E
 	@Override
 	public int indexOf(E element, Comparator<E> usingComparator) {
 		// TODO: Student: finish this as part of task 02.
-		for (int silmukka = 0; silmukka <= count - 1; silmukka++) {
+		for (int silmukka = 0; silmukka < count; silmukka++) {
 			if (array[silmukka].compareTo(element) == 0) {
 				return silmukka;
 			}
@@ -125,7 +125,7 @@ public class SimpleContainer<E extends Comparable<E>> implements TIRAContainer<E
 	@Override
 	public int findIndex(Predicate<E> searcher) {
 		// TODO: Student: finish this as part of task 02.
-		for (int silmukka = 0; silmukka <= count - 1; silmukka++) {
+		for (int silmukka = 0; silmukka < count; silmukka++) {
 			if (searcher.test(array[silmukka])) {
 				return silmukka;
 			}
