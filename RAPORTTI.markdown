@@ -38,7 +38,6 @@ Alaluvut jokaisen tehtävän raportille löydät alta.
 
 ## 01-TASK
 
-'
 Kävin ensimmäisessä tehtävässä läpi insertion sort algorytmiä. Algorytmin rakentaminen ei ollut omasta puolestani haastavaa eikä edellyttänyt paljoakaan aikaa sen kokonaisuuden ymmärtämiseen. Haastavin asia oli sisäistää tai ymmärtää koko projektin toiminnallisuus. 
 
 - Insetion Sort algorytmi on yleensä O(n^2) eli neliöllinen (quadratic / kvadraattinen), mutta voi myös olla lineaarinen O(n) riippuen JSON tai datan esitysjärjestyksestä.
@@ -47,17 +46,20 @@ Kävin ensimmäisessä tehtävässä läpi insertion sort algorytmiä. Algorytmi
 Raportin kysmyksessä oli "Jos taulukko on jo valmiiksi järjestyksessä nousevaan järjestykseen, ja se aiotaan lajitella laskevaan järjestykseen, kannattaako taulukko lajitella vai kääntää sen järjestys? Miksi, perustele?"
 
 Tässä tapauksessa Reverse metodi on suositeltavampaa koska sen aikakompleksisuus on lineaari O(n) kun taas insertion sort on O(n) tai O(n^2) riippuen taulukon koosta.
-'
 
 ## 02-TASK
 
-'
-![Fill & Search Chart](image.png)
+### Graaffi analyysi
+Tehtävässä 2, askeleessa 3 tehdyssä tehtävässä sain tarkasteltavaksi arvoja, jotka ovat riippuvaisia algorytmistä insertionSort ja myös oman koneeni suoritustehosta. X-akselilla on datan kasvu (n). Huomamme että "Fill" tekee jonkinlaisen pudotuksen alussa, mutta on muutoin lineaarinen kun "Search" on taas lähes eksonentiaalinen. Kuvaajassa nähdään "Fill" ja "Search" risteyskohta, sekä pieniä "droppeja" graafissa. Uskon että nämä "dropit" graaffissa johtuvat tietorakenteen järjestyksestä jolloin hakuun voi mennä vähemmän aikaa. Risteyskohdasta en ole täysin varma.
 
-Haluan korjata että toteuttamamme "insertionSort()" - algorytmi ei ole lineaarinen, vaan kvadraattinen algorytmi. Se on riippuvainen tietorakenteen järjestyksestä ja koosta. Tämä johtuu siitä, insertion sort - algorytmi käy läpi jokaisen alkion taulukosta ja vertaa sitä kaikkiin aikaisempiin alkioihin asettaakseen sen oikeaan paikkaan. Tämän takia algorytmin aikakompleksisuus on O(n^2), missä n on taulukon pituus. Lineaarisen algorytmin toimintaperiaate on sama mutta sen aikakompleksisuus on O(n). Lineaarinen aikakompleksisuus tarkoittaa siis että jos taulukon pituus kaksinkertaistuu niin myös suoritusajan tulee kaksinkertaistua. Nämä ovat siis suoraan verrannollisia. Lineaariseen algorytmiiin ei siis vaikuta tietorakenteen alkioiden järjestys.
+![Fill & Search Chart](/student_images/task2_step3_chartImage_DonH.png)
 
-Lineaarinen big-O -notaatio on O(n) ja kvadraattinen on O(n^2).
-'
+![Data](/student_images/task2_step3_dataImage_DonH.png)
+
+
+### Tehtävä raportti
+Lineaarista hakualgorytmiä kutsutaan lineaariseksi, koska se käy tietorakenteen (esim. taulukon tai listan) läpi elementti kerrallaan alusta loppuun asti tai kunnes etsittävä kohde on löydetty. Lineaarisen haun aikakompleksisuusluokka big-O -notaatiolla esiteltynä on O(n), missä n on tietorakenteen pituus (elementtien lukumäärä). Tämä tarkoittaa että algorytmin suoritusaika kasvaa suoraan verrannollisesti tietorakenteen pituuteen (n). Luomamme insertionSort algorytmi ei ole lineaarinen vaan kvadraattinen O(n^2) riippuen tietorakenteen järjestyksestä ja pituudesta. SimpleContaineriin tehdyt muutokset kuten E get() jossa on yksinkertainen for-silmukka on lineaarinen.
+
 
 ## 03-TASK
 

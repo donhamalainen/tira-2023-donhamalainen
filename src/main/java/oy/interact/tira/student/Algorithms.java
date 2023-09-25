@@ -67,6 +67,7 @@ public class Algorithms {
    ///////////////////////////////////////////
 
    public static <T extends Comparable<T>> int binarySearch(T aValue, T[] fromArray, int fromIndex, int toIndex) {
+
       return -1;
    }
 
