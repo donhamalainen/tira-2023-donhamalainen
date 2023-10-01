@@ -67,7 +67,45 @@ public class Algorithms {
    ///////////////////////////////////////////
 
    public static <T extends Comparable<T>> int binarySearch(T aValue, T[] fromArray, int fromIndex, int toIndex) {
+      int alinPiste = fromIndex;
+      int korkeinPiste = toIndex;
 
+      // Iteratiivinen
+      /*
+       * int alinPiste = fromIndex;
+       * int korkeinPiste = toIndex - 1;
+       * while (alinPiste <= korkeinPiste) {
+       * int keskiPiste = alinPiste + (korkeinPiste - alinPiste) / 2;
+       * if (fromArray[keskiPiste].compareTo(aValue) == 0) {
+       * return keskiPiste;
+       * } else if (fromArray[keskiPiste].compareTo(aValue) < 0) {
+       * alinPiste = keskiPiste + 1;
+       * } else {
+       * korkeinPiste = keskiPiste - 1;
+       * }
+       * }
+       */
+
+      // Rekurssiivinen
+      if (alinPiste <= korkeinPiste) {
+         int keskiPiste = alinPiste + (korkeinPiste - alinPiste) / 2;
+         // Jos keskipisteen arvo on yhtäsuuri kuin avainarvo. Palautetaan keskipiste
+         if (fromArray[keskiPiste].compareTo(aValue) == 0) {
+            return keskiPiste;
+            /*
+             * Jos keskipisteen arvo on pienempi kuin avainarvo. Kutsutaan funktiota
+             * rekursiivisesti vasemmanpuoleisesti.
+             */
+         } else if (fromArray[keskiPiste].compareTo(aValue) < 0) {
+            return binarySearch(aValue, fromArray, keskiPiste + 1, toIndex);
+            /*
+             * Jos keskipisteen arvo on suurempaa kuin avainarvo. Kutsutaan funktiota
+             * rekursiivisesti oikeanpuoleisesti.
+             */
+         } else {
+            return binarySearch(aValue, fromArray, fromIndex, keskiPiste - 1);
+         }
+      }
       return -1;
    }
 
