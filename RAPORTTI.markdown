@@ -63,6 +63,12 @@ Lineaarista hakualgorytmiä kutsutaan lineaariseksi, koska se käy tietorakentee
 
 ## 03-TASK
 
+Kirjaa raporttiisi RAPORTTI.markdown mitä opit tehtävän tekemisestä, mikä oli vaikeaa, mikä helppoa, jne.
+Kirjoita myös raporttiisi edellisen analyysikohdan listaamat asiat. Perustele johtopäätöksesi ja ole tarkka analyyseissäsi.
+Viittaa suoritusaikataulukoihin ja laatimiisi käyriin (jotka ovat mukana raportissasi), sekä koodin aikakompleksisuusanalyyseihisi.
+miksi toteutettuja hakualgoritmeja kutsutaan lineaarisiksi?
+Mikä niiden aikakompleksisuusluokka on big-O -notaatiolla esiteltynä?
+
 ### Graaffi analyysi
 Tehtävässä 3. kirjoitimme binäärisin hakualgorytmin, jonka periaate on puolittaa aina haku.
 ![Fill & Search Chart](/student_images/task3_chartImage_DonH.png)
