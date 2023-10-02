@@ -73,11 +73,16 @@ public class SimpleContainer<E extends Comparable<E>> implements TIRAContainer<E
 	@Override
 	public int indexOf(E element, Comparator<E> usingComparator) {
 		// TODO: Student: finish this as part of task 02.
-		for (int silmukka = 0; silmukka < count; silmukka++) {
-			if (array[silmukka].compareTo(element) == 0) {
-				return silmukka;
+		if (isSorted()) {
+			return Algorithms.binarySearch(element, array, 0, count, usingComparator);
+		} else {
+			for (int silmukka = 0; silmukka < count; silmukka++) {
+				if (array[silmukka].compareTo(element) == 0) {
+					return silmukka;
+				}
 			}
 		}
+
 		throw new NotYetImplementedException("Task 02-TASK on linear search not yet implemented");
 	}
 

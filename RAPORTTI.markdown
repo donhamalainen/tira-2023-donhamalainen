@@ -63,6 +63,13 @@ Lineaarista hakualgorytmiä kutsutaan lineaariseksi, koska se käy tietorakentee
 
 ## 03-TASK
 
+### Graaffi analyysi
+Tehtävässä 3. kirjoitimme binäärisin hakualgorytmin, jonka periaate on puolittaa aina haku.
+![Fill & Search Chart](/student_images/task3_chartImage_DonH.png)
+
+### Tehtävä raportti
+Tehtävä oli haasteellinen binäärihaun (binary search) osalta. Sain tehtyä iteratiivisen binäärihaun onnistuneesti helposti, mutta rekurssiivinen tuotti ongelmia eikä ainakaan vielä (2.10.2023) ole vielä valmis. Ajattelin kuitenkin toteuttaa sen jossain vaiheessa. Huomasin ongelmana pino ylivuodon (stack overflow) tuottaman ongelman enkä ole vielä onnistunut korjaamaan sitä.
+
 ## 04-TASK
 
 ## 05-TASK
