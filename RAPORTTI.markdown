@@ -56,28 +56,24 @@ Tehtävässä 2, askeleessa 3 tehdyssä tehtävässä sain tarkasteltavaksi arvo
 
 ![Data](/student_images/task2_step3_dataImage_DonH.png)
 
-
 ### Tehtävä raportti
 Lineaarista hakualgorytmiä kutsutaan lineaariseksi, koska se käy tietorakenteen (esim. taulukon tai listan) läpi elementti kerrallaan alusta loppuun asti tai kunnes etsittävä kohde on löydetty. Lineaarisen haun aikakompleksisuusluokka big-O -notaatiolla esiteltynä on O(n), missä n on tietorakenteen pituus (elementtien lukumäärä). Tämä tarkoittaa että algorytmin suoritusaika kasvaa suoraan verrannollisesti tietorakenteen pituuteen (n). Luomamme insertionSort algorytmi ei ole lineaarinen vaan kvadraattinen O(n^2) riippuen tietorakenteen järjestyksestä ja pituudesta. SimpleContaineriin tehdyt muutokset kuten E get() jossa on yksinkertainen for-silmukka on lineaarinen.
 
 
 ## 03-TASK
 
-Kirjaa raporttiisi RAPORTTI.markdown mitä opit tehtävän tekemisestä, mikä oli vaikeaa, mikä helppoa, jne.
-Kirjoita myös raporttiisi edellisen analyysikohdan listaamat asiat. Perustele johtopäätöksesi ja ole tarkka analyyseissäsi.
-Viittaa suoritusaikataulukoihin ja laatimiisi käyriin (jotka ovat mukana raportissasi), sekä koodin aikakompleksisuusanalyyseihisi.
-miksi toteutettuja hakualgoritmeja kutsutaan lineaarisiksi?
-Mikä niiden aikakompleksisuusluokka on big-O -notaatiolla esiteltynä?
+Tehtävän tekeminen tarjosi merkittävän mahdollisuuden oppia lisää binäärisestä hakualgorytmistä. Opin että binäärinenhaku on tehokas tapa löytää tietty elementti järjestetystä tietorakenteesta, kuten taulukosta tai listasta. Sen periaate perustuu jatkuvaan puolittuvaan hakuun, jossa keskipiste määritellään ja vertaillaan haettavaan arvoon eli avainarvoon.
 
+* Mikä oli haasteellista?
+	* Iteratiivisen binäärihaun toteutus oli omastamielestäni yksinkertainen, kiitos visuaalisen esimerkin. Kuitenkin vaikeutta tuotti
+	rekurssiivinen haku tuotti erityisiä haasteita pino ylivuodon takia. 
+
+Toteutettu hakualgorytmejä kutsutaan lineaariseksi, koska ne käyvät tietorakennetta läpi yksikerrallaan. Tämä tarkoittaa että sen aikakompleksisuus on neliöllinen O(n^2) ja suoritusaika on suoraan verrannollinen tietorakenteen kokoon. Toteuttamani binäärihakualgorytmi on aikakompleksisuudeltaan O(log n), mikä tarkoittaa että sen suoritusaika kasvaa hitaasti, kun tietorakenteen koko kasvaa. Tämä tekee siitä erityisen tehokkaan tietorakenteen. 
 ### Graaffi analyysi
-Tehtävässä 3. kirjoitin binäärisen hakualgorytmin, jonka periaate on puolittaa aina haku. Periaate toimii kolmen pisteen avulla, jotka ovat alin (low), keski/avain (mid/key), ja ylä (high). Näiden pisteiden avulla algorytmi tietää (tutkittavan) alueen. Binäärinen hakualgorytmi on O(log n), joka on huomattavasti nopeampi kuin lineaarinen algorytmi O(n). Sanotaan näin että siinä missä lineaarinen saattaa/joutuu käymään läpi koko tietorakenteen. Binäärisessä taas haun puolitusperiaatteen ansiosta käytännössä algorytmi tietää vain kolme tietorakenteen alkiopistettä. Alhaalla olevassa kuvaajassa sininen viiva (Series1) kuvastaa kohtaa Fill ja oranssi (Series2) kohtaa Search.
+
+Graaffissa olevat sininen (Series1 = Fill) ja oranssi (Series2 = Search) viiva kuvaavat kuinka binäärihakualgorytmi suoritutuu tehtävästä. Huomataan erityisen hyvin kuinka oranssi viiva tasaisena vaikka Fill kasvaa. Tästä voidaan tehdä johtopäätös kuinka tehokas binäärihakualgorytmi oikeasti on isommillakin tietorakenteilla. Se pystyy löytämään halutun elementin suuremmastakin tietorakenteesta
 
 ![Fill & Search Chart](/student_images/task3_chartImage_DonH.png)
-
-### Tehtävä raportti
-Tehtävä oli haasteellinen binäärihaun (binary search) osalta. Sain tehtyä iteratiivisen binäärihaun onnistuneesti ja helposti, mutta rekurssiivinen tuotti ongelmia eikä ainakaan vielä (2.10.2023) ole vielä valmis. Ajattelin kuitenkin toteuttaa sen jossain vaiheessa. Huomasin ongelmana pino ylivuodon (stack overflow) tuottaman ongelman enkä ole vielä onnistunut korjaamaan sitä.
-
-Tehtävässä kuitenkin toteuttamani algorytmi toimii siten että se ottaa alimman ja ylimmän pisteen, jossa alinpiste on vakiona 0 ja ylin on tietorakenteen pituus - 1. Keskipiste on taas näiden kahden pisteen erotus kaavalla (alin + (ylin - alin) / 2), eikä kaavalla ((ylin - alin) / 2). Ei näin siksi että tämä mahdollistaa pino ylivuodon (stack overflow). Jos algorytmi ei löydä haluttua numeroa niin se palauttaa -1, joka lopettaa tehtävän.
 
 ## 04-TASK
 
