@@ -70,11 +70,14 @@ miksi toteutettuja hakualgoritmeja kutsutaan lineaarisiksi?
 Mikä niiden aikakompleksisuusluokka on big-O -notaatiolla esiteltynä?
 
 ### Graaffi analyysi
-Tehtävässä 3. kirjoitimme binäärisin hakualgorytmin, jonka periaate on puolittaa aina haku.
+Tehtävässä 3. kirjoitin binäärisen hakualgorytmin, jonka periaate on puolittaa aina haku. Periaate toimii kolmen pisteen avulla, jotka ovat alin (low), keski/avain (mid/key), ja ylä (high). Näiden pisteiden avulla algorytmi tietää (tutkittavan) alueen. Binäärinen hakualgorytmi on O(log n), joka on huomattavasti nopeampi kuin lineaarinen algorytmi O(n). Sanotaan näin että siinä missä lineaarinen saattaa/joutuu käymään läpi koko tietorakenteen. Binäärisessä taas haun puolitusperiaatteen ansiosta käytännössä algorytmi tietää vain kolme tietorakenteen alkiopistettä. Alhaalla olevassa kuvaajassa sininen viiva (Series1) kuvastaa kohtaa Fill ja oranssi (Series2) kohtaa Search.
+
 ![Fill & Search Chart](/student_images/task3_chartImage_DonH.png)
 
 ### Tehtävä raportti
-Tehtävä oli haasteellinen binäärihaun (binary search) osalta. Sain tehtyä iteratiivisen binäärihaun onnistuneesti helposti, mutta rekurssiivinen tuotti ongelmia eikä ainakaan vielä (2.10.2023) ole vielä valmis. Ajattelin kuitenkin toteuttaa sen jossain vaiheessa. Huomasin ongelmana pino ylivuodon (stack overflow) tuottaman ongelman enkä ole vielä onnistunut korjaamaan sitä.
+Tehtävä oli haasteellinen binäärihaun (binary search) osalta. Sain tehtyä iteratiivisen binäärihaun onnistuneesti ja helposti, mutta rekurssiivinen tuotti ongelmia eikä ainakaan vielä (2.10.2023) ole vielä valmis. Ajattelin kuitenkin toteuttaa sen jossain vaiheessa. Huomasin ongelmana pino ylivuodon (stack overflow) tuottaman ongelman enkä ole vielä onnistunut korjaamaan sitä.
+
+Tehtävässä kuitenkin toteuttamani algorytmi toimii siten että se ottaa alimman ja ylimmän pisteen, jossa alinpiste on vakiona 0 ja ylin on tietorakenteen pituus - 1. Keskipiste on taas näiden kahden pisteen erotus kaavalla (alin + (ylin - alin) / 2), eikä kaavalla ((ylin - alin) / 2). Ei näin siksi että tämä mahdollistaa pino ylivuodon (stack overflow). Jos algorytmi ei löydä haluttua numeroa niin se palauttaa -1, joka lopettaa tehtävän.
 
 ## 04-TASK
 

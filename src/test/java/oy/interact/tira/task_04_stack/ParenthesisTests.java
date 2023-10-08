@@ -157,7 +157,7 @@ public class ParenthesisTests {
                "Error code must be ParenthesesException.PARENTHESES_IN_WRONG_ORDER");
       } catch (Exception others) {
          System.out.println("Exception thrown: " + others.getMessage());
-         fail("Must throw ParenthesisExceptions from checkParentheses when parentheses are wrong");         
+         fail("Must throw ParenthesisExceptions from checkParentheses when parentheses are wrong");
       }
    }
 
@@ -178,7 +178,7 @@ public class ParenthesisTests {
       }
    }
 
-      @Test
+   @Test
    // @Timeout(value = 10, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
    @DisplayName("JSON file with too many closing parentheses should fail the test.")
    void incorrectJSONParenthesisTest2ExceptionData() {
@@ -196,7 +196,7 @@ public class ParenthesisTests {
                "Error code must be ParenthesesException.TOO_MANY_OPENING_PARENTHESES");
       } catch (Exception others) {
          System.out.println("Exception thrown: " + others.getMessage());
-         fail("Must throw ParenthesisExceptions from checkParentheses when parentheses are wrong");         
+         fail("Must throw ParenthesisExceptions from checkParentheses when parentheses are wrong");
       }
    }
 
