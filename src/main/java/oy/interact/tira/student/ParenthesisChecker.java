@@ -67,10 +67,8 @@ public class ParenthesisChecker {
     * @throws StackAllocationException If the stack cannot be allocated or
     *                                  reallocated if necessary.
     */
-   public static int checkParentheses(StackInterface<Character> stack, String fromString) throws ParenthesesException {
-      // throw new ParenthesesException("Parenthesis didn't match.", lineNumber,
-      // columnNumber, ParenthesesException.PARENTHESES_IN_WRONG_ORDER);
 
+   public static int checkParentheses(StackInterface<Character> stack, String fromString) throws ParenthesesException {
       // Atribuutit
       int lineNumber = 1;
       int columnNumber = 1;
@@ -81,7 +79,7 @@ public class ParenthesisChecker {
       for (int merkki = 0; merkki < fromString.length(); merkki++) {
          // Otetaan merkki merkkijonosta charAt.
          char currentChar = fromString.charAt(merkki);
-
+         columnNumber++;
          // 2. if in between of quotes
          // Lainausmerkin aktivointi, jonka ollessa TRUE, niin ei huomioida sen sisällä
          // olevaa/olevia merkkejä
@@ -89,7 +87,6 @@ public class ParenthesisChecker {
             // 3. ignore this character (but count column numbers)
             columnNumber++;
             quotesToggle = !quotesToggle;
-            continue;
          }
          // Jatketaan ohitusta jos quotesToggle = true;
          if (quotesToggle) {
@@ -97,6 +94,17 @@ public class ParenthesisChecker {
             // iteraatioon, CONTINUE ohittaa silmukan jäljellä olevan koodin
             continue;
          }
+         if (currentChar == '\n') {
+            lineNumber++;
+            columnNumber = 1;
+         }
+
+         /*
+          * **************************************************
+          * ALOITETAAN parantheses PROSESSI
+          * **************************************************
+          */
+
          // 4. if character is an opening parenthesis -- one of "([{"
          if (currentChar == '[' || currentChar == '{' || currentChar == '(') {
             // 5. push it into the stack (check for failure and throw an exception if so)
@@ -114,10 +122,33 @@ public class ParenthesisChecker {
             // 6. else if character is a closing parenthesis -- one of ")]}"
          } else if (currentChar == ']' || currentChar == '}' || currentChar == ')') {
             // 6. pop the latest opening parenthesis from the stack
-            char poppedChar = stack.pop();
+            char poppedChar;
+            try {
+               poppedChar = stack.pop();
+            } catch (Exception e) {
+               throw new ParenthesesException("Stack popping failed", lineNumber, columnNumber - 1,
+                     ParenthesesException.TOO_MANY_CLOSING_PARENTHESES);
+            }
+
             // 7. if the popped item is null
+            // Koodi on saatu ChatGPT:n avulla, ja sitä on muutettu tehtävään sopivaksi.
+
+            if ((currentChar == ']' && poppedChar != '[') ||
+                  (currentChar == '}' && poppedChar != '{') ||
+                  (currentChar == ')' && poppedChar != '(')) {
+               throw new ParenthesesException("Parenthesis didn't match.", lineNumber, columnNumber - 1,
+                     ParenthesesException.PARENTHESES_IN_WRONG_ORDER);
+            }
+            count++;
+            // 8. throw an exception, wrong kind of parenthesis were in the text (e.g. "asfa
+            // ( asdf } sadf")
          }
       }
+      if (!stack.isEmpty()) {
+         throw new ParenthesesException("Missing closing parentheses.", lineNumber, columnNumber - 1,
+               ParenthesesException.TOO_MANY_OPENING_PARENTHESES);
+      }
+
       return count;
    }
 }

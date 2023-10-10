@@ -69,6 +69,7 @@ Tehtävän tekeminen tarjosi merkittävän mahdollisuuden oppia lisää binäär
 	rekurssiivinen haku tuotti erityisiä haasteita pino ylivuodon takia. 
 
 Toteutettu hakualgorytmejä kutsutaan lineaariseksi, koska ne käyvät tietorakennetta läpi yksikerrallaan. Tämä tarkoittaa että sen aikakompleksisuus on neliöllinen O(n^2) ja suoritusaika on suoraan verrannollinen tietorakenteen kokoon. Toteuttamani binäärihakualgorytmi on aikakompleksisuudeltaan O(log n), mikä tarkoittaa että sen suoritusaika kasvaa hitaasti, kun tietorakenteen koko kasvaa. Tämä tekee siitä erityisen tehokkaan tietorakenteen. 
+
 ### Graaffi analyysi
 
 Graaffissa olevat sininen (Series1 = Fill) ja oranssi (Series2 = Search) viiva kuvaavat kuinka binäärihakualgorytmi suoritutuu tehtävästä. Huomataan erityisen hyvin kuinka oranssi viiva tasaisena vaikka Fill kasvaa. Tästä voidaan tehdä johtopäätös kuinka tehokas binäärihakualgorytmi oikeasti on isommillakin tietorakenteilla. Se pystyy löytämään halutun elementin suuremmastakin tietorakenteesta
@@ -76,6 +77,25 @@ Graaffissa olevat sininen (Series1 = Fill) ja oranssi (Series2 = Search) viiva k
 ![Fill & Search Chart](/student_images/task3_chartImage_DonH.png)
 
 ## 04-TASK
+
+Kirjaa raporttiisi RAPORTTI.markdown mitä opit tehtävän tekemisestä, mikä oli vaikeaa, mikä helppoa, jne.
+Analysoi erityisesti sitä, onko toteutuksesi sellainen että se vastaa tehtävän alussa esiteltyjä aikakompleksisuusvaatimuksia. Perustele miksi.
+Miten tarkistin toimii jos lainausmerkit tekstissä ovat väärin (niitä puuttuu tai on liikaa)? Analysoi algoritmin oikeellisuutta tässä tilanteessa.
+Mikä tahansa metodi jossa on silmukka, ei voi olla O(1) -- onko sinulla silmukoita metodeissa joissa vaatimus oli O(1)? Tai kutsutko tällaisesta metodista jotain toista metodia jonka O on muuta kuin O(1)? Jos näin on, aikakompleksisuusvaatimus ei täyty.
+
+### Tehtävä raportti
+
+Tehtävässä toteutin StackImplementation tiedoston ja ParenthesisChecker tiedostossa olevan metodin checkParentheses(). 
+
+* Haasteita:
+	- Koin itse tehtävän toisen osan haasteelliseksi, koska en oikein ymmärtänyt tehtävänantoa kunnolla, mutta muutamien tuntien jälkeen idea alkoi selventyä. Muutoin tehtävä oli aika simppeli. 
+	- Toinen haaste joka ilmeni StackImplementation oli aluksi se että mitä metodeilta halutaan. Kieltämättä myös omaa tyhmyyttäni että en osannut heti liittää näitä termistoja, mutta muutoin tehtävä oli helppo. En oikein kyllä tiedä miten näitä aikakompleksisuuksia testaisin, mutta uskon että olen ottanut ne huomioon parhaani mukaan.
+
+Uskon onnistuneeni tehtävänannossa mainittujen aikakompleksisuuksien osalta, vaikkakin niiden tarkistusta en oikein osannut toteuttaa tässä tilanteessa. Otin aikakompleksisuuden huomioon esim siten että en hyödyntänyt capacity(), size() tai muissa "laskennallisissa" metodeissa for-silmukkaa tai muitakaan silmukallisia lauseita jotka pitkittäisivät aikakompleksisuutta huomattavasti. Nyt olen varma että aikakompleksisuus on yksi:yhteen. 
+
+Toisen tehtävän tarkistus (")-merkeille aktivoi boolean omaavan muuttujan joka toimii "tarkistajana" ohjelmassa. Ohitan sen alla olevat koodit seuraavaan iteraatioon asti (continue;) komennon avulla. Kuitenkin, jos muuttuja saa arvoksi (")-merkin niin muuttaa se boolean arvon true arvoksi jolloin if()- ehtolause päästää lukijan continue; lauseeseen. 
+
+En ole toteuttanut silmukallisia lauseita ohjelmassa, jossa aikakompleksisuus vaatimus on O(1). 
 
 ## 05-TASK
 
