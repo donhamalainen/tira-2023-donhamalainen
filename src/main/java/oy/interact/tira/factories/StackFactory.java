@@ -10,25 +10,25 @@ public class StackFactory {
 	}
 
 	public static StackInterface<Integer> createIntegerStack() {
-		return new StackImplementation<Integer>();
+		return new StackImplementation<>();
 	}
 
 	public static StackInterface<Integer> createIntegerStack(int capacity) {
 		if (capacity <= 0) {
 			throw new NotYetImplementedException("Stack capacity must be non-null");
 		}
-		return new StackImplementation<Integer>(capacity);
+		return new StackImplementation<>(capacity);
 	}
 
 	public static StackInterface<Character> createCharacterStack() {
-		return new StackImplementation<Character>();
+		return new StackImplementation<>();
 	}
 
 	public static StackInterface<Character> createCharacterStack(int capacity) {
 		if (capacity <= 0) {
 			throw new NotYetImplementedException("Stack capacity must be non-null");
 		}
-		return new StackImplementation<Character>(capacity);
+		return new StackImplementation<>(capacity);
 	}
 
 }

@@ -4,11 +4,31 @@ import oy.interact.tira.util.QueueInterface;
 
 public class QueueImplementation<E> implements QueueInterface<E> {
 
+    /*
+     * capacity(): O(1). (DONE)
+     * 
+     * enqueue(): O(1) paitsi kun/jos joudutaan reallokoimaan taulukkoratkaisussa:
+     * O(n).
+     * 
+     * dequeue(): O(1).
+     * 
+     * element(): O(1).
+     * 
+     * size(): O(1).
+     * 
+     * isEmpty(): O(1).
+     * 
+     * clear(): O(1).
+     * 
+     * toString(): O(n).
+     */
+
     // ******************
     // Attributes
     // ******************
     private static final int DEFAULT_STACK_SIZE = 10;
     private int capacity = DEFAULT_STACK_SIZE;
+    private int count = 0;
 
     private Object[] itemArray = new Object[capacity];
 
@@ -41,6 +61,14 @@ public class QueueImplementation<E> implements QueueInterface<E> {
         int newCapacity = capacity * 2;
         Object[] newArray = new Object[newCapacity];
 
+        // Siirretään vanhan taulukon elementit uuteen
+        for (int alkio = 0; alkio < capacity; alkio++) {
+            newArray[alkio] = itemArray[head + alkio];
+        }
+        head = 0;
+        tail = capacity;
+        itemArray = newArray;
+        capacity = newCapacity;
     }
 
     @Override
@@ -49,41 +77,66 @@ public class QueueImplementation<E> implements QueueInterface<E> {
         return this.capacity;
     }
 
-    // JATKA TÄSTÄ:::::::::
+    // TAIL
     @Override
     public void enqueue(E element) throws OutOfMemoryError, NullPointerException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'enqueue'");
+        if (element == null) {
+            throw new NullPointerException("Element cannot be null");
+        }
+        if (size() == capacity) {
+            reallocate();
+        }
+        // Tarkista tämä kohta TAIL JA HEAD
+
+        // Lisätään elementti taulukkoon.
+        if (tail == capacity) {
+            tail = 0;
+        }
+        itemArray[tail++] = element;
+        count++;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public E dequeue() throws IllegalStateException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'dequeue'");
+        if (isEmpty()) {
+            throw new IllegalStateException("Empty queue");
+        }
+        E item = (E) itemArray[head];
+        itemArray[head] = null;
+        head = (head + 1) % capacity;
+        count--;
+        return item;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public E element() throws IllegalStateException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'element'");
+        if (isEmpty()) {
+            throw new IllegalStateException("Element cannot be null");
+        }
+
+        // Palautetaan
+        return (E) itemArray[head];
     }
 
     @Override
     public int size() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+        return this.count;
     }
 
     @Override
     public boolean isEmpty() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isEmpty'");
+        return size() == 0;
     }
 
     @Override
     public void clear() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'clear'");
+        capacity = DEFAULT_STACK_SIZE;
+        tail = 0;
+        head = 0;
+        Object[] newArray = new Object[capacity];
+        itemArray = newArray;
     }
 
 }
