@@ -99,6 +99,26 @@ En ole toteuttanut silmukallisia lauseita ohjelmassa, jossa aikakompleksisuus va
 
 ## 05-TASK
 
+Kirjaa raporttiisi RAPORTTI.markdown mitä opit tehtävän tekemisestä, mikä oli vaikeaa, mikä helppoa, jne.
+Jos toteutit tässä molemmat tietorakenteet, mainitse siitä raportissasi, jotta opettajat huomaavat testata ne ja antaa tehtävästä lisäpisteet!
+Vaikket olisi toteuttanutkaan molempia vaihtoehtoisia toteutuksia jonosta (taulukko ja linkitetty lista), pohdi miten ne eroavat toisistaan:
+
+Missä asioissa linkitetty lista on parempi kuin taulukkopohjainen toteutus, muistin käytön (muistikompleksisuus) ja aikatehokkuuden (aikakompleksisuus) suhteen?
+Missä asioissa taulukkopohjainen toteutus päihittää linkitetyn listan, muistin käytön ja aikatehokkuuden suhteen?
+
+Analysoi erityisesti sitä, onko toteutuksesi oikeasti sellainen että se vastaa tehtävän alussa esiteltyjä aikakompleksisuusvaatimuksia.
+
+### Tehtävä raportti
+
+Tehtävässä toteutin jono-tietorakenteen, jossa pääsin syventymään tarkemmin sen periaatteisiin. Opin "karusellimäisen" ajattelutavan tietorakenteen lukemisesta. Toteuttamani jono-tietorakenne hyödyntää (tail) ja (head) muuttujia jotka kuvaavat tietorakenteessa olevia kohtia. Tail muuttuja lisää enqueue() metodin avulla tietorakenteeseen alkion, ja vaihtaa paikkaa seuraavaan tietorakenteen kohtaan. Head taas poistaa dequeue() metodin avulla tietorakenteesta alkion. Nämä kaksi yhdessä toimivat karusellimäisesti eli jos tietorakenne ei ole täynnä niin tail siirtyy vasemmalta katsottuna seuraavaan tyhjään indexi kohtaan.
+
+Metodit enqueue() ja dequeue() ovat big-O -notaatiolla O(1), koska ne eivät sisällä minkäänlaisia silmukoita. Ohjelma sisältää silmukan ainoastaan reallakointi funktiossa reallocate().
+
+Ero linkitetyssä ja taulukkopojaisessa jono-tietorakenteessa on muistin käyttö. Linkitetyssä muistia ei varata enempää mitä on tarvetta varata, kun taas taulukkopohjaisessa annetaan, jonkinlainen aloitus muistiarvo kuten tässä DEFAULT_STACK_SIZE = 10. 
+Reallakoidessa tämä tuplataan.
+
+Olen yrittänyt toteuttaa tässä tehtävässä linkitetyn jono-tietorakenteen ja se löytyy nimellä LinkedListQueue.java /student/ kansiosta. Tämä rakennelma ei kuitenkaan toimi.
+
 ## 06-TASK
 
 ## 07-TASK

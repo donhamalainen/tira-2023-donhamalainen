@@ -34,13 +34,12 @@ import org.junit.jupiter.api.Order;
  */
 @DisplayName("Basic tests for the QueueImplementation class.")
 @TestMethodOrder(OrderAnnotation.class)
- public class QueueTests 
-{
+public class QueueTests {
     static Random randomizer = null;
     static final int MIN_QUEUE_SIZE = 10;
     static final int MAX_QUEUE_SIZE = 100;
     static int toAdd = 0;
-    
+
     /**
      * Initialize the test.
      */
@@ -53,8 +52,10 @@ import org.junit.jupiter.api.Order;
         randomizer = new Random();
         int queueSize = Math.max(2, randomizer.nextInt(100));
         QueueInterface<Integer> queueToTest = QueueFactory.createIntegerQueue(queueSize);
-        assertNotNull(queueToTest, () -> "Could not create queue object to test. Implement QueueBuilder.createIntegerQueue().");
-        assertEquals(queueSize, queueToTest.capacity(), () -> "Queue capacity must be what was requested in creating it.");
+        assertNotNull(queueToTest,
+                () -> "Could not create queue object to test. Implement QueueBuilder.createIntegerQueue().");
+        assertEquals(queueSize, queueToTest.capacity(),
+                () -> "Queue capacity must be what was requested in creating it.");
     }
 
     @Test
@@ -69,9 +70,12 @@ import org.junit.jupiter.api.Order;
         queueToTest.clear();
         assertTrue(queueToTest.isEmpty(), () -> "The queue should be empty.");
         assertEquals(0, queueToTest.size(), () -> "Expected queue to be empty, count() returning 0.");
-        assertThrows(IllegalStateException.class, () -> queueToTest.dequeue(), "Expecting to throw QueueIsEmptyException when removing from empty queue.");
-        assertThrows(IllegalStateException.class, () -> queueToTest.element(), "Expecting to throw QueueIsEmptyException when accessing element from empty queue");
-        assertThrows(NullPointerException.class, () -> queueToTest.enqueue(null), "Must not be able to add null to queue.");
+        assertThrows(IllegalStateException.class, () -> queueToTest.dequeue(),
+                "Expecting to throw QueueIsEmptyException when removing from empty queue.");
+        assertThrows(IllegalStateException.class, () -> queueToTest.element(),
+                "Expecting to throw QueueIsEmptyException when accessing element from empty queue");
+        assertThrows(NullPointerException.class, () -> queueToTest.enqueue(null),
+                "Must not be able to add null to queue.");
         assertEquals("[]", queueToTest.toString(), () -> "Empty queue as string failed.");
     }
 
@@ -107,8 +111,10 @@ import org.junit.jupiter.api.Order;
         assertNotNull(queueToTest.dequeue(), () -> "Should be able to take final element out.");
         assertEquals(0, queueToTest.size(), () -> "Expected queue to be empty, count() returning 0.");
         assertTrue(queueToTest.isEmpty(), () -> "The queue should be empty.");
-        assertThrows(IllegalStateException.class, () -> queueToTest.dequeue(), "Expecting to get null when removing from empty queue.");
-        assertThrows(IllegalStateException.class, () -> queueToTest.element(), "Expecting to get null when removing from empty queue");
+        assertThrows(IllegalStateException.class, () -> queueToTest.dequeue(),
+                "Expecting to get null when removing from empty queue.");
+        assertThrows(IllegalStateException.class, () -> queueToTest.element(),
+                "Expecting to get null when removing from empty queue");
     }
 
     @Test
@@ -130,17 +136,20 @@ import org.junit.jupiter.api.Order;
         }
         // Check that the queue has the correct element of items.
         assertEquals(elementCount, queueToTest.size(), () -> "Queue must have the number of elements added into it.");
-        // Take elements from the queue and compare that the values are in the same order than in the test data list, reversed.
+        // Take elements from the queue and compare that the values are in the same
+        // order than in the test data list, reversed.
         while (queueToTest.size() > 0) {
             Integer numberFromQueue = queueToTest.dequeue();
             assertNotNull(numberFromQueue, () -> "Item taken from queue should not be null.");
-            assertEquals(testData.get(0), numberFromQueue, () -> "Items removed must be in the order they were added into queue.");
+            assertEquals(testData.get(0), numberFromQueue,
+                    () -> "Items removed must be in the order they were added into queue.");
             testData.remove(0);
         }
         // And since removing all, test now that the queue is really empty.
         assertTrue(queueToTest.isEmpty(), () -> "The queue should be empty.");
         assertEquals(0, queueToTest.size(), () -> "After removing all items, queue must be empty.");
-        assertThrows(IllegalStateException.class, () -> queueToTest.dequeue(), "Remove must return null after all items have been removed.");
+        assertThrows(IllegalStateException.class, () -> queueToTest.dequeue(),
+                "Remove must return null after all items have been removed.");
     }
 
     @Test
@@ -162,7 +171,8 @@ import org.junit.jupiter.api.Order;
         int newCapacity = queueToTest.capacity();
         assertTrue(newCapacity > oldCapacity, () -> "The capacity did not grow when it should have.");
         assertEquals(testData.get(0), queueToTest.dequeue(), () -> "First thing queued was not dequeued from queue.");
-        assertEquals(testData.get(1), queueToTest.dequeue(), () -> "Reallocated queue has no second to last element in place.");
+        assertEquals(testData.get(1), queueToTest.dequeue(),
+                () -> "Reallocated queue has no second to last element in place.");
         assertFalse(queueToTest.isEmpty(), () -> "Queue should not be empty at this point.");
     }
 
@@ -178,8 +188,9 @@ import org.junit.jupiter.api.Order;
         queueToTest.enqueue(111);
         queueToTest.clear();
         assertTrue(queueToTest.isEmpty(), () -> "The queue should be empty.");
-        assertThrows(IllegalStateException.class, () -> queueToTest.dequeue(), "After resetting a queue, dequeue must throw QueueIsEmptyException.");
-        assertEquals(0, queueToTest.size(), () -> "After resetting a queue, count must return zero.");        
+        assertThrows(IllegalStateException.class, () -> queueToTest.dequeue(),
+                "After resetting a queue, dequeue must throw QueueIsEmptyException.");
+        assertEquals(0, queueToTest.size(), () -> "After resetting a queue, count must return zero.");
     }
 
     @Test
@@ -197,10 +208,12 @@ import org.junit.jupiter.api.Order;
         assertEquals(111, queueToTest.dequeue(), () -> "Remove must return the second value put in");
         assertEquals(0, queueToTest.size(), () -> "After removing, count must one less.");
         assertTrue(queueToTest.isEmpty(), () -> "The queue should be empty.");
-        assertThrows(IllegalStateException.class, () -> queueToTest.dequeue(), "After removing last item a queue, dequeue must throw QueueIsEmptyException.");
+        assertThrows(IllegalStateException.class, () -> queueToTest.dequeue(),
+                "After removing last item a queue, dequeue must throw QueueIsEmptyException.");
         queueToTest.clear();
         assertTrue(queueToTest.isEmpty(), () -> "The queue should be empty.");
-        assertThrows(IllegalStateException.class, () -> queueToTest.dequeue(), "After resetting a queue, dequeue must throw QueueIsEmptyException.");
+        assertThrows(IllegalStateException.class, () -> queueToTest.dequeue(),
+                "After resetting a queue, dequeue must throw QueueIsEmptyException.");
     }
 
     @Test
@@ -212,7 +225,7 @@ import org.junit.jupiter.api.Order;
         int queueSize = randomQueueSize();
         QueueInterface<Integer> queueToTest = QueueFactory.createIntegerQueue(queueSize);
         assertEquals("[]", queueToTest.toString(), () -> "Empty queue must print out as \"[]\"");
-        
+
         assertDoesNotThrow(() -> queueToTest.enqueue(42), "In this test enqueue must succeed, but failed");
         assertEquals("[42]", queueToTest.toString(), () -> "Queue with one value to string fails");
         // Fill the queue to contain max number of items.
@@ -221,26 +234,34 @@ import org.junit.jupiter.api.Order;
         for (Integer value : testData) {
             assertDoesNotThrow(() -> queueToTest.enqueue(value), "In this test enqueue must succeed, but failed.");
         }
-        System.out.println("Step 1: Test data " + testData.toString() + "\nQueue:            " + queueToTest.toString());
-        assertEquals(testData.toString(), queueToTest.toString(), () -> "Queue as string must match test data as string.");
+        System.out
+                .println("Step 1: Test data " + testData.toString() + "\nQueue:            " + queueToTest.toString());
+        assertEquals(testData.toString(), queueToTest.toString(),
+                () -> "Queue as string must match test data as string.");
 
         testData.remove(0);
         assertNotNull(queueToTest.dequeue(), () -> "Should have elements in the queue.");
-        System.out.println("Step 2: Test data " + testData.toString() + "\nQueue:            " + queueToTest.toString());
-        assertEquals(testData.toString(), queueToTest.toString(), () -> "Queue as string must match test data as string.");
+        System.out
+                .println("Step 2: Test data " + testData.toString() + "\nQueue:            " + queueToTest.toString());
+        assertEquals(testData.toString(), queueToTest.toString(),
+                () -> "Queue as string must match test data as string.");
 
         toAdd = randomizer.nextInt(1000);
         testData.add(toAdd);
         assertDoesNotThrow(() -> queueToTest.enqueue(toAdd), "In this test enqueue must succeed, but failed");
-        System.out.println("Step 3: Test data " + testData.toString() + "\nQueue:            " + queueToTest.toString());
-        assertEquals(testData.toString(), queueToTest.toString(), () -> "Queue as string must match test data as string.");
+        System.out
+                .println("Step 3: Test data " + testData.toString() + "\nQueue:            " + queueToTest.toString());
+        assertEquals(testData.toString(), queueToTest.toString(),
+                () -> "Queue as string must match test data as string.");
 
         testData.remove(0);
-        assertDoesNotThrow( () -> queueToTest.dequeue(), "Should have elements in the queue.");
+        assertDoesNotThrow(() -> queueToTest.dequeue(), "Should have elements in the queue.");
         testData.remove(0);
-        assertDoesNotThrow( () -> queueToTest.dequeue(), () -> "Should have elements in the queue.");
-        System.out.println("Step 4: Test data " + testData.toString() + "\nQueue:            " + queueToTest.toString());
-        assertEquals(testData.toString(), queueToTest.toString(), () -> "Queue as string must match test data as string.");
+        assertDoesNotThrow(() -> queueToTest.dequeue(), () -> "Should have elements in the queue.");
+        System.out
+                .println("Step 4: Test data " + testData.toString() + "\nQueue:            " + queueToTest.toString());
+        assertEquals(testData.toString(), queueToTest.toString(),
+                () -> "Queue as string must match test data as string.");
 
         toAdd = randomizer.nextInt(1000);
         testData.add(toAdd);
@@ -248,8 +269,10 @@ import org.junit.jupiter.api.Order;
         toAdd = randomizer.nextInt(1000);
         testData.add(toAdd);
         assertDoesNotThrow(() -> queueToTest.enqueue(toAdd), () -> "Should be able to enqueue at this point");
-        System.out.println("Step 5: Test data " + testData.toString() + "\nQueue:            " + queueToTest.toString());
-        assertEquals(testData.toString(), queueToTest.toString(), () -> "Queue as string must match test data as string.");
+        System.out
+                .println("Step 5: Test data " + testData.toString() + "\nQueue:            " + queueToTest.toString());
+        assertEquals(testData.toString(), queueToTest.toString(),
+                () -> "Queue as string must match test data as string.");
     }
 
     @Test
@@ -265,14 +288,17 @@ import org.junit.jupiter.api.Order;
         for (Integer value : testData) {
             assertDoesNotThrow(() -> queueToTest.enqueue(value), "In this test enqueue must succeed, but failed.");
         }
-        // Stack should be now full so the next push must reallocate internal array and capacity should be increased.
+        // Stack should be now full so the next push must reallocate internal array and
+        // capacity should be increased.
         int newCapacity = queueToTest.capacity();
         testData = fillWithTestData(newCapacity * 10);
         for (Integer value : testData) {
             assertDoesNotThrow(() -> queueToTest.enqueue(value), "In this test enqueue must succeed, but failed.");
         }
-        assertEquals(firstFillCount + testData.size(), queueToTest.size(), () -> "Queue does not hold enought elements after growing it ten times the original.");
-        assertEquals(firstNumberInQueue, queueToTest.dequeue(), () -> "First thing enqueued was not dequeued from the queue.");
+        assertEquals(firstFillCount + testData.size(), queueToTest.size(),
+                () -> "Queue does not hold enought elements after growing it ten times the original.");
+        assertEquals(firstNumberInQueue, queueToTest.dequeue(),
+                () -> "First thing enqueued was not dequeued from the queue.");
     }
 
     @Test
@@ -289,8 +315,9 @@ import org.junit.jupiter.api.Order;
         queue.enqueue("Fourth");
         assertEquals("[First, Second, Third, Fourth]", queue.toString(), () -> "Queue as string must match test data.");
         // Queue now has "[First, Second, Third, Fourth]"
-        // Dequeued values not needed, so no variables here to avoid warnings about unused objects.
-        queue.dequeue(); 
+        // Dequeued values not needed, so no variables here to avoid warnings about
+        // unused objects.
+        queue.dequeue();
         queue.dequeue();
         // And now it should have "[Third, Fourth]"
         queue.enqueue("fifth");
@@ -300,7 +327,8 @@ import org.junit.jupiter.api.Order;
         // And now it should have "[Third, Fourth, fifth, sixth, seventh, eight]"
         queue.dequeue();
         // And now it should have "[Fourth, fifth, sixth, seventh, eight]"
-        assertEquals("[Fourth, fifth, sixth, seventh, eight]", queue.toString(), () -> "Queue as string must match test data.");
+        assertEquals("[Fourth, fifth, sixth, seventh, eight]", queue.toString(),
+                () -> "Queue as string must match test data.");
     }
 
     @Test
@@ -323,9 +351,10 @@ import org.junit.jupiter.api.Order;
         queue.enqueue(6);
         assertEquals("[4, 5, 6]", queue.toString(), "Not expected output from toString");
     }
-    
+
     /**
      * Utility method to create a random size queue.
+     * 
      * @param itemCount
      * @return
      */
@@ -335,6 +364,7 @@ import org.junit.jupiter.api.Order;
 
     /**
      * Utility method to create a list with random test data.
+     * 
      * @param itemCount Number of items to put into the testa data list.
      * @return A list of test data to use with the test queue.
      */

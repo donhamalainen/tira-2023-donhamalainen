@@ -2,7 +2,7 @@ package oy.interact.tira.student;
 
 import oy.interact.tira.util.QueueInterface;
 
-public class QueueImplementation<E> implements QueueInterface<E> {
+public class ArrayQueue<E> implements QueueInterface<E> {
 
     /*
      * capacity(): O(1). (DONE)
@@ -26,24 +26,22 @@ public class QueueImplementation<E> implements QueueInterface<E> {
     // ******************
     // Attributes
     // ******************
-    private static final int DEFAULT_STACK_SIZE = 10;
-    private int capacity = DEFAULT_STACK_SIZE;
-    private int count = 0;
 
-    private Object[] itemArray = new Object[capacity];
+    private static final int DEFAULT_STACK_SIZE = 10;
 
     // Tärkeimmät atribuutit
-    private int head = 0;
-    private int tail = 0;
+    private int head = 0, tail = 0, count = 0;
+    private int capacity = DEFAULT_STACK_SIZE;
+    private Object[] itemArray = new Object[capacity];
 
     // ******************
     // Contructors
     // ******************
-    public QueueImplementation() {
+    public ArrayQueue() {
         this(DEFAULT_STACK_SIZE);
     }
 
-    public QueueImplementation(int parameterCapacity) {
+    public ArrayQueue(int parameterCapacity) {
         capacity = parameterCapacity;
         itemArray = new Object[parameterCapacity];
     }
@@ -63,7 +61,7 @@ public class QueueImplementation<E> implements QueueInterface<E> {
 
         // Siirretään vanhan taulukon elementit uuteen
         for (int alkio = 0; alkio < capacity; alkio++) {
-            newArray[alkio] = itemArray[head + alkio];
+            newArray[alkio] = itemArray[(head + alkio) % capacity];
         }
         head = 0;
         tail = capacity;
@@ -83,19 +81,20 @@ public class QueueImplementation<E> implements QueueInterface<E> {
         if (element == null) {
             throw new NullPointerException("Element cannot be null");
         }
-        if (size() == capacity) {
+
+        // Tarkistetaan onko taulukko jo täynnä
+        // size() palauttaa count arvon joka on listan täytettyjen alkioiden lukumäärä
+        if (size() == this.capacity) {
             reallocate();
         }
-        // Tarkista tämä kohta TAIL JA HEAD
-
-        // Lisätään elementti taulukkoon.
-        if (tail == capacity) {
-            tail = 0;
-        }
-        itemArray[tail++] = element;
+        // Lisätään taulukkoon elementti, ja +1 count ja otetaan huomioon tail arvot ja
+        // pyörivän taulukon logiikka.
+        itemArray[tail] = element;
+        tail = (tail + 1) % capacity;
         count++;
     }
 
+    // HEAD
     @Override
     @SuppressWarnings("unchecked")
     public E dequeue() throws IllegalStateException {
@@ -122,21 +121,49 @@ public class QueueImplementation<E> implements QueueInterface<E> {
 
     @Override
     public int size() {
+        // Palauttaa alkioiden lukumäärän
         return this.count;
     }
 
     @Override
     public boolean isEmpty() {
+        // Palauttaa totuusarvon
         return size() == 0;
     }
 
     @Override
     public void clear() {
+        // Asetetaan capacity default arvo takaisin DEFAULT_STACK_SIZE arvoksi
         capacity = DEFAULT_STACK_SIZE;
+        // Sanotaan että itemArray on yhtäsuuri kuin uusi object taulukko, mikä on
+        // capacity:n kokoinen
+        itemArray = new Object[capacity];
+        // Asetetaan head, tail ja count alkuarvoihin
         tail = 0;
         head = 0;
-        Object[] newArray = new Object[capacity];
-        itemArray = newArray;
+        count = 0;
     }
 
+    // toString
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("[");
+
+        // Aloitetaan for silmukka head:stä ja päätetään se tail indexi arvoon.
+        for (int alkio = 0; alkio < count; alkio++) {
+            int index = (head + alkio) % capacity;
+            // Lisätään alkion sisältö taulukkoon
+            stringBuilder.append(itemArray[index]);
+
+            // Jos kyseessä ei ole viimeinen elementti, lisätään pilkku ja välilyönti
+            if (alkio < count - 1) {
+                stringBuilder.append(", ");
+            }
+        }
+        // Lisätään lopuksi ]
+        stringBuilder.append("]");
+        // Palautetaan merkkijono
+        return stringBuilder.toString();
+    }
 }
