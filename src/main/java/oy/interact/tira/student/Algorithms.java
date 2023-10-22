@@ -128,16 +128,65 @@ public class Algorithms {
       return -1; // aValue:ta ei löytynyt taulukosta
    }
 
+   // FASTSORT COMPARABLE
    public static <E extends Comparable<E>> void fastSort(E[] array) {
       // TODO: Student, implement this.
+      quickSort(array, 0, array.length - 1, Comparator.naturalOrder());
    }
 
+   // FASTSORT COMPARATOR
    public static <E> void fastSort(E[] array, Comparator<E> comparator) {
       // TODO: Student, implement this.
+      quickSort(array, comparator);
    }
 
+   // FASTSORT COMPARATOR with Indexes
    public static <E> void fastSort(E[] array, int fromIndex, int toIndex, Comparator<E> comparator) {
       // TODO: Student, implement this.
+      quickSort(array, fromIndex, toIndex - 1, comparator);
    }
 
+   // PARTITION
+   private static <E> int partition(E[] array, int fromIndex, int toIndex, Comparator<E> comparator) {
+      // Käytä viimeistä elementtiä pivotina
+      E pivot = array[toIndex];
+      int edellinen_alkio = fromIndex - 1;
+
+      for (int alkio = fromIndex; alkio < toIndex; alkio++) {
+         if (comparator.compare(array[alkio], pivot) <= 0) {
+            edellinen_alkio++;
+
+            // vaihdetaan paikkoja
+            swap(array, alkio, edellinen_alkio);
+         }
+      }
+
+      // Vaihdetaan pivot oikeaan paikkaan jälkeen viimeisen "pienemmän" alkion
+      swap(array, edellinen_alkio + 1, toIndex);
+
+      return edellinen_alkio + 1; // Palautetaan pivotin uusi indeksi
+   }
+
+   ///////////////////////////////////////////
+   // Q U I C K S O R T
+   ///////////////////////////////////////////
+   public static <E> void quickSort(E[] array, Comparator<E> comparator) {
+      quickSort(array, 0, array.length - 1, comparator);
+   }
+
+   public static <E> void quickSort(E[] array, int fromIndex, int toIndex, Comparator<E> comparator) {
+      if (fromIndex < toIndex) {
+         int partitionIndex = partition(array, fromIndex, toIndex, comparator);
+
+         quickSort(array, fromIndex, partitionIndex - 1, comparator);
+         quickSort(array, partitionIndex + 1, toIndex, comparator);
+      }
+   }
+   ///////////////////////////////////////////
+   // H E A P S O R T
+   ///////////////////////////////////////////
+
+   ///////////////////////////////////////////
+   // M E R G E S O R T
+   ///////////////////////////////////////////
 }
