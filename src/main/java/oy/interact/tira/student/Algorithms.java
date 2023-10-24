@@ -5,17 +5,20 @@ import java.util.Comparator;
 public class Algorithms {
 
    private Algorithms() {
-      // nada
    }
 
-   // SWAP METHOD; joka vaihtaa kahden taulukon arvon paikkaa.
+   ///////////////////////////////////////////
+   // S W A P
+   ///////////////////////////////////////////
    public static <T> void swap(T[] array, int first, int second) {
       final T temp = array[first];
       array[first] = array[second];
       array[second] = temp;
    }
 
-   // INSERTIONSORT
+   ///////////////////////////////////////////
+   // I N S E R T I O N S O R T
+   ///////////////////////////////////////////
    public static <T extends Comparable<T>> void insertionSort(T[] array) {
       insertionSort(array, 0, array.length);
    }
@@ -32,8 +35,6 @@ public class Algorithms {
       }
    }
 
-   // INSERTIONSORT END
-   // COMPARATOR INSERTIONSORT
    public static <T> void insertionSort(T[] array, Comparator<T> comparator) {
       insertionSort(array, 0, array.length, comparator);
    }
@@ -49,8 +50,9 @@ public class Algorithms {
       }
    }
 
-   // COMPARATOR INSERTIONSORT END
-   // REVERSE
+   ////////////////////////////////////////////
+   // R E V E R S E
+   ///////////////////////////////////////////
    public static <T> void reverse(T[] array) {
       reverse(array, 0, array.length);
    }
@@ -60,10 +62,9 @@ public class Algorithms {
          swap(array, tarkasteltava_alkio, (toIndex - 1 - tarkasteltava_alkio));
       }
    }
-   // REVERSE END
 
    ///////////////////////////////////////////
-   // Binary search bw indices
+   // B I N A R Y S E A R C H
    ///////////////////////////////////////////
 
    public static <T extends Comparable<T>> int binarySearch(T aValue, T[] fromArray, int fromIndex, int toIndex) {
@@ -100,10 +101,6 @@ public class Algorithms {
       return -1; // aValue eli haluttua arvoa ei löytynyt taulukosta.
    }
 
-   ///////////////////////////////////////////
-   // Binary search using a Comparator
-   ///////////////////////////////////////////
-
    public static <T> int binarySearch(T aValue, T[] fromArray, int fromIndex, int toIndex, Comparator<T> comparator) {
       int alinPiste = fromIndex;
       int korkeinPiste = toIndex - 1;
@@ -123,30 +120,35 @@ public class Algorithms {
          }
       }
 
-      // Rekurssiivinen
-
       return -1; // aValue:ta ei löytynyt taulukosta
    }
 
-   // FASTSORT COMPARABLE
+   ///////////////////////////////////////////
+   // F A S T S O R T
+   ///////////////////////////////////////////
    public static <E extends Comparable<E>> void fastSort(E[] array) {
-      // TODO: Student, implement this.
-      quickSort(array, 0, array.length - 1, Comparator.naturalOrder());
+      // quickSort(array, 0, array.length - 1, Comparator.naturalOrder());
+      heapSort(array, Comparator.naturalOrder());
+      // mergeSort(array, 0, array.length - 1, Comparator.naturalOrder());
    }
 
-   // FASTSORT COMPARATOR
    public static <E> void fastSort(E[] array, Comparator<E> comparator) {
-      // TODO: Student, implement this.
-      quickSort(array, comparator);
+      // quickSort(array, comparator);
+      heapSort(array, comparator);
+      // mergeSort(array, comparator);
    }
 
-   // FASTSORT COMPARATOR with Indexes
    public static <E> void fastSort(E[] array, int fromIndex, int toIndex, Comparator<E> comparator) {
-      // TODO: Student, implement this.
-      quickSort(array, fromIndex, toIndex - 1, comparator);
+
+      // quickSort(array, fromIndex, toIndex - 1, comparator);
+      heapSort(array, fromIndex, toIndex - 1, comparator);
+      // mergeSort(array, fromIndex, toIndex - 1, comparator);
    }
 
-   // PARTITION
+   ///////////////////////////////////////////
+   // Q U I C K S O R T
+   ///////////////////////////////////////////
+
    private static <E> int partition(E[] array, int fromIndex, int toIndex, Comparator<E> comparator) {
       // Käytä viimeistä elementtiä pivotina
       E pivot = array[toIndex];
@@ -167,26 +169,131 @@ public class Algorithms {
       return edellinen_alkio + 1; // Palautetaan pivotin uusi indeksi
    }
 
-   ///////////////////////////////////////////
-   // Q U I C K S O R T
-   ///////////////////////////////////////////
    public static <E> void quickSort(E[] array, Comparator<E> comparator) {
+      if (array == null) {
+         throw new IllegalArgumentException("Array cannot be null");
+      }
+
       quickSort(array, 0, array.length - 1, comparator);
    }
 
    public static <E> void quickSort(E[] array, int fromIndex, int toIndex, Comparator<E> comparator) {
-      if (fromIndex < toIndex) {
-         int partitionIndex = partition(array, fromIndex, toIndex, comparator);
+      if (array == null) {
+         throw new IllegalArgumentException("Array cannot be null");
+      }
 
-         quickSort(array, fromIndex, partitionIndex - 1, comparator);
-         quickSort(array, partitionIndex + 1, toIndex, comparator);
+      if (fromIndex < toIndex) {
+         int pi = partition(array, fromIndex, toIndex, comparator);
+
+         quickSort(array, fromIndex, pi - 1, comparator);
+         quickSort(array, pi + 1, toIndex, comparator);
       }
    }
+
    ///////////////////////////////////////////
-   // H E A P S O R T
+   // H E A P S O R T ( MAX-HEAP )
    ///////////////////////////////////////////
+
+   private static int parent(int currentNode) {
+      return (int) Math.floor((currentNode - 1) / 2);
+   }
+
+   private static int leftChild(int currentNode) {
+      return (2 * currentNode) + 1;
+   }
+
+   // private static int rightChild(int currentNode) {
+   // return (2 * currentNode) + 2;
+   // }
+
+   private static <E> void siftDown(E[] array, int start, int end, Comparator<E> comparator) {
+      int root = start;
+
+      while (leftChild(root) <= end) {
+         int child = leftChild(root);
+         int swap = root;
+         if (comparator.compare(array[swap], array[child]) < 0) {
+            swap = child;
+         }
+         if (child + 1 <= end && comparator.compare(array[swap], array[child + 1]) < 0) {
+            swap = child + 1;
+         }
+         if (swap == root) {
+            return;
+         } else {
+            swap(array, root, swap);
+            root = swap;
+         }
+      }
+   }
+
+   private static <E> void heapify(E[] array, int end, Comparator<E> comparator) {
+      int start = parent(end);
+      while (start >= 0) {
+         siftDown(array, start, end, comparator);
+         start--;
+      }
+   }
+
+   public static <E> void heapSort(E[] array, Comparator<E> comparator) {
+      heapSort(array, 0, array.length - 1, comparator);
+   }
+
+   public static <E> void heapSort(E[] array, int fromIndex, int toIndex, Comparator<E> comparator) {
+      heapify(array, toIndex, comparator);
+
+      while (toIndex > 0) {
+         swap(array, toIndex, 0);
+         toIndex--;
+         siftDown(array, 0, toIndex, comparator);
+      }
+   }
 
    ///////////////////////////////////////////
    // M E R G E S O R T
    ///////////////////////////////////////////
+
+   private static <E> void merge(E[] array, int fromIndex, int toIndex, int midIndex, Comparator<E> comparator) {
+      // Määritetään apuarrayt vasemmalle ja oikealle puolelle.
+      int leftSize = midIndex - fromIndex + 1;
+      int rightSize = toIndex - midIndex;
+
+      // Luo väliaikaiset taulukot.
+      E[] leftArray = (E[]) new Object[leftSize];
+      E[] rightArray = (E[]) new Object[rightSize];
+
+      // Kopioi tiedot väliaikaisiin taulukoihin.
+      for (int alkioVasen = 0; alkioVasen < leftSize; alkioVasen++) {
+         leftArray[alkioVasen] = array[fromIndex + alkioVasen];
+      }
+      for (int alkioOikea = 0; alkioOikea < rightSize; alkioOikea++) {
+         rightArray[alkioOikea] = array[midIndex + 1 + alkioOikea];
+      }
+
+   }
+
+   public static <E> void mergeSort(E[] array, Comparator<E> comparator) {
+      if (array == null) {
+         throw new IllegalArgumentException("Array cannot be null");
+      }
+      mergeSort(array, 0, array.length - 1, comparator);
+   }
+
+   public static <E> void mergeSort(E[] array, int fromIndex, int toIndex, Comparator<E> comparator) {
+      if (array == null) {
+         throw new IllegalArgumentException("Array cannot be null");
+      }
+
+      if (fromIndex < toIndex) {
+         // Otetaan keskipiste
+         int keskipiste = fromIndex + (toIndex - fromIndex) / 2;
+
+         // merge sorting
+         mergeSort(array, fromIndex, keskipiste, comparator);
+         mergeSort(array, keskipiste + 1, toIndex, comparator);
+
+         merge(array, fromIndex, toIndex, keskipiste, comparator);
+      }
+   }
+
 }

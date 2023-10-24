@@ -121,6 +121,53 @@ Olen yrittänyt toteuttaa tässä tehtävässä linkitetyn jono-tietorakenteen j
 
 ## 06-TASK
 
+## Hidas lajittelu
+```
+Test#	   Count	ms      	ms/element
+  1	     100	       9	   0,090
+  2	    1000	      70	   0,070
+  3	    5000	     497	   0,099
+  4	   10000	    1648	   0,165
+  5	   50000	  101441	   2,029
+  6	  100000	  353668	   3,537
+```
+
+![Slow Sorting](/student_images/task6_slowSorting.png)
+
+## Quicksort - lajittelualgorytmi
+```
+Test#	   Count	ms      	ms/element
+  1	     100	       5	   0,050
+  2	    1000	       7	   0,007
+  3	    5000	       8	   0,002
+  4	   10000	      18	   0,002
+  5	   50000	      98	   0,002
+  6	  100000	     203	   0,002
+  7	 1000000	    3154	   0,003
+  8	 2000000	    7173	   0,004
+```
+
+![Quick Sorting](/student_images/task6_quickSort.png)
+
+## Heap sort - lajittelualgorytmi
+
+```
+Test#	   Count	ms      	ms/element
+  1	     100	       6	   0,060
+  2	    1000	       8	   0,008
+  3	    5000	       9	   0,002
+  4	   10000	      17	   0,002
+  5	   50000	     170	   0,003
+  6	  100000	     347	   0,003
+  7	 1000000	    6362	   0,006
+  8	 2000000	   14579	   0,007
+```
+![Quick Sorting](/student_images/task6_heapSort.png)
+
+### Tehtävä raportti
+
+
+
 ## 07-TASK
 
 ## 08-TASK
