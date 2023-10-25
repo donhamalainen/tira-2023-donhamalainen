@@ -121,7 +121,18 @@ Olen yrittänyt toteuttaa tässä tehtävässä linkitetyn jono-tietorakenteen j
 
 ## 06-TASK
 
-## Hidas lajittelu
+## Tehtävä raportti
+
+Tehtävässä suoritin *Quick Sort*, *Heap Sort* algorytmin, jotka olivat eritasoisesti haastavia. *Heap Sort* algorytmin toteuttaminen oli haastavaa, mutta sen perusperiaatteen ymmärsin todella nopeasti ja paperilla se oli yksinkertainen. *Quick Sort* algorytmin toteuttaminen oli huomattavasti yksinkertaisempi, sillä se muistutti todella paljon toimintaperiaatteeltaan *Insertion Sort* algorytmiä. Toteuttamieni algorytmien aikakompleksisuudet ovat seuraavanlaiset:
+
+- *Quick Sort* algorytmin aikakompleksisuus on O(n log n)
+- *Heap Sort* algorytmin aikakompleksisuus on O(n log n)
+
+Alhaalla näkyvissä graaffisissa esityksissä huomaamme että tekemämme algorytmit suoriutuvat lähes yhtätehokkaasti myös suurilla tietokannoilla. Quick Sort tekee kuitenkin huomattavasti vähemmän siirtoja verrattuna Heap Sort algorytmiin, joka joutuu suorittamaan keko (heapify) prosessia jatkuvasti. Kuitenkin Heap Sort on vakaampi ja johdonmukaisempi suorituksen lopputuloksen kannalta kuin Quick Sort. Loppupeleissä kumpikin toimivat todella hyvin.
+
+## Algortmien ajalliset tulokset
+
+### Hidas lajittelu
 ```
 Test#	   Count	ms      	ms/element
   1	     100	       9	   0,090
@@ -134,7 +145,7 @@ Test#	   Count	ms      	ms/element
 
 ![Slow Sorting](/student_images/task6_slowSorting.png)
 
-## Quicksort - lajittelualgorytmi
+### Quicksort - lajittelualgorytmi
 ```
 Test#	   Count	ms      	ms/element
   1	     100	       5	   0,050
@@ -149,7 +160,7 @@ Test#	   Count	ms      	ms/element
 
 ![Quick Sorting](/student_images/task6_quickSort.png)
 
-## Heap sort - lajittelualgorytmi
+#### Heap sort - lajittelualgorytmi
 
 ```
 Test#	   Count	ms      	ms/element
@@ -163,10 +174,6 @@ Test#	   Count	ms      	ms/element
   8	 2000000	   14579	   0,007
 ```
 ![Quick Sorting](/student_images/task6_heapSort.png)
-
-### Tehtävä raportti
-
-
 
 ## 07-TASK
 
