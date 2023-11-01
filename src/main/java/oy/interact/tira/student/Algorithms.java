@@ -127,21 +127,21 @@ public class Algorithms {
    // F A S T S O R T
    ///////////////////////////////////////////
    public static <E extends Comparable<E>> void fastSort(E[] array) {
-      // quickSort(array, 0, array.length - 1, Comparator.naturalOrder());
-      heapSort(array, Comparator.naturalOrder());
+      quickSort(array, 0, array.length - 1, Comparator.naturalOrder());
+      // heapSort(array, Comparator.naturalOrder());
       // mergeSort(array, 0, array.length - 1, Comparator.naturalOrder());
    }
 
    public static <E> void fastSort(E[] array, Comparator<E> comparator) {
-      // quickSort(array, comparator);
-      heapSort(array, comparator);
+      quickSort(array, comparator);
+      // heapSort(array, comparator);
       // mergeSort(array, comparator);
    }
 
    public static <E> void fastSort(E[] array, int fromIndex, int toIndex, Comparator<E> comparator) {
 
-      // quickSort(array, fromIndex, toIndex - 1, comparator);
-      heapSort(array, fromIndex, toIndex - 1, comparator);
+      quickSort(array, fromIndex, toIndex - 1, comparator);
+      // heapSort(array, fromIndex, toIndex - 1, comparator);
       // mergeSort(array, fromIndex, toIndex - 1, comparator);
    }
 

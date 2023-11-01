@@ -121,7 +121,6 @@ public class ParenthesisChecker {
             }
             // 6. else if character is a closing parenthesis -- one of ")]}"
          } else if (currentChar == ']' || currentChar == '}' || currentChar == ')') {
-            // 6. pop the latest opening parenthesis from the stack
             char poppedChar;
             try {
                poppedChar = stack.pop();
@@ -131,7 +130,6 @@ public class ParenthesisChecker {
             }
 
             // 7. if the popped item is null
-            // Koodi on saatu ChatGPT:n avulla, ja sitä on muutettu tehtävään sopivaksi.
 
             if ((currentChar == ']' && poppedChar != '[') ||
                   (currentChar == '}' && poppedChar != '{') ||
@@ -140,8 +138,6 @@ public class ParenthesisChecker {
                      ParenthesesException.PARENTHESES_IN_WRONG_ORDER);
             }
             count++;
-            // 8. throw an exception, wrong kind of parenthesis were in the text (e.g. "asfa
-            // ( asdf } sadf")
          }
       }
       if (!stack.isEmpty()) {

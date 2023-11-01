@@ -218,7 +218,8 @@ public class SimpleContainer<E extends Comparable<E>> implements TIRAContainer<E
 	@Override
 	public void sort() {
 		// TODO: Student: finish this as part of task 02.
-		Algorithms.insertionSort(this.array, 0, count);
+		// Algorithms.insertionSort(this.array, 0, count);
+		Algorithms.fastSort(this.array);
 		this.sorted = true;
 	}
 
@@ -226,7 +227,8 @@ public class SimpleContainer<E extends Comparable<E>> implements TIRAContainer<E
 	@Override
 	public void sort(Comparator<E> usingComparator) {
 		// TODO: Student: finish this as part of task 02.
-		Algorithms.insertionSort(this.array, 0, count, usingComparator);
+		// Algorithms.insertionSort(this.array, 0, count, usingComparator);
+		Algorithms.fastSort(this.array, 0, count, usingComparator);
 		this.sorted = true;
 	}
 }

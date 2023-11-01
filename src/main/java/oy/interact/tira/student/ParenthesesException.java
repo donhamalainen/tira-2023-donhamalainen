@@ -1,15 +1,17 @@
 package oy.interact.tira.student;
 
 /**
- * Exception class to be used in implementing ParenthesisChecker.checkParentheses().
+ * Exception class to be used in implementing
+ * ParenthesisChecker.checkParentheses().
  * 
- * When your code sees that the text to analyse has too many closing parentheses,
+ * When your code sees that the text to analyse has too many closing
+ * parentheses,
  * throw this exeption like this:
  * 
  * <code>
  * throw new ParenthesesException("Invalid parenthesis in file", ParenthesesException.TOO_MANY_CLOSING_PARENTHESES) ;
  * </code>
-*/
+ */
 public class ParenthesesException extends Exception {
    private static final long serialVersionUID = 1426141947123353829L;
    public static final int TOO_MANY_CLOSING_PARENTHESES = -1;
@@ -41,6 +43,7 @@ public class ParenthesesException extends Exception {
          return "Unknown error";
       }
    }
+
    @Override
    public String getMessage() {
       return String.format("%s in line %d column %d (error code %d)", codeAsString(), lineNumber, columnNumber, code);
