@@ -1,10 +1,10 @@
 package oy.interact.tira.util;
 
-public class Pair<K extends Comparable<K>,V> {
+public class Pair<K extends Comparable<K>, V> {
 	private K key;
 	private V value;
 	private boolean removed;
-	
+
 	public Pair(K key, V value) {
 		this.key = key;
 		this.value = value;
