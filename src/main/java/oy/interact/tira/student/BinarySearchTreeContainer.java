@@ -72,7 +72,6 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
         if (root == null) {
             return null;
         }
-        V value = null;
         TreeNode<K, V> currentNode = root;
         TreeNode<K, V> parent = null;
         StackInterface<TreeNode<K, V>> nodeStack = new StackImplementation<>();
@@ -84,13 +83,15 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
                 currentNode = currentNode.getLeft();
             } else {
                 parent = nodeStack.pop();
-                currentNode = parent.getRight();
                 if (searcher.test(parent.getValue())) {
-                    value = parent.getValue();
+                    // Kun löydetään haluttu arvo, niin palautetaan se heti
+                    return parent.getValue();
                 }
+                currentNode = parent.getRight();
             }
         }
-        return value;
+        // Ei löytynyt
+        return null;
     }
 
     @Override
@@ -102,7 +103,7 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
     @Override
     public int capacity() {
         // Palauttaa elementtien hetkellisen määrän puussa
-        return this.maxDepth;
+        return Integer.MAX_VALUE;
 
     }
 

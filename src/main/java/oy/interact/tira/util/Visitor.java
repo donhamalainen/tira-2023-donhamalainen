@@ -18,7 +18,7 @@ package oy.interact.tira.util;
  * 2. preorder, or
  * 3. postorder.
  */
-public interface Visitor<K extends Comparable<K>,V> {
+public interface Visitor<K extends Comparable<K>, V> {
 	/**
 	 * When a visitor wishes to visit a visitable, it calls the
 	 * accept method of the node. Node then calls the visitor's
@@ -29,7 +29,7 @@ public interface Visitor<K extends Comparable<K>,V> {
 	 * @param visitable The element to visit
 	 * @throws Exception
 	 */
-	void visit(Visitable<K,V> visitable) throws Exception;
+	void visit(Visitable<K, V> visitable) throws Exception;
 
 	/**
 	 * For situations where the visitor needs to allocate resources
