@@ -201,6 +201,7 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
             if (index < currentIndex) {
                 // vähennetään currentIndexistä 1 (vasemmalle mennessä indeksit pienenevät)
                 currentIndex--;
+                currentNode = currentNode.getLeftChild();
                 // JOS nodella on oikeanpuoleinen solmu
                 if (currentNode.getRightChild() != null) {
                     // vähennetään currentIndeksistä oikeanpuoleisen solmu lasten lukumäärä + 1
@@ -210,6 +211,7 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
             } else if (index > currentIndex) {
                 // lisätään currentIndexiin 1 (indeksit kasvavat oikealle mentäessä)
                 currentIndex++;
+                currentNode = currentNode.getRightChild();
                 // JOS nodella on vasemmanpuoleinen solmu
                 if (currentNode.getLeftChild() != null) {
                     // lisätään currentIndexiin vasemmanpuoleisen solmun lasten lukumäärä + 1
