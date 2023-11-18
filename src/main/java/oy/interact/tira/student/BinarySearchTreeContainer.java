@@ -143,27 +143,25 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
         if (root == null) {
             return -1;
         }
-
-        StackInterface<TreeNode<K, V>> nodeStack = new StackImplementation<>();
         TreeNode<K, V> currentNode = root;
-        TreeNode<K, V> parent = null;
         int index = 0;
-
-        while (!nodeStack.isEmpty() || currentNode != null) {
-            if (currentNode != null) {
-                nodeStack.push(currentNode);
-                parent = currentNode;
-                currentNode = currentNode.getLeftChild();
+        while (currentNode != null) {
+            int compare = comparator.compare(itemKey, currentNode.key);
+            if (compare < 0) {
+                // Siirry vasemmalle
+                currentNode = currentNode.leftChild;
             } else {
-                parent = nodeStack.pop();
-                currentNode = parent.getRightChild();
-                if (parent.getKey().equals(itemKey)) {
+                if (currentNode.leftChild != null) {
+                    index += currentNode.leftChild.size;
+                }
+                if (compare == 0) {
                     return index;
                 }
-                index++;
+                index++; // Siirrytään yksi eteenpäin nykyisestä solmusta
+                currentNode = currentNode.rightChild;
             }
         }
-        return -1;
+        return -1; // Avainta ei löytynyt
     }
 
     @Override
