@@ -185,8 +185,8 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
             return null;
         }
         // currentIndex on leftchild.childcount + 1, tai jos left childia ei ole, nolla
-        int currentIndex = root.getLeftChild().size + 1;
         TreeNode<K, V> currentNode = root;
+        int currentIndex = (currentNode.getLeftChild() != null) ? currentNode.getLeftChild().size + 1 : 0;
 
         // Toistetaan (huom!: tämä on siis iteratiivinen algoritmi) kunnes current on
         // null (on menty pohjalle eikä löydetty indeksiä)
