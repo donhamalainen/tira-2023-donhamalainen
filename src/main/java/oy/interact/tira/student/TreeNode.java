@@ -1,23 +1,38 @@
 package oy.interact.tira.student;
 
+import java.util.Comparator;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import oy.interact.tira.util.Pair;
 
 public class TreeNode<K extends Comparable<K>, V> {
+    // ATTRIBUTES
+    // ===============
+    // TASK 7
+    // ===============
     K key;
     V value;
-    public static int addDepth;
-    TreeNode<K, V> left;
-    TreeNode<K, V> right;
+    TreeNode<K, V> leftChild = null;
+    TreeNode<K, V> rightChild = null;
+    // LISÄATTRIBUUTIT
+    int size;
 
+    // ===============
+    // TASK 8
+    // ===============
+    private int hash = -1;
+    Pair<K, V> keyValue;
+
+    // CONSTRUCTORS
     public TreeNode(K key, V value) {
         this.key = key;
         this.value = value;
-        this.left = null;
-        this.right = null;
     }
 
+    // METHODS
+    // ===================================================
+    // GETTERS & SETTERS
+    // ===================================================
     public K getKey() {
         return key;
     }
@@ -34,25 +49,31 @@ public class TreeNode<K extends Comparable<K>, V> {
         this.value = value;
     }
 
-    public TreeNode<K, V> getLeft() {
-        return left;
+    public TreeNode<K, V> getLeftChild() {
+        return leftChild;
     }
 
-    public void setLeft(TreeNode<K, V> left) {
-        this.left = left;
+    public void setLeftChild(TreeNode<K, V> leftChild) {
+        this.leftChild = leftChild;
     }
 
-    public TreeNode<K, V> getRight() {
-        return right;
+    public TreeNode<K, V> getRightChild() {
+        return rightChild;
     }
 
-    public void setRight(TreeNode<K, V> right) {
-        this.right = right;
+    public void setRightChild(TreeNode<K, V> rightChild) {
+        this.rightChild = rightChild;
     }
+    // ===================================================
+    // REAL METHODS
+    // ===================================================
 
-    // Insert
-    public boolean insert(K key, V value) {
-        boolean result = false;
+    // INSERT
+
+    // Apumetodi solmujen lisäämiseksi
+    public boolean insert(K key, V value, Comparator<K> comparator) {
+        // Vertaillaan annettua avainta nykyiseen avaimeen.
+        int compare = comparator.compare(key, this.key);
         // Tarkistetaan että eihän ole sama arvo kyseessä
         if (this.value.equals(value)) {
             this.key = key;
@@ -60,59 +81,60 @@ public class TreeNode<K extends Comparable<K>, V> {
             return false;
         }
 
-        // Vasempaan haaraan
-        if (key.compareTo(this.key) <= 0) {
-            // TARKISTETAAN: Jos left side on null, niin luodaan uusi solmu
-            if (left == null) {
-                left = new TreeNode<K, V>(key, value);
-                addDepth++;
-                result = true;
+        // Vasempaan haara
+        if (compare <= 0) {
+            // Jos left side on null, niin luodaan uusi solmu
+            if (this.leftChild == null) {
+                this.leftChild = new TreeNode<K, V>(key, value);
+                this.size++; // Päivitetään solmun kokoa
+                return true;
             } else {
-                addDepth++;
-                result = left.insert(key, value);
+                this.leftChild.insert(key, value, comparator);
+                this.size++; // Päivitetään solmun kokoa
+                return true;
             }
             // Oikea haara
         } else {
-            // TARKISTETAAN: Jos right side on null, niin luodaan uusi solmu
-            if (right == null) {
-                right = new TreeNode<K, V>(key, value);
-                addDepth++;
-                result = true;
+            if (this.rightChild == null) {
+                this.rightChild = new TreeNode<K, V>(key, value);
+                this.size++; // Päivitetään solmun kokoa
+                return true;
             } else {
-                addDepth++;
-                result = right.insert(key, value);
+                this.rightChild.insert(key, value, comparator);
+                this.size++; // Päivitetään solmun kokoa
+                return true;
             }
         }
-        // PALAUTETAAN ARVO
-        return result;
     }
 
-    public V find(K key) {
-        V result = null;
-        // Lähdetään tarkastelemaan että onko key puussa
+    // FIND
+    public V find(K key, Comparator<K> comparator) {
+
+        // Vertaillaan annettua avainta nykyiseen avaimeen.
+        int compare = comparator.compare(key, this.key);
+
+        // Tarkastellaan että key on puussa
         if (this.key.equals(key)) {
-            result = this.value;
-            // Tarkastellaan ensin vasenta puolta
-        } else if (key.compareTo(this.key) <= 0) {
-            if (left != null) {
-                result = left.find(key);
-            }
-            // Tarkastellaan oikeaa puolta
-        } else {
-            if (right != null) {
-                result = right.find(key);
-            }
+            return this.value;
+            // Vasen haara
+        } else if (compare <= 0 && leftChild != null) {
+            return leftChild.find(key, comparator);
+            // Oikea haara
+        } else if (compare > 0 && rightChild != null) {
+            return rightChild.find(key, comparator);
         }
-        return result;
+        // EI LÖYTÄNYT
+        return null;
     }
 
+    // toArray
     public void toArray(Pair<K, V>[] array, AtomicInteger currentIndex) {
-        if (left != null) {
-            left.toArray(array, currentIndex);
+        if (leftChild != null) {
+            leftChild.toArray(array, currentIndex);
         }
         array[currentIndex.getAndIncrement()] = new Pair<K, V>(key, value);
-        if (right != null) {
-            right.toArray(array, currentIndex);
+        if (rightChild != null) {
+            rightChild.toArray(array, currentIndex);
         }
     }
 }
