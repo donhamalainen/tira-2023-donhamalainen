@@ -181,26 +181,41 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
         if (index < 0 || index >= size()) {
             throw new IndexOutOfBoundsException("Error: index out of bounds");
         }
-        int currentIndex = 0;
-        TreeNode<K, V> currentNode = root;
-        TreeNode<K, V> parent = null;
-        StackInterface<TreeNode<K, V>> stack = new StackImplementation<>();
-
         if (root == null) {
             return null;
         }
-        while (!stack.isEmpty() || currentNode != null) {
-            if (currentNode != null) {
-                stack.push(currentNode);
-                parent = currentNode;
-                currentNode = currentNode.getLeftChild();
-            } else {
-                parent = stack.pop();
-                currentNode = parent.getRightChild();
-                if (index == currentIndex) {
-                    return new Pair<>(parent.getKey(), parent.getValue());
+        // currentIndex on leftchild.childcount + 1, tai jos left childia ei ole, nolla
+        int currentIndex = root.getLeftChild().size + 1;
+        TreeNode<K, V> currentNode = root;
+
+        // Toistetaan (huom!: tämä on siis iteratiivinen algoritmi) kunnes current on
+        // null (on menty pohjalle eikä löydetty indeksiä)
+        while (currentNode != null) {
+            // Jos currentIndex == haettava, palautetaan current:n K,V Pair -oliossa.
+            if (currentIndex == index) {
+                // Löydettiin oikea solmu ja palautetaan
+                return new Pair<K, V>(currentNode.getKey(), currentNode.getValue());
+                // Mennään vasemmalle
+            }
+            // Jos haettava < currentIndex, mennään vasemmalle
+            if (index < currentIndex) {
+                // vähennetään currentIndexistä 1 (vasemmalle mennessä indeksit pienenevät)
+                currentIndex--;
+                // JOS nodella on oikeanpuoleinen solmu
+                if (currentNode.getRightChild() != null) {
+                    // vähennetään currentIndeksistä oikeanpuoleisen solmu lasten lukumäärä + 1
+                    currentIndex -= currentNode.getRightChild().size + 1;
                 }
+                // Jos haettava > currentIndex, mennään oikealle
+            } else if (index > currentIndex) {
+                // lisätään currentIndexiin 1 (indeksit kasvavat oikealle mentäessä)
                 currentIndex++;
+                // JOS nodella on vasemmanpuoleinen solmu
+                if (currentNode.getLeftChild() != null) {
+                    // lisätään currentIndexiin vasemmanpuoleisen solmun lasten lukumäärä + 1
+                    // (siellä on tämän haaran pienemmät indeksit)
+                    currentIndex += currentNode.getLeftChild().size + 1;
+                }
             }
         }
         return null;
