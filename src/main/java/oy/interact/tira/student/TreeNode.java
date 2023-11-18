@@ -15,7 +15,7 @@ public class TreeNode<K extends Comparable<K>, V> {
     TreeNode<K, V> leftChild = null;
     TreeNode<K, V> rightChild = null;
     // LISÄATTRIBUUTIT
-    int size;
+    int size = 0;
 
     // ===============
     // TASK 8
@@ -84,25 +84,23 @@ public class TreeNode<K extends Comparable<K>, V> {
         // Vasempaan haara
         if (compare <= 0) {
             // Jos left side on null, niin luodaan uusi solmu
-            if (this.leftChild == null) {
-                this.leftChild = new TreeNode<K, V>(key, value);
+            if (leftChild == null) {
+                leftChild = new TreeNode<K, V>(key, value);
                 this.size++; // Päivitetään solmun kokoa
                 return true;
             } else {
-                this.leftChild.insert(key, value, comparator);
                 this.size++; // Päivitetään solmun kokoa
-                return true;
+                return leftChild.insert(key, value, comparator);
             }
             // Oikea haara
         } else {
-            if (this.rightChild == null) {
-                this.rightChild = new TreeNode<K, V>(key, value);
+            if (rightChild == null) {
+                rightChild = new TreeNode<K, V>(key, value);
                 this.size++; // Päivitetään solmun kokoa
                 return true;
             } else {
-                this.rightChild.insert(key, value, comparator);
                 this.size++; // Päivitetään solmun kokoa
-                return true;
+                return rightChild.insert(key, value, comparator);
             }
         }
     }
