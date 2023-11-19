@@ -2,69 +2,71 @@ package oy.interact.tira.student;
 
 import java.util.Comparator;
 import java.util.concurrent.atomic.AtomicInteger;
+// Imports
 import java.util.function.Predicate;
 import oy.interact.tira.util.Pair;
 import oy.interact.tira.util.StackInterface;
 import oy.interact.tira.util.TIRAKeyedOrderedContainer;
 import oy.interact.tira.util.Visitor;
 
-public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TIRAKeyedOrderedContainer<K, V> {
-    ////////////////////////////////
-    // * ATTRIBUUTIT
-    ////////////////////////////////
+/* NOTES:
+- Key: "String";
+- Value: "Coder";
 
+Taulukkopohjaisessa toteutuksessa kun lajittelujärjestys muuttui, käytettiin lajittelualgoritmia (quicksort, heapsort,...) taulukon järjestyksen muuttamiseksi. BST:n tapauksessa luodaan uusi puu eri Comparator -toteutuksella, johon koodarit vanhasta puusta siirretään.
+*/
+// MAIN
+public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TIRAKeyedOrderedContainer<K, V> {
+    // ATTRIBUTES
+    TreeNode<K, V> root; // Root node of the tree, your private little helper class.
+    int size = 0; // Number of elements currently in the tree.
+    int maxDepth = 0; // Number of nodes in the tree
     private Comparator<K> comparator; // The comparator used to determine if new node will go to left or right
                                       // subtree.
 
-    private TreeNode<K, V> root; // Root node of the tree, your private little helper class.
-    private int maxDepth = 0; // Puun suurin syvyys
-    private int count = 0; // Puun elementtien määrä
-
-    ////////////////////////////////
-    // * KONSTRUKTORIT
-    ////////////////////////////////
-
+    // CONSTRUCTORS
     public BinarySearchTreeContainer(Comparator<K> comparator) {
         this.comparator = comparator;
-
     }
 
-    ////////////////////////////////
-    // * METODIT
-    ////////////////////////////////
-
+    // METODS
     @Override
     public void add(K key, V value) throws OutOfMemoryError, IllegalArgumentException {
-        // Jos puussa ei ole solmua
+        // Jos puussa ei ole vielä solmua, niin tehdään sellainen.
         if (root == null) {
             root = new TreeNode<K, V>(key, value);
-            count++;
-            maxDepth = 1;
+            this.size++;
+            this.maxDepth = 1;
         } else {
-            TreeNode.addDepth = 1;
-            if (root.insert(key, value)) {
-                maxDepth = Math.max(maxDepth, TreeNode.addDepth);
-                count++;
+            // Alustetaan TreeNode<K, V> size = 1.
+            root.addDepth = 1;
+            if (root.insert(key, value, comparator)) {
+                // Tallennetaan suurin syvyys vertailussa.
+                this.maxDepth = Math.max(this.maxDepth, root.addDepth);
+                this.size++;
             }
+
         }
     }
 
     @Override
     public V get(K key) throws IllegalArgumentException {
+        // Jos key on null.
         if (key == null) {
             throw new IllegalArgumentException("Error: key cannot be null");
         }
-        // Jos puussa ei ole solmua niin palautetaan null
+        // Jos Root on null.
         if (root == null) {
             return null;
         }
-        // muutoin lähdetään etsimään
-        return root.find(key);
+        // Lähdetään etsimään.
+        return root.find(key, comparator);
     }
 
     @Override
     public V remove(K key) throws IllegalArgumentException {
-        throw new IllegalArgumentException("Key cannot be null");
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'remove'");
     }
 
     @Override
@@ -72,6 +74,7 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
         if (root == null) {
             return null;
         }
+
         TreeNode<K, V> currentNode = root;
         TreeNode<K, V> parent = null;
         StackInterface<TreeNode<K, V>> nodeStack = new StackImplementation<>();
@@ -80,14 +83,14 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
             if (currentNode != null) {
                 nodeStack.push(currentNode);
                 parent = currentNode;
-                currentNode = currentNode.getLeft();
+                currentNode = currentNode.getLeftChild();
             } else {
                 parent = nodeStack.pop();
                 if (searcher.test(parent.getValue())) {
                     // Kun löydetään haluttu arvo, niin palautetaan se heti
                     return parent.getValue();
                 }
-                currentNode = parent.getRight();
+                currentNode = parent.getRightChild();
             }
         }
         // Ei löytynyt
@@ -96,15 +99,14 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
 
     @Override
     public int size() {
-        // Palautetaan puun
-        return this.count;
+        // Palauttaa size attribuutin
+        return this.size;
     }
 
     @Override
     public int capacity() {
-        // Palauttaa elementtien hetkellisen määrän puussa
+        // Palauttaa puun maximaalisen kapasiteetin
         return Integer.MAX_VALUE;
-
     }
 
     @Override
@@ -115,50 +117,71 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
 
     @Override
     public void clear() {
-        // Nollataan kaikki arvot
+        // Puhdistetaan kaikki
         root = null;
-        count = 0;
+        size = 0;
         maxDepth = 0;
     }
 
     @Override
-    @SuppressWarnings("Checked")
+    @SuppressWarnings("checked")
     public Pair<K, V>[] toArray() throws Exception {
-        Pair<K, V>[] array = (Pair<K, V>[]) new Pair[count];
+        Pair<K, V>[] array = (Pair<K, V>[]) new Pair[size];
         AtomicInteger arrayIndex = new AtomicInteger(0);
-
         if (root != null) {
             root.toArray(array, arrayIndex);
         }
         return array;
     }
 
+    // ====================================================
+    // VOIMME HYÖDYNTÄÄ LASTEN LUKUMÄÄRÄÄ
+    // ====================================================
     @Override
     public int indexOf(K itemKey) {
+
+        // Tarkistetaan että puu ei ole tyhjä
         if (root == null) {
             return -1;
         }
 
-        StackInterface<TreeNode<K, V>> nodeStack = new StackImplementation<>();
+        // Alustetaan
         TreeNode<K, V> currentNode = root;
-        TreeNode<K, V> parent = null;
-        int index = 0;
+        // currentIndex on leftchild.childcount + 1, tai jos left childia ei ole, nolla
+        int currentIndex = (currentNode.getLeftChild() != null) ? currentNode.getLeftChild().addDepth + 1 : 0;
+        // Toistetaan (huom!: tämä on siis iteratiivinen algoritmi) kunnes current on
+        // null (on menty pohjalle eikä löydetty indeksiä)
+        while (currentNode != null) {
+            // Vertailija
+            int compare = comparator.compare(itemKey, currentNode.key);
 
-        while (!nodeStack.isEmpty() || currentNode != null) {
-            if (currentNode != null) {
-                nodeStack.push(currentNode);
-                parent = currentNode;
-                currentNode = currentNode.getLeft();
-            } else {
-                parent = nodeStack.pop();
-                currentNode = parent.getRight();
-                if (parent.getKey().equals(itemKey)) {
-                    return index;
+            if (compare == 0) {
+                // Avain löytyi
+                return currentIndex;
+            } else if (compare < 0) {
+                // Siirrytään vasemmalle
+                // vähennetään currentIndexistä 1 (vasemmalle mennessä indeksit pienenevät)
+                currentIndex--;
+                currentNode = currentNode.getLeftChild();
+                // JOS nodella on oikeanpuoleinen solmu
+                if (currentNode.getRightChild() != null) {
+                    // vähennetään currentIndeksistä oikeanpuoleisen solmu lasten lukumäärä + 1
+                    currentIndex -= currentNode.getRightChild().addDepth + 1;
                 }
-                index++;
+            } else {
+                // Siirrytään oikealle
+                // lisätään currentIndexiin 1 (indeksit kasvavat oikealle mentäessä)
+                currentIndex++;
+                currentNode = currentNode.getRightChild();
+                // JOS nodella on vasemmanpuoleinen solmu
+                if (currentNode.getLeftChild() != null) {
+                    // lisätään currentIndexiin vasemmanpuoleisen solmun lasten lukumäärä + 1
+                    // (siellä on tämän haaran pienemmät indeksit)
+                    currentIndex += currentNode.getLeftChild().addDepth + 1;
+                }
             }
         }
-        return -1;
+        return -1; // Avainta ei löytynyt
     }
 
     @Override
@@ -166,30 +189,51 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
         if (index < 0 || index >= size()) {
             throw new IndexOutOfBoundsException("Error: index out of bounds");
         }
-        int currentIndex = 0;
-        TreeNode<K, V> currentNode = root;
-        TreeNode<K, V> parent = null;
-        StackInterface<TreeNode<K, V>> stack = new StackImplementation<>();
-
         if (root == null) {
             return null;
         }
-        while (!stack.isEmpty() || currentNode != null) {
-            if (currentNode != null) {
-                stack.push(currentNode);
-                parent = currentNode;
-                currentNode = currentNode.getLeft();
-            } else {
-                parent = stack.pop();
-                currentNode = parent.getRight();
-                if (index == currentIndex) {
-                    return new Pair<>(parent.getKey(), parent.getValue());
+        // currentIndex on leftchild.childcount + 1, tai jos left childia ei ole, nolla
+        TreeNode<K, V> currentNode = root;
+        int currentIndex = (currentNode.getLeftChild() != null) ? currentNode.getLeftChild().addDepth + 1 : 0;
+
+        // Toistetaan (huom!: tämä on siis iteratiivinen algoritmi) kunnes current on
+        // null (on menty pohjalle eikä löydetty indeksiä)
+        while (currentNode != null) {
+            // Jos currentIndex == haettava, palautetaan current:n K,V Pair -oliossa.
+            if (currentIndex == index) {
+                // Löydettiin oikea solmu ja palautetaan
+                return new Pair<K, V>(currentNode.getKey(), currentNode.getValue());
+                // Mennään vasemmalle
+            }
+            // Jos haettava < currentIndex, mennään vasemmalle
+            if (index < currentIndex) {
+                // vähennetään currentIndexistä 1 (vasemmalle mennessä indeksit pienenevät)
+                currentIndex--;
+                currentNode = currentNode.getLeftChild();
+                // JOS nodella on oikeanpuoleinen solmu
+                if (currentNode.getRightChild() != null) {
+                    // vähennetään currentIndeksistä oikeanpuoleisen solmu lasten lukumäärä + 1
+                    currentIndex -= currentNode.getRightChild().addDepth + 1;
                 }
+                // Jos haettava > currentIndex, mennään oikealle
+            } else if (index > currentIndex) {
+                // lisätään currentIndexiin 1 (indeksit kasvavat oikealle mentäessä)
                 currentIndex++;
+                currentNode = currentNode.getRightChild();
+                // JOS nodella on vasemmanpuoleinen solmu
+                if (currentNode.getLeftChild() != null) {
+                    // lisätään currentIndexiin vasemmanpuoleisen solmun lasten lukumäärä + 1
+                    // (siellä on tämän haaran pienemmät indeksit)
+                    currentIndex += currentNode.getLeftChild().addDepth + 1;
+                }
             }
         }
         return null;
     }
+
+    // ====================================================
+    // VOIMME HYÖDYNTÄÄ LASTEN LUKUMÄÄRRÄÄ (END)
+    // ====================================================
 
     @Override
     public int findIndex(Predicate<V> searcher) {
@@ -202,10 +246,10 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
             if (current != null) {
                 stack.push(current);
                 parent = current;
-                current = current.getLeft();
+                current = current.getLeftChild();
             } else {
                 parent = stack.pop();
-                current = parent.getRight();
+                current = parent.getRightChild();
                 if (searcher.test(parent.getValue())) {
                     return index;
                 }
@@ -220,5 +264,4 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'accept'");
     }
-
 }
