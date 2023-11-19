@@ -21,7 +21,7 @@ public class TreeNode<K extends Comparable<K>, V> {
     // TASK 8
     // ===============
     private int hash = -1;
-    Pair<K, V> keyValue;
+    // Pair<K, V> keyValue;
 
     // CONSTRUCTORS
     public TreeNode(K key, V value) {
@@ -80,26 +80,33 @@ public class TreeNode<K extends Comparable<K>, V> {
             this.value = value;
             return false;
         }
+        boolean result = false;
         // Vasempaan haara
         if (compare <= 0) {
             // Jos left side on null, niin luodaan uusi solmu
-            if (leftChild == null) {
-                leftChild = new TreeNode<K, V>(key, value);
+            if (this.leftChild == null) {
+                this.leftChild = new TreeNode<K, V>(key, value);
                 this.addDepth += 1; // Päivitetään solmun kokoa
                 return true;
             } else {
-                this.addDepth += 1; // Päivitetään solmun kokoa
-                return leftChild.insert(key, value, comparator);
+                result = this.leftChild.insert(key, value, comparator);
+                if (result) {
+                    this.addDepth += 1; // Päivitetään solmun kokoa, jos oikeasti lisättiin jotain
+                }
+                return result;
             }
             // Oikea haara
         } else {
-            if (rightChild == null) {
-                rightChild = new TreeNode<K, V>(key, value);
+            if (this.rightChild == null) {
+                this.rightChild = new TreeNode<K, V>(key, value);
                 this.addDepth += 1; // Päivitetään solmun kokoa
                 return true;
             } else {
-                this.addDepth += 1; // Päivitetään solmun kokoa
-                return rightChild.insert(key, value, comparator);
+                result = this.rightChild.insert(key, value, comparator);
+                if (result) {
+                    this.addDepth += 1; // Päivitetään solmun kokoa, jos oikeasti lisättiin jotain
+                }
+                return result;
             }
         }
     }

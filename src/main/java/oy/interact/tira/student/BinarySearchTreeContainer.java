@@ -139,37 +139,46 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
     // ====================================================
     @Override
     public int indexOf(K itemKey) {
+
         // Tarkistetaan että puu ei ole tyhjä
         if (root == null) {
             return -1;
         }
+
         // Alustetaan
         TreeNode<K, V> currentNode = root;
-        int index = 0;
-
-        //
+        // currentIndex on leftchild.childcount + 1, tai jos left childia ei ole, nolla
+        int currentIndex = (currentNode.getLeftChild() != null) ? currentNode.getLeftChild().addDepth + 1 : 0;
+        // Toistetaan (huom!: tämä on siis iteratiivinen algoritmi) kunnes current on
+        // null (on menty pohjalle eikä löydetty indeksiä)
         while (currentNode != null) {
             // Vertailija
             int compare = comparator.compare(itemKey, currentNode.key);
 
-            if (compare < 0) {
+            if (compare == 0) {
+                // Avain löytyi
+                return currentIndex;
+            } else if (compare < 0) {
                 // Siirrytään vasemmalle
+                // vähennetään currentIndexistä 1 (vasemmalle mennessä indeksit pienenevät)
+                currentIndex--;
                 currentNode = currentNode.getLeftChild();
+                // JOS nodella on oikeanpuoleinen solmu
+                if (currentNode.getRightChild() != null) {
+                    // vähennetään currentIndeksistä oikeanpuoleisen solmu lasten lukumäärä + 1
+                    currentIndex -= currentNode.getRightChild().addDepth + 1;
+                }
             } else {
-                // Jos oikealle siirtyessä, lisää vasemman alipuun solmujen määrä indeksiin
-                if (currentNode.getLeftChild() != null) {
-                    index += currentNode.getLeftChild().addDepth + 1;
-                } else {
-                    index++;
-                }
-
-                if (compare == 0) {
-                    // Avain löytyi
-                    return index;
-                }
-
-                // Siirry oikealle
+                // Siirrytään oikealle
+                // lisätään currentIndexiin 1 (indeksit kasvavat oikealle mentäessä)
+                currentIndex++;
                 currentNode = currentNode.getRightChild();
+                // JOS nodella on vasemmanpuoleinen solmu
+                if (currentNode.getLeftChild() != null) {
+                    // lisätään currentIndexiin vasemmanpuoleisen solmun lasten lukumäärä + 1
+                    // (siellä on tämän haaran pienemmät indeksit)
+                    currentIndex += currentNode.getLeftChild().addDepth + 1;
+                }
             }
         }
         return -1; // Avainta ei löytynyt
@@ -205,7 +214,6 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
                 if (currentNode.getRightChild() != null) {
                     // vähennetään currentIndeksistä oikeanpuoleisen solmu lasten lukumäärä + 1
                     currentIndex -= currentNode.getRightChild().addDepth + 1;
-                    System.out.println(currentIndex);
                 }
                 // Jos haettava > currentIndex, mennään oikealle
             } else if (index > currentIndex) {
