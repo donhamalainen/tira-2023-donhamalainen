@@ -177,6 +177,17 @@ Test#	   Count	ms      	ms/element
 
 ## 07-TASK
 
+### Tehtävä raportti
+
+Toteutin binäärisen hakupuun rakenteen "D" metodia hyödyntäen, joka oli todella iso parannus aikaisempaan in-order metodiin nähden.
+Nopeamman "D" metodin aikakompleksisuus on O(log n) ja in-order:n aikakompleksisuus oli O(n). Huomasin eron esimerkiksi BSTPerformanceTests.java testauksessa, johon minulla meni enemmän aikaa mitä ikä ja terveys olisi kestänyt. Kuitenkin vertailun vuoksi kyselin kavereiltani kauanko he ajoivat koodia, niin keskiarviolta monet sanoivat 4 tunnista - 1 päivään. 
+
+Päätin Refactoroida tämän binäärisen hakupuun ja tehdä sen vaikeamman "D" metodin. D metodin ideana oli vähän sama periaate kuin netistä löytyvästä AVL binäärisellä hakupuulla, jossa ideana oli pitää tallessa jokaisen aikuisen (parentin) alipuiden lukumäärän. Näin ollen kykenimme nopeuttamaan hakua, koska pysytimme ohittamaan tiettyjä puun osia. Luentomateriaalissa olevien pseudokoodien avulla onnistuin muuttamaan getIndex() ja indexOf() metodia onnistuneesti. 
+
+#### Suorituskyky analyysi
+Alla olevassa taulukossa esitetään suorituskykytestin tulokset eri operaatioille binäärisessä hakupuussa.
+
+![Chart](/student_images/task7_bts_chart.png)
 ## 08-TASK
 
 ## 09-TASK
