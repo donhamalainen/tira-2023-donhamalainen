@@ -6,10 +6,22 @@ import oy.interact.tira.util.Pair;
 import oy.interact.tira.util.TIRAKeyedContainer;
 
 public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyedContainer<K, V> {
-    {
 
-    }
+    /////////////////////////////////////////////
+    // ATTRIBUTES
+    /////////////////////////////////////////////
 
+    // Counting variables
+    int reallocateCount = 0;
+    int crushCount = 0;
+    int exploringCount = 0;
+    /////////////////////////////////////////////
+    // CONSTRUCTORS
+    /////////////////////////////////////////////
+
+    /////////////////////////////////////////////
+    // METHODS
+    /////////////////////////////////////////////
     @Override
     public void add(K key, V value) throws OutOfMemoryError, IllegalArgumentException {
         // TODO Auto-generated method stub
