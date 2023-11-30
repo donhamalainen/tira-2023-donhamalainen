@@ -65,6 +65,7 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
                 // collisionModifier);
             }
         } while (!added);
+
     }
 
     @Override
@@ -191,24 +192,4 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
         // Lisätään reallocate + 1
         reallocateCount++;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 31;
-        for (Pair<K, V> pair : array) {
-            // if (pair != null && !pair.isRemoved()) {
-            if (pair != null) {
-                hash = 31 * hash + (pair.getKey() == null ? 0 : pair.getKey().hashCode());
-                hash = 31 * hash + (pair.getValue() == null ? 0 : pair.getValue().hashCode());
-            }
-        }
-        return hash;
-    }
-
-    /*
-     * private static int hashFor(Object object) {
-     * return object.hashCode();
-     * }
-     */
-
 }

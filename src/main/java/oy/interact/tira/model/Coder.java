@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import oy.interact.tira.util.Pair;
+
 /**
  * https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Comparable.html#compareTo(T)
  * It is strongly recommended, but not strictly required that
@@ -215,7 +217,12 @@ public class Coder implements Comparable<Coder> {
 	 */
 	@Override
 	public int hashCode() {
-		return 0;
+		int hash = 31;
+		for (int index = 0; index < id.length(); index++) {
+			hash = hash * 31 + id.charAt(index);
+		}
+
+		return hash;
 	}
 
 }
