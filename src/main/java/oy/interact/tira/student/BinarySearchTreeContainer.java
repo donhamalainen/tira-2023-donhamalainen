@@ -39,13 +39,12 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
             this.maxDepth = 1;
         } else {
             // Alustetaan TreeNode<K, V> size = 1.
-            root.addDepth = 1;
+            TreeNode.addDepth = 1;
             if (root.insert(key, value, comparator)) {
                 // Tallennetaan suurin syvyys vertailussa.
-                this.maxDepth = Math.max(this.maxDepth, root.addDepth);
+                this.maxDepth = Math.max(this.maxDepth, TreeNode.addDepth);
                 this.size++;
             }
-
         }
     }
 
@@ -126,6 +125,7 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
     @Override
     @SuppressWarnings("checked")
     public Pair<K, V>[] toArray() throws Exception {
+        System.out.println("Puun syvyys: " + maxDepth);
         Pair<K, V>[] array = (Pair<K, V>[]) new Pair[size];
         AtomicInteger arrayIndex = new AtomicInteger(0);
         if (root != null) {
@@ -141,14 +141,14 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
     public int indexOf(K itemKey) {
 
         // Tarkistetaan että puu ei ole tyhjä
-        if (root == null) {
+        if (root == null || itemKey == null) {
             return -1;
         }
 
         // Alustetaan
         TreeNode<K, V> currentNode = root;
         // currentIndex on leftchild.childcount + 1, tai jos left childia ei ole, nolla
-        int currentIndex = (currentNode.getLeftChild() != null) ? currentNode.getLeftChild().addDepth + 1 : 0;
+        int currentIndex = (currentNode.getLeftChild() != null) ? currentNode.getLeftChild().childCount + 1 : 0;
         // Toistetaan (huom!: tämä on siis iteratiivinen algoritmi) kunnes current on
         // null (on menty pohjalle eikä löydetty indeksiä)
         while (currentNode != null) {
@@ -166,7 +166,7 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
                 // JOS nodella on oikeanpuoleinen solmu
                 if (currentNode.getRightChild() != null) {
                     // vähennetään currentIndeksistä oikeanpuoleisen solmu lasten lukumäärä + 1
-                    currentIndex -= currentNode.getRightChild().addDepth + 1;
+                    currentIndex -= currentNode.getRightChild().childCount + 1;
                 }
             } else {
                 // Siirrytään oikealle
@@ -177,7 +177,7 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
                 if (currentNode.getLeftChild() != null) {
                     // lisätään currentIndexiin vasemmanpuoleisen solmun lasten lukumäärä + 1
                     // (siellä on tämän haaran pienemmät indeksit)
-                    currentIndex += currentNode.getLeftChild().addDepth + 1;
+                    currentIndex += currentNode.getLeftChild().childCount + 1;
                 }
             }
         }
@@ -194,7 +194,7 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
         }
         // currentIndex on leftchild.childcount + 1, tai jos left childia ei ole, nolla
         TreeNode<K, V> currentNode = root;
-        int currentIndex = (currentNode.getLeftChild() != null) ? currentNode.getLeftChild().addDepth + 1 : 0;
+        int currentIndex = (currentNode.getLeftChild() != null) ? currentNode.getLeftChild().childCount + 1 : 0;
 
         // Toistetaan (huom!: tämä on siis iteratiivinen algoritmi) kunnes current on
         // null (on menty pohjalle eikä löydetty indeksiä)
@@ -213,7 +213,7 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
                 // JOS nodella on oikeanpuoleinen solmu
                 if (currentNode.getRightChild() != null) {
                     // vähennetään currentIndeksistä oikeanpuoleisen solmu lasten lukumäärä + 1
-                    currentIndex -= currentNode.getRightChild().addDepth + 1;
+                    currentIndex -= currentNode.getRightChild().childCount + 1;
                 }
                 // Jos haettava > currentIndex, mennään oikealle
             } else if (index > currentIndex) {
@@ -224,7 +224,7 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
                 if (currentNode.getLeftChild() != null) {
                     // lisätään currentIndexiin vasemmanpuoleisen solmun lasten lukumäärä + 1
                     // (siellä on tämän haaran pienemmät indeksit)
-                    currentIndex += currentNode.getLeftChild().addDepth + 1;
+                    currentIndex += currentNode.getLeftChild().childCount + 1;
                 }
             }
         }

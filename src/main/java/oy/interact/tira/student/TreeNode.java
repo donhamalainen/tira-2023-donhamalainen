@@ -15,13 +15,8 @@ public class TreeNode<K extends Comparable<K>, V> {
     TreeNode<K, V> leftChild = null;
     TreeNode<K, V> rightChild = null;
     // LISÄATTRIBUUTIT
-    int addDepth;
-
-    // ===============
-    // TASK 8
-    // ===============
-    private int hash = -1;
-    // Pair<K, V> keyValue;
+    public static int addDepth = 0;
+    int childCount = 0;
 
     // CONSTRUCTORS
     public TreeNode(K key, V value) {
@@ -64,6 +59,10 @@ public class TreeNode<K extends Comparable<K>, V> {
     public void setRightChild(TreeNode<K, V> rightChild) {
         this.rightChild = rightChild;
     }
+
+    public int getChildCount() {
+        return this.childCount;
+    }
     // ===================================================
     // REAL METHODS
     // ===================================================
@@ -86,12 +85,14 @@ public class TreeNode<K extends Comparable<K>, V> {
             // Jos left side on null, niin luodaan uusi solmu
             if (this.leftChild == null) {
                 this.leftChild = new TreeNode<K, V>(key, value);
-                this.addDepth += 1; // Päivitetään solmun kokoa
+                addDepth++; // Päivitetään solmun kokoa
+                childCount++;
                 return true;
             } else {
                 result = this.leftChild.insert(key, value, comparator);
                 if (result) {
-                    this.addDepth += 1; // Päivitetään solmun kokoa, jos oikeasti lisättiin jotain
+                    addDepth++; // Päivitetään solmun kokoa, jos oikeasti lisättiin jotain
+                    childCount++;
                 }
                 return result;
             }
@@ -99,12 +100,14 @@ public class TreeNode<K extends Comparable<K>, V> {
         } else {
             if (this.rightChild == null) {
                 this.rightChild = new TreeNode<K, V>(key, value);
-                this.addDepth += 1; // Päivitetään solmun kokoa
+                addDepth++; // Päivitetään solmun kokoa
+                childCount++;
                 return true;
             } else {
                 result = this.rightChild.insert(key, value, comparator);
                 if (result) {
-                    this.addDepth += 1; // Päivitetään solmun kokoa, jos oikeasti lisättiin jotain
+                    addDepth++; // Päivitetään solmun kokoa, jos oikeasti lisättiin jotain
+                    childCount++;
                 }
                 return result;
             }

@@ -19,6 +19,11 @@ public class Pair<K extends Comparable<K>, V> {
 		return value;
 	}
 
+	// Opiskelijan lisäämä
+	public void setValue(V value) {
+		this.value = value;
+	}
+
 	public boolean isRemoved() {
 		return removed;
 	}
