@@ -8,6 +8,8 @@ import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Arrays;
+import java.util.Comparator;
 
 import oy.interact.tira.factories.HashTableFactory;
 import oy.interact.tira.util.Pair;
@@ -132,16 +134,28 @@ public class CodeWordsCounter {
 		// frequency of use from hash table.
 		// 1. Get, from the hash table, pairs of all words and word counts from hash
 		// table to an array.
+		Pair<String, Integer>[] pairs = codeWords.toArray();
 		// 2. Use your fast sort algorithm to sort the array of pairs by word count,
 		// descending (!) order,
 		// so that the word that is most frequent, is the first in the array.
+		Arrays.sort(pairs, new Comparator<Pair<String, Integer>>() {
+			@Override
+			public int compare(Pair<String, Integer> pair1, Pair<String, Integer> pair2) {
+				return pair2.getValue().compareTo(pair1.getValue());
+			}
+		});
 		// 3. Allocate a new array (let's call it result array) of size topCount,
 		// or _smaller_ if the array has _less_ than topCount items.
 		// Let's say the resulting new array size is n.
+		int resultSize = Math.min(topCount, pairs.length);
+		Pair<String, Integer>[] result = new Pair[resultSize];
 		// 4. Put the first n items from the array of all pairs to this result array of
 		// size n.
+		for (int i = 0; i < resultSize; i++) {
+			result[i] = pairs[i];
+		}
 		// 5. Return the results array to caller.
-		return null; // TODO: return the array of codeword/count pairs.
+		return result;
 	}
 
 }
