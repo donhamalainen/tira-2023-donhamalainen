@@ -34,6 +34,7 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
     /////////////////////////////////////////////
     @Override
     public void add(K key, V value) throws OutOfMemoryError, IllegalArgumentException {
+
         if (key == null || value == null) {
             throw new IllegalArgumentException("Key & Value cannot be null");
         }
@@ -161,11 +162,14 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
     }
 
     ////////////////////////////////////////////////////////////////
-    // HashCode & Reallakointi & IndexFor
+    // Reallakointi & IndexFor
     ////////////////////////////////////////////////////////////////
 
     private int indexFor(int hash, int collisionModifier) {
-        return ((hash + collisionModifier) & 0x7FFFFFFF) % array.length;
+        final int c1 = 4;
+        final int c2 = 17;
+        return ((hash + c1 * collisionModifier + c2 * (collisionModifier * collisionModifier) & 0x7FFFFFFF)
+                % array.length);
     }
 
     // Reallakointi, kun siirretään elementit vanhasta taulukosta uuteen, niin

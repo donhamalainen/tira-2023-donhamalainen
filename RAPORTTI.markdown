@@ -188,6 +188,17 @@ Päätin Refactoroida tämän binäärisen hakupuun ja tehdä sen vaikeamman "D"
 Alla olevassa taulukossa esitetään suorituskykytestin tulokset eri operaatioille binäärisessä hakupuussa.
 
 ![Chart](/student_images/task7_bts_chart.png)
+
 ## 08-TASK
+
+### Tehtävä raportti
+Toteutin tehtävässä HashCode algorytmin, jonka perusideana on tuottaa uniikki hajautusarvo jokaiselle objektille. Jokaisen generoidun hajautusarvo mahdollistaa tehokkaan tallennuksen ja haun. Sen tarkoituksena on luoda hajautusarvoja jotka sijoitetaan jatkuvasti tasaisesti hajautusavaruuteen, jonka ansiosta minimoidaan törmäysten määrä. Törmäykset ovat tilanteita joissa kaksi eri avainta tuottavat saman hajautusarvon. En itse kokenut oikein ymmärtäväni tehtävää tai sitä kuinka itse hashCode toteutetaan tehokkaasti ja toimivasti koodissa. Sain todella paljon kuitenkin apua kavereilta ja videoista, jonka myötä voin todeta että tämä oli kurssin vaikein tehtävä. 
+
+![Chart](/student_images/task8_hashcode.png)
+
+#### Bugeja
+Koodissa on vielä muutamia bugeja kuten että luotaukset ja törmäykset ovat kokoajan samat. Enkä oikein ymmärtänyt miksi näin vaikka debuggasin asiaa todella kauan. 
+
+![Chart](/student_images/task8_hashcode_bug.png)
 
 ## 09-TASK
