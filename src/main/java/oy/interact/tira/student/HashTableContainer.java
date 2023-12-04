@@ -46,23 +46,24 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
         boolean added = false;
         int hash = key.hashCode();
         int collisionModifier = 0;
+        int currentProbingCount = 0;
         boolean collisionOccurred = false;
         // Jos kapasiteetistä on käytetty 60 % niin reallokoi
         // Koska LOAD_FACTOR on 1.60 eli 60% niin vähennetään siitä 1.
-        if ((double) count / capacity() >= (LOAD_FACTOR - 1)) {
+        if ((double) count / capacity() >= LOAD_FACTOR - 1) {
             reallocate();
         }
         do {
             int index = indexFor(hash, collisionModifier);
             if (array[index] == null) {
                 array[index] = new Pair<K, V>(key, value);
-                added = true;
                 count++; // Lisätään laskentaa
+                added = true;
                 // System.out.format("LISÄTTIIN %s INDEX %d%n", value, index);
             } else if (array[index].getKey().equals(key)) {
                 array[index] = new Pair<K, V>(key, value);
-                added = true;
                 pairUpdateCount++;
+                added = true;
                 // System.out.format("PÄIVITETTIIN %s INDEX %d%n", value, index);
             } else {
                 if (!collisionOccurred) {
@@ -85,7 +86,7 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
         }
         int hash = key.hashCode();
         int collisionModifier = 0;
-        while (collisionModifier < array.length) {
+        while (collisionModifier < capacity()) {
             int index = indexFor(hash, collisionModifier);
             Pair<K, V> pair = array[index];
             // if(pair != null && !pair.isRemoved())
@@ -160,7 +161,7 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
         System.out.println("Törmäys: " + crushCount);
         System.out.println("Luotaus: " + exploringCount);
         System.out.println("Paripäivitykset: " + pairUpdateCount);
-        for (int index = 0; index < array.length; index++) {
+        for (int index = 0; index < capacity(); index++) {
             // if(array[index] != null && !array[index].isRemoved()) {
             if (array[index] != null) {
                 arrayTwo[tempIndex++] = array[index];
@@ -177,7 +178,7 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
         final int c1 = 4;
         final int c2 = 17;
         return ((hash + c1 * collisionModifier + c2 * (collisionModifier * collisionModifier) & 0x7FFFFFFF)
-                % array.length);
+                % capacity());
     }
 
     // Reallakointi, kun siirretään elementit vanhasta taulukosta uuteen, niin
@@ -185,7 +186,7 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
     // uuden taulukon koko? 1.60x
     @SuppressWarnings("unchecked")
     private void reallocate() {
-        int newCapacity = (int) (array.length * LOAD_FACTOR);
+        int newCapacity = (int) (capacity() * LOAD_FACTOR);
         Pair<K, V>[] oldArray = array;
         array = (Pair<K, V>[]) new Pair[newCapacity];
 
