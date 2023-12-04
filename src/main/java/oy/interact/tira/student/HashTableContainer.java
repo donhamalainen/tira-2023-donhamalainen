@@ -15,6 +15,7 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
     private int count = 0;
     private int reallocateCount = 0;
     private int crushCount = 0;
+    private int pairUpdateCount = 0;
     private int exploringCount = 0;
 
     // static variables
@@ -27,6 +28,7 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
     @SuppressWarnings("unchecked")
     public HashTableContainer() {
         array = (Pair<K, V>[]) new Pair[DEFAULT_TABLE_SIZE];
+
     }
 
     /////////////////////////////////////////////
@@ -35,16 +37,19 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
     @Override
     public void add(K key, V value) throws OutOfMemoryError, IllegalArgumentException {
 
+        // Null arvojen tarkistus
         if (key == null || value == null) {
             throw new IllegalArgumentException("Key & Value cannot be null");
         }
 
+        // Alustus
         boolean added = false;
         int hash = key.hashCode();
         int collisionModifier = 0;
+        boolean collisionOccurred = false;
         // Jos kapasiteetistä on käytetty 60 % niin reallokoi
         // Koska LOAD_FACTOR on 1.60 eli 60% niin vähennetään siitä 1.
-        if ((double) count / array.length >= (LOAD_FACTOR - 1)) {
+        if ((double) count / capacity() >= (LOAD_FACTOR - 1)) {
             reallocate();
         }
         do {
@@ -55,13 +60,17 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
                 count++; // Lisätään laskentaa
                 // System.out.format("LISÄTTIIN %s INDEX %d%n", value, index);
             } else if (array[index].getKey().equals(key)) {
-                array[index].setValue(value);
+                array[index] = new Pair<K, V>(key, value);
                 added = true;
+                pairUpdateCount++;
                 // System.out.format("PÄIVITETTIIN %s INDEX %d%n", value, index);
             } else {
+                if (!collisionOccurred) {
+                    crushCount++; // Kasvattaa törmäyslaskuria vain ensimmäisellä törmäyksellä
+                    collisionOccurred = true;
+                }
+                exploringCount++; // Kasvattaa luotauslaskuria jokaisella yrityksellä
                 collisionModifier++;
-                exploringCount++;
-                crushCount++;
                 // System.out.format("TÖRMÄYS %s INDEX %d, collisionMod: %d%n", value, index,
                 // collisionModifier);
             }
@@ -150,6 +159,7 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
         System.out.println("Rellakointi: " + reallocateCount);
         System.out.println("Törmäys: " + crushCount);
         System.out.println("Luotaus: " + exploringCount);
+        System.out.println("Paripäivitykset: " + pairUpdateCount);
         for (int index = 0; index < array.length; index++) {
             // if(array[index] != null && !array[index].isRemoved()) {
             if (array[index] != null) {
