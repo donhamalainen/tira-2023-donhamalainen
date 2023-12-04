@@ -19,7 +19,7 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
 
     // static variables
     private static final int DEFAULT_TABLE_SIZE = 10;
-    private static final double LOAD_FACTOR = 1.60;
+    private static final double LOAD_FACTOR = 1.65;
 
     /////////////////////////////////////////////
     // CONSTRUCTORS
@@ -76,14 +76,13 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
         }
         int hash = key.hashCode();
         int collisionModifier = 0;
-
         while (collisionModifier < array.length) {
             int index = indexFor(hash, collisionModifier);
             Pair<K, V> pair = array[index];
             // if(pair != null && !pair.isRemoved())
             if (pair != null) {
                 if (key.equals(pair.getKey())) {
-                    return pair.getValue();
+                    return pair.getValue(); // Avain löytyi
                 }
             }
             collisionModifier++;
@@ -140,7 +139,6 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
         this.crushCount = 0;
         this.exploringCount = 0;
         this.reallocateCount = 0;
-
     }
 
     @Override
@@ -174,7 +172,7 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
 
     // Reallakointi, kun siirretään elementit vanhasta taulukosta uuteen, niin
     // niille pitää laskea uusi INDEKSI!! Kun reallakointi tehdään, niin mikä on
-    // uuden taulukon koko? x2
+    // uuden taulukon koko? 1.60x
     @SuppressWarnings("unchecked")
     private void reallocate() {
         int newCapacity = (int) (array.length * LOAD_FACTOR);
