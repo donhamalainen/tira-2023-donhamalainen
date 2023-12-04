@@ -192,9 +192,14 @@ Alla olevassa taulukossa esitetään suorituskykytestin tulokset eri operaatioil
 ## 08-TASK
 
 ### Tehtävä raportti
-Toteutin tehtävässä HashCode algorytmin, jonka perusideana on tuottaa uniikki hajautusarvo jokaiselle objektille. Jokaisen generoidun hajautusarvo mahdollistaa tehokkaan tallennuksen ja haun. Sen tarkoituksena on luoda hajautusarvoja jotka sijoitetaan jatkuvasti tasaisesti hajautusavaruuteen, jonka ansiosta minimoidaan törmäysten määrä. Törmäykset ovat tilanteita joissa kaksi eri avainta tuottavat saman hajautusarvon. En itse kokenut oikein ymmärtäväni tehtävää tai sitä kuinka itse hashCode toteutetaan tehokkaasti ja toimivasti koodissa. Sain todella paljon kuitenkin apua kavereilta ja videoista, jonka myötä voin todeta että tämä oli kurssin vaikein tehtävä. 
+Tehtävässä toteutin hajautustaulun (hashtable) joka on tietorakenne. Tämä tietorakenne mahdollistaa nopean lisäämisen, päivittämisen ja poistamisen antamalla jokaiselle objektille arvon. Tämä arvo on siis liitetty niille vastaaviin arvoihin. Opetellessani ja tutkiessani hajautustaulukon toiminta periaatetta, huomasin että toteutin suljetun hajautetuntaulukon (closed addressing). Hajautustaulu laskee törmäyksiä, luotauksia ja reallakointeja. Aikakompleksisuus tällä algorytmillä on lisäämisessä O(1), jos kollisioita ei tapahdu, mutta jos tapahtuu niin sillon O(n). Opin myös että poistaessa hajautustaulusta, ei saa oikeasti poistaa elementtiä, koska jos hajautustaulu havaitsee null arvoisen elementin niin se ymmärtää että haettavaa elementtiä ei ole taulukossa. Tämän takia poisto pitää tehdä totuusarvon avulla. 
+
+Alla nähtävässä CVS tiedostosta saadusta data:sta voidaan tarkastella nopeutta millisekuntteina. Huomataan mm. nopeus elementtien lisäämisen ja hakemisen aikana. 
 
 ![Chart](/student_images/task8_hashcode.png)
+
+Omasta mielestäni minulle ei oikein selkeytynyt hajautustaulun perinpohjainen idea tai toteutus koodimuodolle. Ymmärsin tehtävää tehdessä kuitenkin loppujen lopuksi idean mutta en kuitenkaan samalla tavalla kuin aikaisemmat tehtävät.
+
 
 #### Bugeja
 Koodissa on vielä muutamia bugeja kuten että luotaukset ja törmäykset ovat kokoajan samat. Enkä oikein ymmärtänyt miksi näin vaikka debuggasin asiaa todella kauan. 
