@@ -15,6 +15,11 @@ public class Pair<K extends Comparable<K>, V> {
 		return key;
 	}
 
+	// Opiskelijan lisäämä
+	public void setKey(K key) {
+		this.key = key;
+	}
+
 	public V getValue() {
 		return value;
 	}

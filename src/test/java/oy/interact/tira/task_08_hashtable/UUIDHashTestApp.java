@@ -63,7 +63,7 @@ import java.util.UUID;
 public class UUIDHashTestApp {
 
     // Kuinka monta UUID:tä testissä luodaan.
-    private static final int TEST_UUID_COUNT = 50;
+    private static final int TEST_UUID_COUNT = 50000;
     // Mikä on hajautustaulun load factor, eli paljonko siellä
     // on vapaata suhteessa aineiston kokoon. Tässä taulukko täytettäisiin n.
     // 62%:sti
