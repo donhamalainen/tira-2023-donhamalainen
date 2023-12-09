@@ -14,13 +14,12 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
     // Counting variables
     private int count = 0;
     private int collisionCount = 0;
-    private int probingCount = 0;
     private int maxProbingCount = 0;
     private int pairUpdateCount = 0;
     private int reallocateCount = 0;
     // static variables
     private static final int DEFAULT_TABLE_SIZE = 10;
-    private static final double LOAD_FACTOR = 0.60;
+    private static final double LOAD_FACTOR = 0.50;
 
     /////////////////////////////////////////////
     // CONSTRUCTORS
@@ -55,8 +54,7 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
                 added = true;
                 count++;
             } else if (array[index].getKey().equals(key)) {
-                array[index].setKey(key);
-                array[index].setValue(value);
+                array[index] = new Pair<K, V>(key, value);
                 added = true;
                 pairUpdateCount++;
             } else {
@@ -135,7 +133,6 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
         array = (Pair<K, V>[]) new Pair[DEFAULT_TABLE_SIZE];
         this.count = 0;
         this.collisionCount = 0;
-        this.probingCount = 0;
         this.maxProbingCount = 0;
         this.pairUpdateCount = 0;
     }
@@ -149,7 +146,7 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
         StringBuilder sb = new StringBuilder();
         sb.append("Count\t\t: " + size() + "\n");
         sb.append("Capacity\t: " + capacity() + "\n");
-        sb.append("Filled to\t: " + ((size() / capacity()) * 100) + "\n");
+        sb.append("Filled to\t: " + String.format("%.2f", ((double) size() / capacity()) * 100) + "\n");
         sb.append("Collisions\t: " + collisionCount + "\n");
         sb.append("Pair Updates\t: " + pairUpdateCount + "\n");
         sb.append("Load Factory\t: " + LOAD_FACTOR + "\n");
@@ -169,10 +166,11 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
     ////////////////////////////////////////////////////////////////
 
     private int indexFor(int hash, int hashModifier) {
-        final int c1 = 4;
-        final int c2 = 17;
+        final int c1 = 29;
+        final int c2 = 31;
         // Quadradic PROBING
-        return ((hash + c1 * hashModifier + c2 * (hashModifier * hashModifier)) & 0x7FFFFFFF) % this.array.length;
+        return ((hash + c1 * hashModifier + c2 * (hashModifier * hashModifier)) &
+                0x7FFFFFFF) % this.array.length;
 
     }
 
@@ -184,7 +182,6 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
         // Nollataan laskurit
         this.count = 0;
         this.collisionCount = 0;
-        this.probingCount = 0;
         this.maxProbingCount = 0;
         this.pairUpdateCount = 0;
 
