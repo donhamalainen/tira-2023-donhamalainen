@@ -19,7 +19,7 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
     private int reallocateCount = 0;
     // static variables
     private static final int DEFAULT_TABLE_SIZE = 10;
-    private static final double LOAD_FACTOR = 0.50;
+    private static final double LOAD_FACTOR = 0.60;
 
     /////////////////////////////////////////////
     // CONSTRUCTORS
@@ -166,7 +166,7 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
     ////////////////////////////////////////////////////////////////
 
     private int indexFor(int hash, int hashModifier) {
-        final int c1 = 29;
+        final int c1 = 17;
         final int c2 = 31;
         // Quadradic PROBING
         return ((hash + c1 * hashModifier + c2 * (hashModifier * hashModifier)) &
