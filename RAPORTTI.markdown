@@ -198,12 +198,31 @@ Alla nähtävässä CVS tiedostosta saadusta data:sta voidaan tarkastella nopeut
 
 ![Chart](/student_images/task8_hashcode.png)
 
-Omasta mielestäni minulle ei oikein selkeytynyt hajautustaulun perinpohjainen idea tai toteutus koodimuodolle. Ymmärsin tehtävää tehdessä kuitenkin loppujen lopuksi idean mutta en kuitenkaan samalla tavalla kuin aikaisemmat tehtävät.
+Aluksi en oikein ollut kärryillä Hash Table:n toteutuksesta ja koodasinkin tehtävää pitkälti ajattelematta asiaa sen syvemmin. Huomasin kuitenkin tällöin ongelman joka oli törmäysten lukumäärä. Päätin refactoroida koodin ja päädyin lisäämään mm. neliöllisen törmäysten käsittelijän indexFor() metodiin. Käytän indexFor() metodissa alkuarvoja jotka parantavat uuden arvon löytämistä. Tein myös hieman muutoksia HashCode() metodiin joka on suuressa osassa tätä tehtävää. Sen toimivuus ratkaisee mm sen että kuinka paljon klusterointia eli ryhmittymistä tai hajavaisuutta tulee taulukkoon lisättäessä. Vaikka tein omasta mielestä todella tehokkaita muutoksia niin tuloksissa se ei näy sillä saan vielä todella paljon törmäyksiä esim:
 
+```
+Count: 1000000
+Capacity: 1961502
+Filled to: 50,98
+Collisions: 441252
+Pair Updates: 0
+Load Factory: 0.6
+Max probing: 17
+-------------------
+Count: 2000000
+Capacity: 5021444
+Filled to: 39,83
+Collisions: 602950
+Pair Updates: 0
+Load Factory: 0.6
+Max probing: 15
+```
 
-#### Bugeja
-Koodissa on vielä muutamia bugeja kuten että luotaukset ja törmäykset ovat kokoajan samat. Enkä oikein ymmärtänyt miksi näin vaikka debuggasin asiaa todella kauan. 
+Huomataan että törmäyksien määrä on todella valtava. Myös Antin tarjoamassa testauksessa saan seuraavanlaisia tuloksia:
+```
+Hashtable size: 80000, UUID count: 50000, initial collisions: 49655, all collisions: 1229074727
+```
 
-![Chart](/student_images/task8_hashcode_bug.png)
+Huomasin myös koodissani *Bugin* jota yritin debugata 2pv. Bugi on ikuiseen silmukkaan jääminen add() metodin yhteydessä. Se on satunnainen ja vaihtelee n. 2 yrityksestä 54 yritykseen jolloin se saattaa ilmetä kerran. En tiedä mistä se johtuu ja sen debuggaaminen oli ja on todella vaikeaa, sillä en koskaan tiedä milloin se ilmenee. Kuitenkin huomasin että hashModifier saattaa tällöin olla todella suuriluku kuten 2 miljoonaa tai 5 miljoonaa.
 
 ## 09-TASK
