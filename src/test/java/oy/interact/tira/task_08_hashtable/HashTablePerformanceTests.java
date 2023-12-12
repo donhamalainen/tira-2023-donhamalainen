@@ -83,11 +83,11 @@ public class HashTablePerformanceTests {
 				DecimalFormat df = new DecimalFormat("0.0000", DecimalFormatSymbols.getInstance(Locale.US));
 				while (currentIndex < testFiles.length) {
 					System.out.format(
-							"%d/%d ==> Starting to analyse HashTable with %s %s%n",
-							currentIndex + 1,
-							testFiles.length,
-							testFiles[currentIndex],
-							new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
+						"%d/%d ==> Starting to analyse HashTable with %s %s%n", 
+						currentIndex + 1, 
+						testFiles.length, 
+						testFiles[currentIndex], 
+						new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
 					final TIRAKeyedContainer<String, Coder> hashTable = HashTableFactory.createHashTable();
 					assertNotNull(hashTable,
 							() -> "HashTableFactory.createHashTable() returns null, not yet implemented?");
@@ -99,8 +99,7 @@ public class HashTablePerformanceTests {
 					long end = System.currentTimeMillis();
 					long duration = end - start;
 					// Also test if all coders are in the hashtable
-					assertEquals(coders.length, hashTable.size(),
-							"Test array size and hashtable size must be the same");
+					assertEquals(coders.length, hashTable.size(), "Test array size and hashtable size must be the same");
 					System.out.format(" Step 3/6: Adding to HashTable from Coders array it took %d ms%n", duration);
 
 					writer.append(Long.toString(hashTable.size()));
@@ -114,8 +113,7 @@ public class HashTablePerformanceTests {
 					// Searching
 					start = System.currentTimeMillis();
 					for (Coder coder : coders) {
-						assertDoesNotThrow(() -> found = hashTable.get(coder.getId()),
-								"hashTable.get(K) must not throw");
+						assertDoesNotThrow(() -> found = hashTable.get(coder.getId()), "hashTable.get(K) must not throw");
 						assertEquals(coder, found, "Found coder must be equal to the searched coder");
 					}
 					end = System.currentTimeMillis();
@@ -149,7 +147,7 @@ public class HashTablePerformanceTests {
 
 					writer.append(Long.toString(findDuration));
 					writer.append(separator);
-					perItem = df.format((double) findDuration / (double) codersLength);
+					perItem = df.format((double)findDuration / (double) codersLength);
 					writer.append(perItem);
 					writer.append(separator);
 					writer.append(testFiles[currentIndex]);

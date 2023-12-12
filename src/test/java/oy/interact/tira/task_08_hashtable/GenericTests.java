@@ -23,13 +23,14 @@ import oy.interact.tira.student.Algorithms;
 import oy.interact.tira.util.Pair;
 import oy.interact.tira.util.TIRAKeyedContainer;
 
+
 @DisplayName("Testing that the implementations are really generic.")
 public class GenericTests {
 
     // Implementations to test:
     static TIRAKeyedContainer<String, Integer> hashTable = null;
     static final int TEST_COUNT = 100;
-    static Pair<String, Integer>[] testArray;
+    static Pair<String, Integer> [] testArray;
     static int testIndex = 0;
     static Integer testValue;
     static boolean testResult;
@@ -74,33 +75,28 @@ public class GenericTests {
             Collections.shuffle(randomList);
             for (int index = 0; index < TEST_COUNT; index++) {
                 final int findValue = index;
-                assertDoesNotThrow(
-                        () -> hashTable.add(randomList.get(findValue), Integer.parseInt(randomList.get(findValue))),
-                        "HashTable add must not throw");
+                assertDoesNotThrow(() -> hashTable.add(randomList.get(findValue), Integer.parseInt(randomList.get(findValue))), "HashTable add must not throw");
             }
             System.out.println(">> Testing HashTable with " + hashTable.size() + " entries");
             assertEquals(TEST_COUNT, hashTable.size(), () -> "Inserted count must match");
             for (int index = 0; index < TEST_COUNT; index++) {
                 final int findValue = index;
-                assertDoesNotThrow(() -> testValue = hashTable.get(String.valueOf(findValue)),
-                        "HashTable find must not throw");
+                assertDoesNotThrow( () -> testValue = hashTable.get(String.valueOf(findValue)), "HashTable find must not throw");
                 assertEquals(index, testValue, () -> "Inserted and retrieved values must match");
             }
-            assertNull(hashTable.get(String.valueOf(TEST_COUNT + 42)),
-                    () -> "Must return null when element not in tree");
-            assertDoesNotThrow(() -> testArray = hashTable.toArray(), "HashTable toArray must not throw");
+            assertNull(hashTable.get(String.valueOf(TEST_COUNT + 42)), () -> "Must return null when element not in tree");
+            assertDoesNotThrow( () -> testArray = hashTable.toArray(), "HashTable toArray must not throw");
             assertNotNull(testArray, () -> "Returned array from toSortedArray must not be null");
-            assertEquals(randomList.size(), testArray.length,
-                    () -> "Test array and toSortedArray lengths do not match");
-            String[] originalArray = new String[randomList.size()];
+            assertEquals(randomList.size(), testArray.length, () -> "Test array and toSortedArray lengths do not match");
+            String [] originalArray = new String[randomList.size()];
             int index = 0;
             for (String item : randomList) {
                 originalArray[index++] = item;
             }
             Algorithms.fastSort(originalArray);
-            String[] keys = new String[testArray.length];
+            String [] keys = new String[testArray.length];
             index = 0;
-            for (Pair<String, Integer> pair : testArray) {
+            for (Pair<String,Integer> pair : testArray) {
                 keys[index++] = pair.getKey();
             }
             Algorithms.fastSort(keys);
@@ -136,14 +132,11 @@ public class GenericTests {
         assertEquals(1, hashTable.size(), "After adding two identical keys, HashTable size must be one (1)");
         assertDoesNotThrow(() -> testValue = hashTable.find(intValue -> intValue.equals(21)));
         assertNull(testValue, "Value must not be in the dictionary in this test");
-        assertDoesNotThrow(() -> testValue = hashTable.get(duplicateUUID),
-                "get(K) should not throw even though key not in HashTable");
-        assertNotNull(testValue,
-                "Value for this key must not be null. it was erased by duplicate value, different value");
+        assertDoesNotThrow(() -> testValue = hashTable.get(duplicateUUID), "get(K) should not throw even though key not in HashTable");
+        assertNotNull(testValue, "Value for this key must not be null. it was erased by duplicate value, different value");
         assertEquals(42, testValue, "The last value put to hashtable with the same key should be in table");
-        assertDoesNotThrow(() -> testValue = hashTable.get(notUsedUUID),
-                "get(K) should not throw when key is in HashTable");
-        assertNull(testValue, "Value for this key must not be null");
+        assertDoesNotThrow(() -> testValue = hashTable.get(notUsedUUID), "get(K) should not throw when key is in HashTable");
+        assertNull(testValue, "Value for this key must not be null");        
         hashTable.clear();
     }
 

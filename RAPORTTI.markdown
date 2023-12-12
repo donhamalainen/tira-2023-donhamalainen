@@ -184,10 +184,10 @@ Nopeamman "D" metodin aikakompleksisuus on O(log n) ja in-order:n aikakompleksis
 
 Päätin Refactoroida tämän binäärisen hakupuun ja tehdä sen vaikeamman "D" metodin. D metodin ideana oli vähän sama periaate kuin netistä löytyvästä AVL binäärisellä hakupuulla, jossa ideana oli pitää tallessa jokaisen aikuisen (parentin) alipuiden lukumäärän. Näin ollen kykenimme nopeuttamaan hakua, koska pysytimme ohittamaan tiettyjä puun osia. Luentomateriaalissa olevien pseudokoodien avulla onnistuin muuttamaan getIndex() ja indexOf() metodia onnistuneesti. 
 
-#### Suorituskyky analyysi
 Alla olevassa taulukossa esitetään suorituskykytestin tulokset eri operaatioille binäärisessä hakupuussa.
 
 ![Chart](/student_images/task7_bts_chart.png)
+
 
 ## 08-TASK
 
@@ -219,6 +219,7 @@ Max probing: 15
 ```
 
 Huomataan että törmäyksien määrä on todella valtava. Myös Antin tarjoamassa testauksessa saan seuraavanlaisia tuloksia:
+
 ```
 Hashtable size: 80000, UUID count: 50000, initial collisions: 49655, all collisions: 1229074727
 ```
