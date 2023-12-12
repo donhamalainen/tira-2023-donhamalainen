@@ -51,12 +51,12 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
             int index = indexFor(hash, hashModifier);
             if (array[index] == null) {
                 array[index] = new Pair<K, V>(key, value);
-                added = true;
                 count++;
+                added = true;
             } else if (array[index].getKey().equals(key)) {
                 array[index] = new Pair<K, V>(key, value);
-                added = true;
                 pairUpdateCount++;
+                added = true;
             } else {
                 hashModifier++;
                 collisionCount++;
@@ -146,11 +146,12 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
         StringBuilder sb = new StringBuilder();
         sb.append("Count\t\t: " + size() + "\n");
         sb.append("Capacity\t: " + capacity() + "\n");
-        sb.append("Filled to\t: " + String.format("%.2f", ((double) size() / capacity()) * 100) + "\n");
         sb.append("Collisions\t: " + collisionCount + "\n");
+        sb.append("Filled to\t: " + String.format("%.2f", ((double) size() / capacity()) * 100) + "\n");
         sb.append("Pair Updates\t: " + pairUpdateCount + "\n");
         sb.append("Load Factory\t: " + LOAD_FACTOR + "\n");
         sb.append("Max probing\t: " + maxProbingCount + "\n");
+
         System.out.println(sb.toString());
         for (int index = 0; index < this.array.length; index++) {
             // if(array[index] != null && !array[index].isRemoved()) {
@@ -166,8 +167,8 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
     ////////////////////////////////////////////////////////////////
 
     private int indexFor(int hash, int hashModifier) {
-        final int c1 = 17;
-        final int c2 = 31;
+        final int c1 = 4;
+        final int c2 = 17;
         // Quadradic PROBING
         return ((hash + c1 * hashModifier + c2 * (hashModifier * hashModifier)) &
                 0x7FFFFFFF) % this.array.length;
