@@ -20,30 +20,30 @@ public class DisconnectednessTests {
 
     static List<?> notVisited;
 
-    @Test 
-    public void testConnectedUndirectedGraph()
-    {
+    @Test
+    public void testConnectedUndirectedGraph() {
         IntegerTestGraph testGraph = IntegerTestGraph.createSimpleUndirectedGraph();
         assertNotNull(testGraph, () -> "Test graph not created though it should have");
         assertDoesNotThrow(() -> notVisited = testGraph.disconnectedVertices(null));
-        assertTrue(notVisited.isEmpty(), () -> "This graph should be connected and not visited list should be then empty");
+        assertTrue(notVisited.isEmpty(),
+                () -> "This graph should be connected and not visited list should be then empty");
     }
 
-    @Test 
-    public void testConnectedDirectedGraph()
-    {
+    @Test
+    public void testConnectedDirectedGraph() {
         IntegerTestGraph testGraph = IntegerTestGraph.createSimpleDirectedGraph();
         assertNotNull(testGraph, () -> "Test graph not created");
-        // We know the graph structure and know that from vertex 1 you can get to all places in this directed graph.
+        // We know the graph structure and know that from vertex 1 you can get to all
+        // places in this directed graph.
         Vertex<Integer> startVertex = testGraph.getVertexFor(1);
         assertNotNull(startVertex, "Turku should be in the train network as a vertex");
         assertDoesNotThrow(() -> notVisited = testGraph.disconnectedVertices(startVertex));
-        assertTrue(notVisited.isEmpty(), () -> "This graph should be connected and not visited list should be then empty");
+        assertTrue(notVisited.isEmpty(),
+                () -> "This graph should be connected and not visited list should be then empty");
     }
 
-    @Test 
-    public void testDisconnectedUndirectedGraph()
-    {
+    @Test
+    public void testDisconnectedUndirectedGraph() {
         IntegerTestGraph testGraph = IntegerTestGraph.createSimpleUndirectedDisconnectedGraph();
         assertNotNull(testGraph, () -> "Test graph not created");
         assertDoesNotThrow(() -> notVisited = testGraph.disconnectedVertices(null));

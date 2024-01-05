@@ -4,7 +4,6 @@ import oy.interact.tira.NotYetImplementedException;
 
 import oy.interact.tira.model.Coder;
 import oy.interact.tira.student.ArrayQueue;
-import oy.interact.tira.student.LinkedListQueue;
 import oy.interact.tira.util.QueueInterface;
 
 public class QueueFactory {

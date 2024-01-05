@@ -16,7 +16,7 @@ package oy.interact.tira.student.graph;
 public class Edge<T> {
 
    /** The source of the edge. */
-   private Vertex<T> source  = null;
+   private Vertex<T> source = null;
    /** The destination of the edge. */
    private Vertex<T> destination = null;
    /** The weight of the edge, 1.0 by default. */
@@ -28,19 +28,22 @@ public class Edge<T> {
    public enum EdgeType {
       /** Directed edge goes from source to destination but not back. */
       DIRECTED,
-      /** Undirected edge goes from source to destination and back (as another edge). */
+      /**
+       * Undirected edge goes from source to destination and back (as another edge).
+       */
       UNDIRECTED;
    }
-   
+
    /**
     * Constructs an Edge with a source and destination vertices and the
     * edge's weight.
-    * @param source The source Vertex.
+    * 
+    * @param source      The source Vertex.
     * @param destination The destination Vertex.
-    * @param weight The weight of the edge.
+    * @param weight      The weight of the edge.
     */
    Edge(Vertex<T> source, Vertex<T> destination, double weight) {
-      assert(source != null && destination != null);
+      assert (source != null && destination != null);
       this.source = source;
       this.destination = destination;
       this.weight = weight;
@@ -48,6 +51,7 @@ public class Edge<T> {
 
    /**
     * Gets the source vertex of the edge.
+    * 
     * @return The source vertex.
     */
    public Vertex<T> getSource() {
@@ -56,14 +60,16 @@ public class Edge<T> {
 
    /**
     * Gets the destination vertex of the edge.
+    * 
     * @return The destination vertex.
     */
-    public Vertex<T> getDestination() {
+   public Vertex<T> getDestination() {
       return destination;
    }
 
    /**
     * Gets the weight of the edge.
+    * 
     * @return Edge's weight.
     */
    public double getWeigth() {
@@ -81,6 +87,7 @@ public class Edge<T> {
 
    /**
     * Provides a string representation of the edge.
+    * 
     * @return The edge represented as a string.
     */
    @Override
@@ -91,6 +98,7 @@ public class Edge<T> {
    /**
     * Checks if the edge is identical to another.
     * Edges are equal if the source and destination vertices are the same.
+    * 
     * @return Returns true if the edges are identical.
     */
    @SuppressWarnings("unchecked")
@@ -103,7 +111,7 @@ public class Edge<T> {
          return true;
       }
       if (another instanceof Edge<?>) {
-         Edge<T> edge = (Edge<T>)another;
+         Edge<T> edge = (Edge<T>) another;
          return this.source.equals(edge.source) && this.destination.equals(edge.destination);
       }
       return false;

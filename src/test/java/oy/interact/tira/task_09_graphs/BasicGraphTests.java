@@ -18,9 +18,8 @@ import oy.interact.tira.student.graph.Vertex;
  */
 public class BasicGraphTests {
 
-    @Test 
-    public void testSimpleGraph()
-    {
+    @Test
+    public void testSimpleGraph() {
         IntegerTestGraph testGraph = IntegerTestGraph.createSimpleUndirectedGraph();
         assertNotNull(testGraph, () -> "Test graph not created");
         Set<Vertex<Integer>> vertices = testGraph.getVertices();
@@ -39,14 +38,13 @@ public class BasicGraphTests {
                     break;
                 default:
                     fail("Vertex ids should be 1..5");
-                break;
+                    break;
             }
         }
     }
 
-    @Test 
-    public void testSimpleDirectedGraph()
-    {
+    @Test
+    public void testSimpleDirectedGraph() {
         IntegerTestGraph testGraph = IntegerTestGraph.createSimpleDirectedGraph();
         assertNotNull(testGraph, () -> "Test graph not created");
         Set<Vertex<Integer>> vertices = testGraph.getVertices();

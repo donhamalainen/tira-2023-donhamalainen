@@ -227,3 +227,21 @@ Hashtable size: 80000, UUID count: 50000, initial collisions: 49655, all collisi
 Huomasin myös koodissani *Bugin* jota yritin debugata 2pv. Bugi on ikuiseen silmukkaan jääminen add() metodin yhteydessä. Se on satunnainen ja vaihtelee n. 2 yrityksestä 54 yritykseen jolloin se saattaa ilmetä kerran. En tiedä mistä se johtuu ja sen debuggaaminen oli ja on todella vaikeaa, sillä en koskaan tiedä milloin se ilmenee. Kuitenkin huomasin että hashModifier saattaa tällöin olla todella suuriluku kuten 2 miljoonaa tai 5 miljoonaa.
 
 ## 09-TASK
+
+### Tehtävä raportti
+
+#### Minimivaatimus:
+
+Toteutin minimivaatimuksessa leveys- ja syvyyshaun. Opin hyödyntämään uudenlaisia kirjastoja kuten HashSet, LinkedList ja Queue. Stack ja ArrayList olivat edellisistä materiaaleista tai tehtävistä tuttuja. Minimivaatimus ei ollut mielestäni uskomattoman vaikea tai haastava ja se oli mielestäni helposti ymmärrettävissä aikaisemman BST-tehtävän takia. Ainoaksi haasteeksi koin peruslogiikan ymmärtämisen kuten mitä kaaren lisääminen tarkoittaa.
+
+Testasin koodia pitkälti debuggaamalla, sekä rakensin ohjelmaa vaiheittain. Tämä edesauttoi todella paljon ohjelman rakenteen ymmärtämistä. Varmistin myös että algorytmi käyttäytyy oikein tiheissä kuin myös harvoissa verkoissa. 
+
+Aikatehokkuudeltaan analyysi on riippuvainen solmujen (S) ja kaarien määrästä (K). Jotkin esim getEdges() metodi voi olla O(1) tai O(K). Leveys- ja syvyyshaku on big O-notaatiolla O(S+K), jos kaikki solmut ovat melkein yhteydessä niin kaari (K) on lähellä S^2.
+tässä tilanteessa notaatio on O(n^2).
+
+Huomasin, että verkon täyttäminen suurella aineistolla oli hitaampaa, mikä johtui todennäköisesti Map-rakenteen hakutoimintojen aikatehokkuudesta. Kun tein pieniä muutoksia, kuten käyttämällä erilaisia Map-toteutuksia, havaitsin merkittäviä parannuksia aikatehokkuudessa.
+
+#### Graaffi
+![Graaffi](./student_images/Task9-firstGraph.png)
+
+### Lisätehtäviä
