@@ -4,7 +4,7 @@ package oy.interact.tira.student.graph;
  * Holds a step in traversing the graph via edges.
  * <p>
  * Used by Dijkstra to track the path traversed. Members
- * are public for simpler and faster access from code, so 
+ * are public for simpler and faster access from code, so
  * this is more like a record (C/C++ struct) than an object oriented class.
  * 
  * @author Antti Juustila
@@ -37,6 +37,7 @@ public class Visit<T> {
 
     /**
      * Constructs a visit with a type and an edge.
+     * 
      * @param type Type of the visit.
      * @param edge The edge of the visit.
      */

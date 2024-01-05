@@ -12,7 +12,7 @@ package oy.interact.tira.student.graph;
  * @version 1.0
  */
 public class Vertex<T> {
-   
+
    /** The generic data element of the vertex. */
    private T element = null;
 
@@ -30,12 +30,13 @@ public class Vertex<T> {
     * @param element The data to put inside the vertex.
     */
    Vertex(T element) {
-      assert(element != null);
+      assert (element != null);
       this.element = element;
    }
 
    /**
     * Gets the value object inside the element.
+    * 
     * @return The element inside the vertex.
     */
    public T getElement() {
@@ -44,6 +45,7 @@ public class Vertex<T> {
 
    /**
     * Provides a string representation of the vertex.
+    * 
     * @return The vertex element as string.
     */
    @Override
@@ -61,6 +63,7 @@ public class Vertex<T> {
 
    /**
     * Checks wheter two vertices are the same.
+    * 
     * @param another The another object to compare this to.
     * @return Returns true if the vertices are identical (or their elements match).
     */
@@ -74,7 +77,7 @@ public class Vertex<T> {
          return true;
       }
       if (another instanceof Vertex<?>) {
-         return this.element.equals(((Vertex<T>)another).element);
+         return this.element.equals(((Vertex<T>) another).element);
       }
       return false;
    }
