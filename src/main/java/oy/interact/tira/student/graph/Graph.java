@@ -20,6 +20,8 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Dictionary;
 
 /**
  * Implementation of the graph data structure and associated algorithms.
@@ -360,7 +362,12 @@ public class Graph<T> {
       result.path = null;
       result.steps = 0;
       result.totalWeigth = 0.0;
+
       // TODO: Student, implement this.
+      result.path = new ArrayList<>();
+      Map<Vertex<T>, Visit<T>> shortestPath = shortestPathsFrom(start);
+      List<Edge<T>> route = route(end, shortestPath);
+
       return result;
    }
 
@@ -376,15 +383,49 @@ public class Graph<T> {
     * @return Returns the vertices forming the route to the destination.
     */
    private List<Edge<T>> route(Vertex<T> toDestination, Map<Vertex<T>, Visit<T>> paths) {
-      List<Edge<T>> path = new ArrayList<>();
-      // TODO: Student, implement this.
-      return path;
+      List<Edge<T>> path = new ArrayList<>(); // empty list of edges; the path
+      Vertex<T> vertex = toDestination;
+
+      if (paths.size() == 0) {
+         return path;
+      }
+      Visit<T> visit = paths.get(vertex); // get a visit to the destination vertex
+      // handle all the edge visits on the path until start is reached
+      while (visit.type != visit.type.START) {
+         path.add(visit.edge); // add the visit’s edge to the path
+         vertex = visit.edge.getSource(); // take the previous vertex from the edge’s source
+         visit = paths.get(vertex); // get the visit and handle the predecessors of it
+      }
+      return path; // returns the path, route (list of edges) to the destination
    }
 
-   private double distance(Vertex<T> toDestination, Map<Vertex<T>, Visit<T>> viaPath) {
+   public double distance(Vertex<T> toDestination, Map<Vertex<T>, Visit<T>> viaPath) {
       double distance = 0.0;
-      // TODO: Student, implement this.
+      List<Edge<T>> path = route(toDestination, viaPath);
+
+      for (Edge<T> edge : path) {
+         distance += edge.getWeigth();
+      }
       return distance;
+   }
+
+   // Apuohjelma
+   public double maxWeight(Vertex<T> toDestination, Map<Vertex<T>, Visit<T>> paths) {
+      List<Edge<T>> path = route(toDestination, paths);
+      double maxWeightInPath = 0.0;
+
+      for (Edge<T> edge : path) {
+         if (edge.getWeigth() > maxWeightInPath) { // Oletetaan, että Edge-luokalla on getWeight-metodi
+            maxWeightInPath = edge.getWeigth();
+         }
+      }
+
+      return maxWeightInPath;
+   }
+
+   // Apumetodi
+   private List<Edge<T>> shortestPathTo(Vertex<T> destination, Map<Vertex<T>, Visit<T>> paths) {
+      return route(destination, paths);
    }
 
    /**
@@ -398,11 +439,33 @@ public class Graph<T> {
     * @return Returns the visits from the starting vertex.
     * @see oy.tol.tira.graph.Graph#route(Vertex, Map)
     */
+
    private Map<Vertex<T>, Visit<T>> shortestPathsFrom(Vertex<T> start) {
       Visit<T> visit = new Visit<>();
       visit.type = Visit.Type.START;
       Map<Vertex<T>, Visit<T>> paths = new HashMap<>();
-      // TODO: Student, implement this.
+
+      paths.put(start, visit); // add to paths a starting visit from starting vertex
+
+      // empty priority queue of vertices arranged by a distance
+      PriorityQueue<Vertex<T>> queue = new PriorityQueue<>(new DistanceComparator(this, paths));
+      queue.add(start); // put the starting vertex in the priority queue
+
+      while (!queue.isEmpty()) {
+         Vertex<T> current = queue.poll();
+         for (Edge<T> edge : getEdges(current)) {
+            double weight = edge.getWeigth();
+
+            // JATKA TÄSTÄ
+            if (!paths.containsKey(current)
+                  || distance(current, paths) + weight < distance(edge.getDestination(), paths)) {
+               visit.type = Visit.Type.EDGE;
+               visit.edge = edge;
+               paths.put(current, visit);
+               queue.add(current);
+            }
+         }
+      }
       return paths;
    }
 

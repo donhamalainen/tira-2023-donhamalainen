@@ -245,3 +245,8 @@ Huomasin, että verkon täyttäminen suurella aineistolla oli hitaampaa, mikä j
 ![Graaffi](./student_images/Task9-firstGraph.png)
 
 ### Lisätehtäviä
+
+Yritin toteuttaa djikstra lyhimmän polun algorytmiä, mutta sen toteutus ei oikein onnistunut ajan loppumisen takia. Tein kuitenkin mahd. pitkälle mitä ehdin.
+
+Djikstran aikakompleksisuus on tiheällä verkolla O(V^2 log V)
+toteutin kaikki paitsi viimeisen vaiheen, sekä loppu jäi debuggaukseen shortestPathFrom:n kohdalle.
