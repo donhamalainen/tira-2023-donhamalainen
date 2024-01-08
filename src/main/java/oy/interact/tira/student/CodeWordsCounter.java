@@ -155,7 +155,7 @@ public class CodeWordsCounter {
 			result[i] = pairs[i];
 		}
 		// 5. Return the results array to caller.
-		return result; // TODO: return the array of codeword/count pairs.
+		return result;
 	}
 
 }

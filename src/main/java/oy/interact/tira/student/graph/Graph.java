@@ -6,11 +6,9 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.Vector;
 
-import javax.management.Query;
-
 import oy.interact.tira.student.StackImplementation;
 import oy.interact.tira.student.graph.Edge.EdgeType;
-import oy.interact.tira.util.QueueInterface;
+import oy.interact.tira.student.graph.Visit.Type;
 import oy.interact.tira.util.StackInterface;
 
 import java.io.IOException;
@@ -20,8 +18,6 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Dictionary;
 
 /**
  * Implementation of the graph data structure and associated algorithms.
@@ -57,7 +53,6 @@ public class Graph<T> {
     * depending on the application requirements.
     */
    public Graph() {
-      // TODO: Student: allocate necessary member variables.
       this.edgeList = new Hashtable<Vertex<T>, List<Edge<T>>>();
       this.vertices = new Hashtable<Integer, Vertex<T>>();
 
@@ -145,15 +140,6 @@ public class Graph<T> {
     *         element.
     */
    public Vertex<T> getVertexFor(T element) {
-      // TODO: Student, implement this.
-      /*
-       * for (Vertex<T> vertex : edgeList.keySet()) {
-       * if (vertex.getElement().equals(element)) {
-       * return vertex;
-       * }
-       * }
-       * return null;
-       */
       Integer hash = element.hashCode();
       return vertices.get(hash);
    }
@@ -168,8 +154,6 @@ public class Graph<T> {
     *         they were found, or an empty list.
     */
    public List<Vertex<T>> breadthFirstSearch(Vertex<T> from, Vertex<T> target) {
-      // TODO: Student, implement this.
-
       List<Vertex<T>> visited = new ArrayList<>(); // Lista vierailluista solmuista
       Set<Vertex<T>> enqueued = new HashSet<>(); // Joukko solmuista, jotka on jo lisätty jonoon
       Queue<Vertex<T>> queue = new LinkedList<>(); // Jono solmuille, joita tulee käsitellä
@@ -211,8 +195,6 @@ public class Graph<T> {
     * @return Returns all the visited vertices traversed while doing DFS.
     */
    public List<Vertex<T>> depthFirstSearch(Vertex<T> from, Vertex<T> target) {
-      // TODO: Student, implement this.
-
       List<Vertex<T>> visited = new ArrayList<>(); // Lista vierailluista solmuista
       Set<Vertex<T>> pushed = new HashSet<>(); // Ei vielä käsitellyt
       StackInterface<Vertex<T>> stack = new StackImplementation<>(); // Pino solmuista
@@ -315,7 +297,6 @@ public class Graph<T> {
     * @return Returns true if the graph has cycles.
     */
    public boolean hasCycles(EdgeType edgeType, Vertex<T> fromVertex) {
-      // TODO: Student, implement this.
       return false;
    }
 
@@ -363,11 +344,24 @@ public class Graph<T> {
       result.steps = 0;
       result.totalWeigth = 0.0;
 
-      // TODO: Student, implement this.
-      result.path = new ArrayList<>();
-      Map<Vertex<T>, Visit<T>> shortestPath = shortestPathsFrom(start);
-      List<Edge<T>> route = route(end, shortestPath);
+      Map<Vertex<T>, Visit<T>> paths;
+      paths = shortestPathsFrom(start);
 
+      if (paths != null && !paths.isEmpty()) {
+         List<Edge<T>> route = route(end, paths);
+
+         if (route != null && !route.isEmpty()) {
+            result.steps = route.size();
+            result.pathFound = true;
+            List<T> list = new Vector<>();
+            list.add(route.get(0).getSource().getElement());
+            for (Edge<T> edge : route) {
+               list.add(edge.getDestination().getElement());
+               result.totalWeigth += edge.getWeigth();
+            }
+            result.path = list;
+         }
+      }
       return result;
    }
 
@@ -383,16 +377,17 @@ public class Graph<T> {
     * @return Returns the vertices forming the route to the destination.
     */
    private List<Edge<T>> route(Vertex<T> toDestination, Map<Vertex<T>, Visit<T>> paths) {
-      List<Edge<T>> path = new ArrayList<>(); // empty list of edges; the path
+      List<Edge<T>> path = new Vector<>(); // empty list of edges; the path
       Vertex<T> vertex = toDestination;
 
       if (paths.size() == 0) {
          return path;
       }
       Visit<T> visit = paths.get(vertex); // get a visit to the destination vertex
+
       // handle all the edge visits on the path until start is reached
-      while (visit.type != visit.type.START) {
-         path.add(visit.edge); // add the visit’s edge to the path
+      while (visit.type != Type.START) {
+         path.add(0, visit.edge); // add the visit’s edge to the path
          vertex = visit.edge.getSource(); // take the previous vertex from the edge’s source
          visit = paths.get(vertex); // get the visit and handle the predecessors of it
       }
@@ -423,11 +418,6 @@ public class Graph<T> {
       return maxWeightInPath;
    }
 
-   // Apumetodi
-   private List<Edge<T>> shortestPathTo(Vertex<T> destination, Map<Vertex<T>, Visit<T>> paths) {
-      return route(destination, paths);
-   }
-
    /**
     * Finds the shortest paths in the graph from the starting vertex.
     *
@@ -452,17 +442,19 @@ public class Graph<T> {
       queue.add(start); // put the starting vertex in the priority queue
 
       while (!queue.isEmpty()) {
-         Vertex<T> current = queue.poll();
-         for (Edge<T> edge : getEdges(current)) {
+         Vertex<T> vertex = queue.poll();
+         Iterable<Edge<T>> edges = getEdges(vertex);
+
+         for (Edge<T> edge : edges) {
             double weight = edge.getWeigth();
 
-            // JATKA TÄSTÄ
-            if (!paths.containsKey(current)
-                  || distance(current, paths) + weight < distance(edge.getDestination(), paths)) {
-               visit.type = Visit.Type.EDGE;
-               visit.edge = edge;
-               paths.put(current, visit);
-               queue.add(current);
+            if (!paths.containsKey(edge.getDestination())
+                  || distance(vertex, paths) + weight < distance(edge.getDestination(), paths)) {
+               Visit<T> edgeVisit = new Visit<>();
+               edgeVisit.type = Visit.Type.EDGE;
+               edgeVisit.edge = edge;
+               paths.put(edge.getDestination(), edgeVisit);
+               queue.add(edge.getDestination());
             }
          }
       }
@@ -495,7 +487,7 @@ public class Graph<T> {
     * @throws IOException If something goes wrong with file operations.
     */
    public void toDotBFS(Vertex<T> from, String outputFileName) throws IOException {
-      // TODO: Student, implement this if you want to (optional task).
+
    }
 
    // STUDENTS: TODO: Uncomment the code below and use it as a sample on how
@@ -525,8 +517,6 @@ public class Graph<T> {
     */
    @Override
    public String toString() {
-      // TODO: Student.
-      // Remove this and uncomment code below when you are ready.
       StringBuilder output = new StringBuilder();
       for (Map.Entry<Vertex<T>, List<Edge<T>>> entry : edgeList.entrySet()) {
          output.append("[");
