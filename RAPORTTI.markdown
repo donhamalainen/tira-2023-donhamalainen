@@ -246,7 +246,7 @@ Huomasin, että verkon täyttäminen suurella aineistolla oli hitaampaa, mikä j
 
 ### Lisätehtäviä
 
-Yritin toteuttaa djikstra lyhimmän polun algorytmiä, mutta sen toteutus ei oikein onnistunut ajan loppumisen takia. Tein kuitenkin mahd. pitkälle mitä ehdin.
+Toteutin lisätehtävänä myös Djikstra lyhyenreitin hakualgorytmin, joka mahdollistaa A:sta B:hen lyhimmän reitin.
 
-Djikstran aikakompleksisuus on tiheällä verkolla O(V^2 log V)
-toteutin kaikki paitsi viimeisen vaiheen, sekä loppu jäi debuggaukseen shortestPathFrom:n kohdalle.
+Djikstran aikakompleksisuus on riippuvainen verkon rakenteesta ja tarkalleen sen tiheydestä/harvuudesta. Tiheässä verkossa, jossa jokainen solmupiste on yhteydessä toiseen solmupisteeseen niin aikavaatimus on O(V^2 log V), missä V on solmupisteiden määrä. Tämä on riippuvainen siitä kun jokaista solmunpisteen naapuria tarkastellaan ja päivitetään prioriteettijonossa, mikä lisää sitten suoritusaikaa.
+

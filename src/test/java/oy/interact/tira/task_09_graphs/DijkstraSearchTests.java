@@ -48,8 +48,10 @@ public class DijkstraSearchTests {
         Graph<String> network = StringTestGraph.createFinlandTrainNetworks();
         System.out.println(network);
         assertNotNull(network, "Must have a graph of train stations");
-        // assertTrue(network.hasCycles(EdgeType.UNDIRECTED, null), "Train graph has cycles so this fails");
-        // assertFalse(network.isDisconnected(null), "Finnish train network is not disconnected");
+        // assertTrue(network.hasCycles(EdgeType.UNDIRECTED, null), "Train graph has
+        // cycles so this fails");
+        // assertFalse(network.isDisconnected(null), "Finnish train network is not
+        // disconnected");
         /*
          * Oulu --> 495 --> Tampere
          * Tampere --> 170 --> Turku
@@ -76,19 +78,21 @@ public class DijkstraSearchTests {
         Graph<String> network = StringTestGraph.createFinlandTrainNetworks();
         System.out.println(network);
         assertNotNull(network, "Must have a graph of train stations");
-        // assertTrue(network.hasCycles(EdgeType.UNDIRECTED, null), "Train graph has cycles so this fails");
+        // assertTrue(network.hasCycles(EdgeType.UNDIRECTED, null), "Train graph has
+        // cycles so this fails");
         /*
-            Oulu   -->  359 -->      Kuopio  
-          Kuopio   -->  360 -->  Vainikkala  
-                >> Totalling    719 km
-        */
+         * Oulu --> 359 --> Kuopio
+         * Kuopio --> 360 --> Vainikkala
+         * >> Totalling 719 km
+         */
         Vertex<String> oulu = network.getVertexFor("Oulu");
         assertNotNull(oulu, "Oulu should be in the train network as a vertex");
         Vertex<String> vainikkala = network.getVertexFor("Vainikkala");
         assertNotNull(vainikkala, "Turku should be in the train network as a vertex");
         Graph<String>.DijkstraResult<String> result = network.shortestPathDijkstra(oulu, vainikkala);
         assertEquals(2, result.steps, "From Oulu to Turku shortest path is two steps: Oulu->Kuopio->Vainikkala");
-        assertEquals(3, result.path.size(), "From Oulu to Turku shortest path is three vertices: Oulu->Kuopio->Vainikkala");
+        assertEquals(3, result.path.size(),
+                "From Oulu to Turku shortest path is three vertices: Oulu->Kuopio->Vainikkala");
         assertEquals(719, result.totalWeigth, "Kilometres from Oulu->Kuopio->Vainikkala must be Vainikkala");
         assertEquals("Oulu", result.path.get(0), "Starting vertex must be Oulu");
         assertEquals("Kuopio", result.path.get(1), "Next vertex must be Kuopio");

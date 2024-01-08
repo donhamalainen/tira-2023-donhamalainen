@@ -89,7 +89,6 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
 
     @Override
     public V remove(K key) throws IllegalArgumentException {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'remove'");
     }
 
@@ -123,7 +122,6 @@ public class HashTableContainer<K extends Comparable<K>, V> implements TIRAKeyed
 
     @Override
     public void ensureCapacity(int capacity) throws OutOfMemoryError, IllegalArgumentException {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'ensureCapacity'");
     }
 
